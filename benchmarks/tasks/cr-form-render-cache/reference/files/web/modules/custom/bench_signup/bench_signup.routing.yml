@@ -1,0 +1,7 @@
+bench_signup.form:
+  path: '/signup'
+  defaults:
+    _form: '\Drupal\bench_signup\Form\SignupForm'
+    _title: 'Sign up'
+  requirements:
+    _access: 'TRUE'

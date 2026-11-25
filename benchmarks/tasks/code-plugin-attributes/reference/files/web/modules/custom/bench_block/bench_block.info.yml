@@ -1,0 +1,7 @@
+name: Bench block
+type: module
+description: Provides a configurable greeting block.
+core_version_requirement: ^10.3 || ^11
+package: Benchmark
+dependencies:
+  - drupal:block

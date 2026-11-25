@@ -1,0 +1,5 @@
+name: Bench members
+type: module
+description: Members-only access check.
+core_version_requirement: ^11.4
+package: Bench

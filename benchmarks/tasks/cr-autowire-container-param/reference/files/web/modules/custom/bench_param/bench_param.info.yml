@@ -1,0 +1,5 @@
+name: Bench parameter
+type: module
+description: Controller with an autowired parameter.
+core_version_requirement: ^11.4
+package: Bench

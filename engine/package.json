@@ -1,0 +1,54 @@
+{
+  "name": "modern-drupal-guidance-engine",
+  "version": "1.0.0",
+  "description": "Build, search and CLI engine for Modern Drupal Guidance.",
+  "type": "module",
+  "private": true,
+  "engines": {
+    "node": ">=22.18.0"
+  },
+  "scripts": {
+    "build": "node --import tsx src/build/build-dist.ts",
+    "build:fixtures": "node --import tsx src/build/build-dist.ts --guides test-fixtures/guides --out dist/fixtures-cli",
+    "build:guides": "node --import tsx src/build/build-guides.ts",
+    "validate": "node --import tsx src/build/validate-guides.ts",
+    "train:words": "node --import tsx src/rag/train-query-words.ts",
+    "cli": "node --import tsx src/cli/modern-drupal-guidance.ts",
+    "typecheck": "tsc",
+    "lint": "oxlint --ignore-path .oxlintignore",
+    "test": "node --import tsx scripts/run-tests.ts",
+    "preflight": "pnpm build && pnpm typecheck && pnpm test"
+  },
+  "keywords": [
+    "drupal",
+    "ai",
+    "agents",
+    "skills"
+  ],
+  "author": "Modern Drupal Guidance contributors",
+  "license": "Apache-2.0",
+  "packageManager": "pnpm@10.30.3",
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
+  },
+  "devDependencies": {
+    "@types/node": "^25.6.0",
+    "@types/omelette": "^0.4.5",
+    "cssomnom": "^0.1.11",
+    "esbuild": "^0.28.1",
+    "linkedom": "^0.18.12",
+    "minimatch": "^11.0.1",
+    "oxlint": "1.55.0",
+    "ts-morph": "^27.0.2",
+    "tsx": "^4.23.15",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "@11ty/gray-matter": "^3.0.0",
+    "glob": "^14.0.2",
+    "marked": "^18.0.3",
+    "omelette": "^0.4.17"
+  }
+}

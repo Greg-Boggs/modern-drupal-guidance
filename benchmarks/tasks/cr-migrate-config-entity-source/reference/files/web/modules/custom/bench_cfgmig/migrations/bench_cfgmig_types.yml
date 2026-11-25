@@ -1,0 +1,12 @@
+id: bench_cfgmig_types
+label: Node type labels from active config
+source:
+  plugin: config_entity
+  key: default
+  names:
+    - node.type.article
+    - node.type.page
+process:
+  label: data/name
+destination:
+  plugin: 'null'

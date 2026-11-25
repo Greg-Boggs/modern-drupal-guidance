@@ -1,0 +1,5 @@
+name: 'MDG demo: lazy builders'
+type: module
+description: 'Reference implementation for the lazy-builders guide.'
+package: Modern Drupal Guidance
+core_version_requirement: '>=10.3'

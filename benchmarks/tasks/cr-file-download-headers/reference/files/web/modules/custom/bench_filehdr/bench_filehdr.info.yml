@@ -1,0 +1,7 @@
+name: bench_filehdr
+type: module
+description: Reference solution for cr-file-download-headers.
+core_version_requirement: ^11.1
+package: Bench
+dependencies:
+  - drupal:file

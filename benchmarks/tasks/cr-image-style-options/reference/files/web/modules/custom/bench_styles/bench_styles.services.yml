@@ -1,0 +1,4 @@
+services:
+  bench_styles.options:
+    class: Drupal\bench_styles\StyleOptions
+    autowire: true

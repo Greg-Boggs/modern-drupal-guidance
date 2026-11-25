@@ -1,0 +1,8 @@
+name: Bench cache
+type: module
+description: Shows a cached count of published articles.
+core_version_requirement: ^10.3 || ^11
+package: Benchmark
+dependencies:
+  - drupal:block
+  - drupal:node

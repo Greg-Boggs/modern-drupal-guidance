@@ -1,0 +1,5 @@
+name: Modern example
+type: module
+description: 'Fixture: the same features written for Drupal 11.1+; legacy-scan should report nothing.'
+package: Custom
+core_version_requirement: ^11.1

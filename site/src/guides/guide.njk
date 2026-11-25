@@ -1,0 +1,23 @@
+---
+layout: base.njk
+pagination:
+  data: guides.all
+  size: 1
+  alias: g
+permalink: "{{ g.url }}"
+eleventyComputed:
+  title: "{{ g.title }}"
+  description: "{{ g.description }}"
+---
+<article class="guide-body">
+  <p class="crumbs"><a href="/guides/">Guides</a> / <a href="/guides/#cat-{{ g.category }}">{{ g.categoryTitle }}</a></p>
+  <div class="meta">
+    <span class="pill"><strong>Supports</strong> {{ g.rangeText }}</span>
+    {% if g.range %}<span class="pill"><strong>drupal-core</strong> <code>{{ g.range }}</code></span>{% endif %}
+    <span class="pill"><strong>ID</strong> <code>{{ g.id }}</code></span>
+  </div>
+  <p class="lede">{{ g.description }}</p>
+  {{ g.html | safe }}
+  <hr>
+  <p>Agents can fetch this guide with <code>npx modern-drupal-guidance retrieve "{{ g.id }}"</code>.</p>
+</article>

@@ -1,0 +1,9 @@
+<article{{ attributes.addClass('card') }}>
+  {% if url %}
+    <h2 class="card__heading"><a href="{{ url }}">{{ heading }}</a></h2>
+  {% else %}
+    <h2 class="card__heading">{{ heading }}</h2>
+  {% endif %}
+  <div class="card__media">{% block media %}{% endblock %}</div>
+  <div class="card__body">{% block body %}{% endblock %}</div>
+</article>

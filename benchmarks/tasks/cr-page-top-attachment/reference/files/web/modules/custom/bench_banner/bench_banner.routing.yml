@@ -1,0 +1,7 @@
+bench_banner.page:
+  path: '/bench-banner'
+  defaults:
+    _controller: '\Drupal\bench_banner\Controller\BannerController'
+    _title: 'Banner demo'
+  requirements:
+    _access: 'TRUE'

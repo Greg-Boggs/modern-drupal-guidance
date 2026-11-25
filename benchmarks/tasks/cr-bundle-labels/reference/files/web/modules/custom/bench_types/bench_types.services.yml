@@ -1,0 +1,4 @@
+services:
+  bench_types.lister:
+    class: Drupal\bench_types\TypeLister
+    autowire: true

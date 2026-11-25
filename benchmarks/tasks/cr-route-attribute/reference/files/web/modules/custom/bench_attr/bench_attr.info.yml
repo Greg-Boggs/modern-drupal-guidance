@@ -1,0 +1,5 @@
+name: Bench attribute route
+type: module
+description: Route defined by attribute.
+core_version_requirement: ^11.4
+package: Bench

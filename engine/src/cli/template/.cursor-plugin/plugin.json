@@ -1,0 +1,8 @@
+{
+  "name": "modern-drupal-guidance",
+  "description": "Modern Drupal Guidance is an agent skill and CLI that gives AI coding agents short, tested guides for current Drupal core APIs at the moment they write code: OOP hooks with #[Hook], PHP attributes, dependency injection, Single Directory Components, Recipes, cache metadata and more, so they stop writing deprecated or removed APIs from their training data.",
+  "version": "0.0.0",
+  "author": {
+    "name": "Modern Drupal Guidance contributors"
+  }
+}

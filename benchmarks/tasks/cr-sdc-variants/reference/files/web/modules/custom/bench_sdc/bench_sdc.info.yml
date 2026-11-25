@@ -1,0 +1,5 @@
+name: Bench SDC
+type: module
+description: A callout component with variants.
+core_version_requirement: ^11.3
+package: Bench

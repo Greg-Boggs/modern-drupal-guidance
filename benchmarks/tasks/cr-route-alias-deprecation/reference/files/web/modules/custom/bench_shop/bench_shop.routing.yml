@@ -1,0 +1,14 @@
+bench_shop.catalog:
+  path: '/bench-shop'
+  defaults:
+    _controller: '\Drupal\bench_shop\Controller\ShopController::catalog'
+    _title: 'Shop'
+  requirements:
+    _access: 'TRUE'
+
+bench_shop.list:
+  alias: bench_shop.catalog
+  deprecated:
+    package: 'drupal/bench_shop'
+    version: '1.1.0'
+    message: 'The "%alias_id%" route is deprecated in bench_shop:1.1.0. Use "bench_shop.catalog" instead.'

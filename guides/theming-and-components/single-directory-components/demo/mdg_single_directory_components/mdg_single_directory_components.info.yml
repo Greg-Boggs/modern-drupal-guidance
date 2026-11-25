@@ -1,0 +1,5 @@
+name: 'MDG demo: Single Directory Components'
+type: module
+description: 'Reference implementation for the single-directory-components guide.'
+package: Modern Drupal Guidance
+core_version_requirement: '>=10.3'

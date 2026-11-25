@@ -1,0 +1,5 @@
+name: Bench banner
+type: module
+description: Adds page_top markup from a controller.
+core_version_requirement: ^11.3
+package: Bench

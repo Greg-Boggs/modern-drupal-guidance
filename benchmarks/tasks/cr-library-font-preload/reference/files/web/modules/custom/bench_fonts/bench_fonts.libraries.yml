@@ -1,0 +1,8 @@
+typography:
+  version: 1.0
+  css:
+    theme:
+      css/typography.css: {}
+  fonts:
+    fonts/inter.woff2:
+      preload: true

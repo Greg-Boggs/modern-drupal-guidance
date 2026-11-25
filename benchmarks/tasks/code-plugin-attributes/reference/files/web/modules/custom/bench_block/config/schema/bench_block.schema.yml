@@ -1,0 +1,7 @@
+block.settings.bench_greeting:
+  type: block_settings
+  label: 'Bench greeting block settings'
+  mapping:
+    greeting:
+      type: label
+      label: 'Greeting'

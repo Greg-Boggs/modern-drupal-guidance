@@ -1,0 +1,30 @@
+---
+layout: base.njk
+title: All guides
+description: Every Modern Drupal Guidance guide, grouped by category, with the Drupal core versions each one supports.
+permalink: /guides/
+---
+<h1>Guides</h1>
+<p class="lede">{{ guides.all.length }} guides in {{ guides.categories.length }} categories. Each lists the Drupal core versions it supports.</p>
+{% if guides.source == "fixtures" %}<p class="pill"><strong>Preview:</strong> showing sample fixture guides.</p>{% endif %}
+
+<form class="search" role="search" hidden onsubmit="return false">
+  <label for="guide-search">Search guides by name or description</label>
+  <input id="guide-search" type="search" autocomplete="off" placeholder="e.g. hooks, twig, cache">
+  <p id="search-status" role="status" aria-live="polite" class="crumbs"></p>
+</form>
+
+{% for c in guides.categories %}
+<section data-category aria-labelledby="cat-{{ c.slug }}">
+  <h2 id="cat-{{ c.slug }}">{{ c.title }}</h2>
+  <ul class="guide-list">
+  {%- for g in c.guides %}
+    <li data-guide data-search="{{ (g.name + ' ' + g.title + ' ' + g.category + ' ' + g.description) | lower | escape }}">
+      <a class="name" href="{{ g.url }}">{{ g.title }}</a>{% if g.isRoot %} <span class="pill">Category overview</span>{% endif %}
+      <p>{{ g.description }}</p>
+      <span class="pill"><strong>Core</strong> {{ g.rangeText }}</span>
+    </li>
+  {%- endfor %}
+  </ul>
+</section>
+{% endfor %}

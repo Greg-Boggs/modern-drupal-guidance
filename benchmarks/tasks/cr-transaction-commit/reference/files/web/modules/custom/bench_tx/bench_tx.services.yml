@@ -1,0 +1,4 @@
+services:
+  bench_tx.writer:
+    class: Drupal\bench_tx\PairWriter
+    arguments: ['@database']

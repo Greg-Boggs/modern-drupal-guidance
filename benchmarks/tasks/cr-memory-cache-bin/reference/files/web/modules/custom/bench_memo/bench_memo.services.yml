@@ -1,0 +1,4 @@
+services:
+  bench_memo.squares:
+    class: Drupal\bench_memo\Squares
+    arguments: ['@cache.memory']

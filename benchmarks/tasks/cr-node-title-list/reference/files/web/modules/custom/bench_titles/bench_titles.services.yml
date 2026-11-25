@@ -1,0 +1,4 @@
+services:
+  bench_titles.builder:
+    class: Drupal\bench_titles\TitleList
+    autowire: true

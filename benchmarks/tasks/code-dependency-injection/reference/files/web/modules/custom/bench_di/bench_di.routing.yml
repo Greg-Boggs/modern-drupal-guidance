@@ -1,0 +1,7 @@
+bench_di.latest_article:
+  path: '/bench/latest-article'
+  defaults:
+    _controller: '\Drupal\bench_di\Controller\LatestArticleController'
+    _title: 'Latest article'
+  requirements:
+    _permission: 'access content'

@@ -1,0 +1,11 @@
+name: Bench no my account
+description: 'Hides the My account link and moves Log out.'
+type: Site
+config:
+  actions:
+    core.menu.static_menu_link_overrides:
+      overrideMenuLinks:
+        user.page:
+          enabled: false
+        user.logout:
+          weight: 50

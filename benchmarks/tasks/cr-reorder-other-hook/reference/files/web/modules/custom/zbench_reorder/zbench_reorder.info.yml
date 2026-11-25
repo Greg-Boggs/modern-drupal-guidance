@@ -1,0 +1,7 @@
+name: Bench reorder
+type: module
+description: Moves Field UI's form alter last.
+core_version_requirement: ^11.2
+package: Bench
+dependencies:
+  - drupal:field_ui

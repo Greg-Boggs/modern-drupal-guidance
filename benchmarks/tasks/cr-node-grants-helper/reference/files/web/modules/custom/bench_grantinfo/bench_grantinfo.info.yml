@@ -1,0 +1,7 @@
+name: Bench grant info
+type: module
+description: Reports node access grants.
+core_version_requirement: ^11.4
+package: Bench
+dependencies:
+  - drupal:node

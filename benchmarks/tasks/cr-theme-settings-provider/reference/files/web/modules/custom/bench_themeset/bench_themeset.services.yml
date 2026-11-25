@@ -1,0 +1,4 @@
+services:
+  bench_themeset.reader:
+    class: Drupal\bench_themeset\ThemeSettingsReader
+    autowire: true

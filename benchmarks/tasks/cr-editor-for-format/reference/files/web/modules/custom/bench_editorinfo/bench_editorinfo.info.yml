@@ -1,0 +1,7 @@
+name: bench_editorinfo
+type: module
+description: Reference solution for cr-editor-for-format.
+core_version_requirement: ^11.3
+package: Bench
+dependencies:
+  - drupal:editor

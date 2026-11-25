@@ -1,0 +1,5 @@
+name: Bench shop
+type: module
+description: Shop page with a renamed route.
+core_version_requirement: ^11.2
+package: Bench

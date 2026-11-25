@@ -1,0 +1,7 @@
+name: Bench bundle
+type: module
+description: Article bundle class.
+core_version_requirement: ^11.4
+package: Bench
+dependencies:
+  - drupal:node

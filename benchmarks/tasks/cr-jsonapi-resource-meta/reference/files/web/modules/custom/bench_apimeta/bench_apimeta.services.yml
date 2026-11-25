@@ -1,0 +1,5 @@
+services:
+  bench_apimeta.subscriber:
+    class: Drupal\bench_apimeta\EventSubscriber\TitleLengthMeta
+    tags:
+      - { name: event_subscriber }

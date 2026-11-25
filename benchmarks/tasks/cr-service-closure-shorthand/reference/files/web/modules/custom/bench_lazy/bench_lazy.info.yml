@@ -1,0 +1,5 @@
+name: Bench lazy
+type: module
+description: Service with a lazy service closure.
+core_version_requirement: ^11.3
+package: Bench

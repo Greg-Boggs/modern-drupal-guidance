@@ -1,0 +1,6 @@
+badge:
+  js:
+    js/badge.js: {}
+  dependencies:
+    - core/drupal
+    - core/once

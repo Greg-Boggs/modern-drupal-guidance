@@ -1,0 +1,11 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+
+  Drupal\mdg_dependency_injection\GreetingBuilder: ~
+  Drupal\mdg_dependency_injection\GreetingBuilderInterface: '@Drupal\mdg_dependency_injection\GreetingBuilder'
+
+  logger.channel.mdg_dependency_injection:
+    parent: logger.channel_base
+    arguments: ['mdg_dependency_injection']

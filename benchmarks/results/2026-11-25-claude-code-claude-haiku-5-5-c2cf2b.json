@@ -1,0 +1,202 @@
+{
+  "schema": "modern-drupal-guidance-bench/1",
+  "id": "c2cf2b",
+  "createdAt": "2026-11-25T06:18:00.785Z",
+  "agent": {
+    "id": "claude-code",
+    "version": "2.1.308",
+    "model": "claude-haiku-5-5"
+  },
+  "guidance": {
+    "skillVersion": "2026_11_24-9a0ea49d",
+    "repoCommit": "uncommitted",
+    "guideCount": 827
+  },
+  "drupal": {
+    "core": "11.4.13",
+    "drush": "13.8.1",
+    "php": "8.3.33",
+    "profile": "standard",
+    "recipes": [
+      "page_content_type",
+      "article_content_type",
+      "article_tags"
+    ]
+  },
+  "os": {
+    "platform": "linux",
+    "release": "7.0.0-44-generic",
+    "arch": "x64"
+  },
+  "harness": {
+    "tasks": "cr-hook-order-first,cr-sdc-variants,cr-library-font-preload,cr-recipe-toolbar-items,cr-bundle-list-cache-tags,cr-recipe-menu-link-override,cr-service-closure-shorthand,cr-form-callback-service,cr-map-query-parameter,cr-batch-callback-service,cr-hook-entity-duplicate,cr-plugin-autowire,cr-runtime-requirements,cr-initial-preprocess,cr-block-placeholder,cr-setter-injection,cr-asset-gc-threshold,cr-bundle-class-attribute,cr-decoration-on-invalid,cr-access-neutral-reason,cr-htmx-fragment,cr-original-entity,cr-remove-hook,cr-exception-status-cache-context,cr-form-autowire,cr-jsonapi-filter-access,cr-autowire-container-param,cr-twig-cva,cr-oop-cache-flush,cr-page-top-attachment,cr-transaction-commit,cr-oop-preprocess",
+    "modes": [
+      "unguided"
+    ],
+    "runs": 3,
+    "allowWeb": false,
+    "timeoutMin": 20,
+    "trialCap": 96,
+    "seed": 800897314,
+    "skipSolved": true,
+    "rerunOf": {
+      "id": "b52fbf",
+      "file": "2026-11-25-claude-code-claude-haiku-5-5-b52fbf.json",
+      "failedMode": "unguided",
+      "tasks": 32
+    }
+  },
+  "solvedUnguided": [],
+  "summary": {
+    "byMode": {
+      "unguided": {
+        "trials": 2,
+        "errored": 0,
+        "tasksFullyPassed": 0,
+        "taskPassRate": 0,
+        "checksPassed": 7,
+        "checksTotal": 9,
+        "checkPassRate": 77.8,
+        "tokens": {
+          "input": 38,
+          "output": 10046,
+          "cacheRead": 399090,
+          "cacheCreation": 29793,
+          "total": 438967
+        },
+        "costUsd": 0.01
+      }
+    },
+    "uplift": {},
+    "solvedUnguided": 0
+  },
+  "trials": [
+    {
+      "task": "cr-hook-entity-duplicate",
+      "mode": "unguided",
+      "run": 1,
+      "startedAt": "2026-11-25T06:16:55.651Z",
+      "agent": {
+        "exitCode": 0,
+        "timedOut": false,
+        "durationSec": 22,
+        "guidanceCalls": {
+          "search": 0,
+          "retrieve": 0,
+          "mcp": 0,
+          "skill": 0
+        },
+        "model": "claude-haiku-5-5",
+        "tokens": {
+          "input": 14,
+          "output": 3964,
+          "cacheRead": 132730,
+          "cacheCreation": 12524,
+          "total": 149232
+        },
+        "costUsd": 0.0058155,
+        "numTurns": 7
+      },
+      "checks": [
+        {
+          "id": "module-enabled",
+          "kind": "must",
+          "text": "Module bench_dup exists in web/modules/custom/bench_dup and is enabled.",
+          "pass": true,
+          "detail": "info=true enabled=true"
+        },
+        {
+          "id": "duplicate",
+          "kind": "must",
+          "text": "createDuplicate() of a published page \"Report\" returns an unsaved, unpublished node titled \"Report (copy)\", and the original keeps its title and status.",
+          "pass": true,
+          "detail": "[\"Report (copy)\",false]"
+        },
+        {
+          "id": "no-save-hooks",
+          "kind": "must_not",
+          "text": "Practice: The module does not implement presave or insert hooks for this.",
+          "pass": true
+        },
+        {
+          "id": "no-legacy-pattern",
+          "kind": "must_not",
+          "text": "Practice: No procedural hook implementations (legacy-scan oop-hooks rules).",
+          "pass": false,
+          "detail": "procedural-hook-implementation bench_dup.module:16"
+        },
+        {
+          "id": "no-deprecated-api",
+          "kind": "must_not",
+          "text": "Practice: The module uses no core API that data/drupal/deprecations.json lists as deprecated or removed.",
+          "pass": true
+        }
+      ],
+      "passed": 4,
+      "total": 5,
+      "diff": "diff --git a/config/sync/core.extension.yml b/config/sync/core.extension.yml\nindex 28a14b2..5fc9f1e 100644\n--- a/config/sync/core.extension.yml\n+++ b/config/sync/core.extension.yml\n@@ -3,6 +3,7 @@ _core:\n module:\n   announcements_feed: 0\n   automated_cron: 0\n+  bench_dup: 0\n   big_pipe: 0\n   block: 0\n   block_content: 0\ndiff --git a/web/modules/custom/bench_dup/bench_dup.info.yml b/web/modules/custom/bench_dup/bench_dup.info.yml\nnew file mode 100644\nindex 0000000..5154088\n--- /dev/null\n+++ b/web/modules/custom/bench_dup/bench_dup.info.yml\n@@ -0,0 +1,5 @@\n+name: Bench Duplicate\n+type: module\n+description: Marks duplicated nodes as \"(copy)\" and unpublished.\n+core_version_requirement: ^10 || ^11\n+package: Custom\ndiff --git a/web/modules/custom/bench_dup/bench_dup.module b/web/modules/custom/bench_dup/bench_dup.module\nnew file mode 100644\nindex 0000000..e6444c6\n--- /dev/null\n+++ b/web/modules/custom/bench_dup/bench_dup.module\n@@ -0,0 +1,19 @@\n+<?php\n+\n+/**\n+ * @file\n+ * Hooks for the Bench Duplicate module.\n+ */\n+\n+use Drupal\\node\\NodeInterface;\n+use Drupal\\Core\\Entity\\EntityInterface;\n+\n+/**\n+ * Implements hook_ENTITY_TYPE_duplicate() for nodes.\n+ *\n+ * Runs on the copy created by createDuplicate(), before it is saved.\n+ */\n+function bench_dup_node_duplicate(NodeInterface $duplicate, EntityInterface $entity): void {\n+  $duplicate->setTitle($entity->label() . ' (copy)');\n+  $duplicate->setUnpublished();\n+}\n",
+      "diffTruncated": false,
+      "diffBytes": 1426
+    },
+    {
+      "task": "cr-recipe-toolbar-items",
+      "mode": "unguided",
+      "run": 1,
+      "startedAt": "2026-11-25T06:17:22.225Z",
+      "agent": {
+        "exitCode": 0,
+        "timedOut": false,
+        "durationSec": 36,
+        "guidanceCalls": {
+          "search": 0,
+          "retrieve": 0,
+          "mcp": 0,
+          "skill": 0
+        },
+        "model": "claude-haiku-5-5",
+        "tokens": {
+          "input": 24,
+          "output": 6082,
+          "cacheRead": 266360,
+          "cacheCreation": 17269,
+          "total": 289735
+        },
+        "costUsd": 0.0091608,
+        "numTurns": 12
+      },
+      "checks": [
+        {
+          "id": "recipe",
+          "kind": "must",
+          "text": "recipes/bench_editor_tools/recipe.yml exists and is named \"Bench editor tools\".",
+          "pass": true
+        },
+        {
+          "id": "one-action",
+          "kind": "must",
+          "text": "Practice: The recipe has one config action entry for editor.editor.full_html that adds both items as a list (addItemToToolbar or addItemsToToolbar).",
+          "pass": false,
+          "detail": "{\"setProperties\":{\"settings.toolbar.items\":[\"bold\",\"italic\",\"strikethrough\",\"code\",\"superscript\",\"subscript\",\"removeFormat\",\"|\",\"link\",\"|\",\"bulletedList\",\"numberedList\",\"|\",\"blockQuote\",\"drupalInsertImage\",\"insertTable\",\"horizontalLine\",\"specialCharacters\",\"|\",\"heading\",\"codeBlock\",\"|\",\"sourceEditing\"]}}"
+        },
+        {
+          "id": "applied",
+          "kind": "must",
+          "text": "The active full_html editor toolbar contains specialCharacters and code and still contains bold, link and sourceEditing.",
+          "pass": true,
+          "detail": "bold,italic,strikethrough,code,superscript,subscript,removeFormat,|,link,|,bulletedList,numberedList,|,blockQuote,drupalInsertImage,insertTable,horizontalLine,specialCharacters,|,heading,codeBlock,|,sourceEditing"
+        },
+        {
+          "id": "no-config-copy",
+          "kind": "must_not",
+          "text": "Practice: The recipe ships editor.editor.full_html.yml in its config folder.",
+          "pass": true
+        }
+      ],
+      "passed": 3,
+      "total": 4,
+      "diff": "diff --git a/config/sync/editor.editor.full_html.yml b/config/sync/editor.editor.full_html.yml\nindex a8aaed8..c8a23b4 100644\n--- a/config/sync/editor.editor.full_html.yml\n+++ b/config/sync/editor.editor.full_html.yml\n@@ -16,6 +16,7 @@ settings:\n       - bold\n       - italic\n       - strikethrough\n+      - code\n       - superscript\n       - subscript\n       - removeFormat\n@@ -29,6 +30,7 @@ settings:\n       - drupalInsertImage\n       - insertTable\n       - horizontalLine\n+      - specialCharacters\n       - '|'\n       - heading\n       - codeBlock\ndiff --git a/recipes/bench_editor_tools/recipe.yml b/recipes/bench_editor_tools/recipe.yml\nnew file mode 100644\nindex 0000000..d5f5c02\n--- /dev/null\n+++ b/recipes/bench_editor_tools/recipe.yml\n@@ -0,0 +1,33 @@\n+name: 'Bench editor tools'\n+description: 'Adds the Special characters and Code buttons to the Full HTML editor toolbar.'\n+type: 'Text format editor'\n+install:\n+  - ckeditor5\n+config:\n+  actions:\n+    editor.editor.full_html:\n+      setProperties:\n+        settings.toolbar.items:\n+          - bold\n+          - italic\n+          - strikethrough\n+          - code\n+          - superscript\n+          - subscript\n+          - removeFormat\n+          - '|'\n+          - link\n+          - '|'\n+          - bulletedList\n+          - numberedList\n+          - '|'\n+          - blockQuote\n+          - drupalInsertImage\n+          - insertTable\n+          - horizontalLine\n+          - specialCharacters\n+          - '|'\n+          - heading\n+          - codeBlock\n+          - '|'\n+          - sourceEditing\n",
+      "diffTruncated": false,
+      "diffBytes": 1563
+    }
+  ]
+}

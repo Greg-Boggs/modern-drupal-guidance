@@ -1,0 +1,4 @@
+services:
+  bench_finder.users:
+    class: Drupal\bench_finder\UserFinder
+    autowire: true

@@ -1,0 +1,4 @@
+services:
+  bench_batch.counter:
+    class: Drupal\bench_batch\Counter
+    arguments: ['@state']

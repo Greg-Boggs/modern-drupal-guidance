@@ -1,0 +1,5 @@
+name: Bench error hint
+type: module
+description: A hint on error pages.
+core_version_requirement: ^11.4
+package: Bench

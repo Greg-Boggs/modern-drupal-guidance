@@ -1,0 +1,5 @@
+name: Bench users
+type: module
+description: User count block.
+core_version_requirement: ^11.3
+package: Bench

@@ -1,0 +1,5 @@
+name: Bench badge
+type: module
+description: A badge theme hook.
+core_version_requirement: ^11.2
+package: Bench

@@ -1,0 +1,5 @@
+name: Bench greet
+type: module
+description: Greeting from a query parameter.
+core_version_requirement: ^11.2
+package: Bench

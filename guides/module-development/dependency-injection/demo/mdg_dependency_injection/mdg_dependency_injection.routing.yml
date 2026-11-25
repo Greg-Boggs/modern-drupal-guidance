@@ -1,0 +1,23 @@
+mdg_dependency_injection.page:
+  path: '/mdg/greeting'
+  defaults:
+    _controller: '\Drupal\mdg_dependency_injection\Controller\GreetingController::page'
+    _title: 'Greeting'
+  requirements:
+    _permission: 'access content'
+
+mdg_dependency_injection.form:
+  path: '/mdg/greeting-form'
+  defaults:
+    _form: '\Drupal\mdg_dependency_injection\Form\GreetingForm'
+    _title: 'Greeting form'
+  requirements:
+    _permission: 'access content'
+
+mdg_dependency_injection.settings:
+  path: '/admin/config/system/mdg-greeting'
+  defaults:
+    _form: '\Drupal\mdg_dependency_injection\Form\SettingsForm'
+    _title: 'Greeting settings'
+  requirements:
+    _permission: 'administer site configuration'

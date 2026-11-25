@@ -1,0 +1,48 @@
+<?php
+
+/**
+ * @file
+ * Legacy example module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function legacy_example_help($route_name, RouteMatchInterface $route_match) {
+  if ($route_name === 'help.page.legacy_example') {
+    return '<p>' . t('Legacy example.') . '</p>';
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function legacy_example_theme() {
+  return [
+    'legacy_example_greeting' => [
+      'variables' => ['name' => NULL],
+    ],
+  ];
+}
+
+/**
+ * Implements hook_page_attachments().
+ */
+function legacy_example_page_attachments(array &$attachments) {
+  $attachments['#attached']['library'][] = 'core/jquery.once';
+}
+
+/**
+ * Implements hook_node_view().
+ */
+function legacy_example_node_view(array &$build, $node, $display, $view_mode) {
+  $count = db_query('SELECT COUNT(*) FROM {node_field_data} WHERE uid = :uid', [':uid' => $node->getOwnerId()])->fetchField();
+  $build['legacy_example_byline'] = [
+    '#markup' => '<p class="byline">' . $node->getOwner()->getDisplayName() . ' has written ' . $count . ' posts.</p>',
+  ];
+  if ($view_mode === 'full') {
+    drupal_set_message(t('You are viewing @title.', ['@title' => $node->label()]));
+  }
+}

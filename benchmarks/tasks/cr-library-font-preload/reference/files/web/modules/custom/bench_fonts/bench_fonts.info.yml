@@ -1,0 +1,5 @@
+name: Bench fonts
+type: module
+description: Preloads a web font.
+core_version_requirement: ^11.4
+package: Bench

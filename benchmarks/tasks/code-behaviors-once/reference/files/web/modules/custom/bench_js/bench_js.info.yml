@@ -1,0 +1,5 @@
+name: Bench JS
+type: module
+description: Adds a badge to node content.
+core_version_requirement: ^10.3 || ^11
+package: Benchmark

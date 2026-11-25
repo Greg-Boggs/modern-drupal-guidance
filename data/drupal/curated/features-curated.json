@@ -1,0 +1,362 @@
+{
+ "_comment": "Hand-curated; every entry cites a change record whose Introduced-in field was checked (cr_info.py).",
+ "entries": [
+  {
+   "id": "oop-hooks",
+   "name": "OOP hook implementations with #[Hook]",
+   "summary": "Hooks are methods on autowired service classes marked with the #[Hook] attribute, instead of procedural functions in .module files. Classes live in src/Hook/.",
+   "category": "hooks",
+   "introduced_in": "11.1.0",
+   "api": [
+    "Drupal\\Core\\Hook\\Attribute\\Hook",
+    "Drupal\\Core\\Hook\\Attribute\\LegacyHook"
+   ],
+   "replaces": [
+    "Procedural hook_*() implementations in .module files"
+   ],
+   "change_record_url": "https://www.drupal.org/node/3442349",
+   "source_url": "https://www.drupal.org/node/3442349",
+   "notes": "Procedural implementations still work; #[LegacyHook] lets a module keep a procedural fallback for older core."
+  },
+  {
+   "id": "hook-reorder",
+   "name": "#[ReorderHook] attribute",
+   "summary": "Reorder hook implementations of other modules (before/after) from a hook class.",
+   "category": "hooks",
+   "introduced_in": "11.2.0",
+   "api": [
+    "Drupal\\Core\\Hook\\Attribute\\ReorderHook"
+   ],
+   "replaces": [
+    "hook_module_implements_alter()"
+   ],
+   "change_record_url": "https://www.drupal.org/node/3497308",
+   "source_url": "https://www.drupal.org/node/3497308"
+  },
+  {
+   "id": "hook-remove",
+   "name": "#[RemoveHook] attribute",
+   "summary": "Remove another module's hook implementation from a hook class.",
+   "category": "hooks",
+   "introduced_in": "11.2.0",
+   "api": [
+    "Drupal\\Core\\Hook\\Attribute\\RemoveHook"
+   ],
+   "replaces": [
+    "hook_module_implements_alter()"
+   ],
+   "change_record_url": "https://www.drupal.org/node/3496786",
+   "source_url": "https://www.drupal.org/node/3496786"
+  },
+  {
+   "id": "oop-hooks-in-themes",
+   "name": "OOP hooks in themes",
+   "summary": "Themes can implement hooks as #[Hook] class methods instead of procedural functions in the .theme file.",
+   "category": "hooks",
+   "introduced_in": "11.3.0",
+   "api": [
+    "Drupal\\Core\\Hook\\Attribute\\Hook"
+   ],
+   "replaces": [
+    "Procedural hooks in mytheme.theme"
+   ],
+   "change_record_url": "https://www.drupal.org/node/3551652",
+   "source_url": "https://www.drupal.org/node/3551652"
+  },
+  {
+   "id": "plugin-attributes",
+   "name": "PHP attributes for plugin definitions",
+   "summary": "Plugin types and plugin implementations declare their metadata with PHP attributes (for example #[Block], #[FieldType], #[Action]) instead of docblock annotations.",
+   "category": "plugins",
+   "introduced_in": "10.2.0",
+   "api": [
+    "Drupal\\Component\\Plugin\\Attribute\\Plugin"
+   ],
+   "replaces": [
+    "deprecation:annotation:plugin-annotations"
+   ],
+   "change_record_url": "https://www.drupal.org/node/3395575",
+   "source_url": "https://www.drupal.org/node/3395575",
+   "notes": "CR 3395582 covers defining new plugin types with attributes. Core converted its own plugin types in 10.3.0 (CR 3229001), 11.1.0 (CR 3505422, entity types) and 11.2.0 (CR 3505424)."
+  },
+  {
+   "id": "plugin-attributes-preferred",
+   "name": "Plugin managers prefer attributes over annotations",
+   "summary": "DefaultPluginManager reads the attribute before the annotation when both exist, so a plugin can carry both during migration.",
+   "category": "plugins",
+   "introduced_in": "11.2.0",
+   "api": [
+    "Drupal\\Core\\Plugin\\DefaultPluginManager"
+   ],
+   "change_record_url": "https://www.drupal.org/node/3521588",
+   "source_url": "https://www.drupal.org/node/3521588"
+  },
+  {
+   "id": "service-autowiring",
+   "name": "Service autowiring",
+   "summary": "Services can be autowired by type-hinted constructor arguments (autowire: true) without listing arguments in services.yml.",
+   "category": "dependency-injection",
+   "introduced_in": "9.3.0",
+   "api": [
+    "autowire: true",
+    "#[Autowire]"
+   ],
+   "change_record_url": "https://www.drupal.org/node/3218156",
+   "source_url": "https://www.drupal.org/node/3218156"
+  },
+  {
+   "id": "autowire-trait",
+   "name": "AutowireTrait for controllers and forms",
+   "summary": "Controllers and other ContainerInjectionInterface classes can use AutowireTrait so create() is not needed to inject services.",
+   "category": "dependency-injection",
+   "introduced_in": "10.2.0",
+   "api": [
+    "Drupal\\Core\\DependencyInjection\\AutowireTrait"
+   ],
+   "change_record_url": "https://www.drupal.org/node/3396179",
+   "source_url": "https://www.drupal.org/node/3396179"
+  },
+  {
+   "id": "autowired-controllers",
+   "name": "Autowired controllers",
+   "summary": "Controllers can be autowired and a create() method is no longer always necessary.",
+   "category": "dependency-injection",
+   "introduced_in": "10.2.0",
+   "change_record_url": "https://www.drupal.org/node/3395716",
+   "source_url": "https://www.drupal.org/node/3395716"
+  },
+  {
+   "id": "core-service-autowire-aliases",
+   "name": "Core services provide autowiring aliases",
+   "summary": "Core services have class and interface aliases so they resolve by type hint.",
+   "category": "dependency-injection",
+   "introduced_in": "10.1.0",
+   "change_record_url": "https://www.drupal.org/node/3323122",
+   "source_url": "https://www.drupal.org/node/3323122"
+  },
+  {
+   "id": "plugin-base-autowire",
+   "name": "PluginBase::create() with autowired parameters",
+   "summary": "Plugins get a default create() that autowires constructor parameters.",
+   "category": "dependency-injection",
+   "introduced_in": "11.3.0",
+   "api": [
+    "Drupal\\Core\\Plugin\\PluginBase"
+   ],
+   "change_record_url": "https://www.drupal.org/node/3542837",
+   "source_url": "https://www.drupal.org/node/3542837"
+  },
+  {
+   "id": "form-base-autowire",
+   "name": "FormBase::create() with autowired parameters",
+   "summary": "Forms get a default create() that autowires constructor parameters.",
+   "category": "dependency-injection",
+   "introduced_in": "11.4.0",
+   "api": [
+    "Drupal\\Core\\Form\\FormBase"
+   ],
+   "change_record_url": "https://www.drupal.org/node/3575184",
+   "source_url": "https://www.drupal.org/node/3575184"
+  },
+  {
+   "id": "autowire-required-setter",
+   "name": "#[Required] setter injection",
+   "summary": "AutowireTrait supports setter injection with the #[Required] attribute.",
+   "category": "dependency-injection",
+   "introduced_in": "11.4.0",
+   "api": [
+    "Symfony\\Contracts\\Service\\Attribute\\Required"
+   ],
+   "change_record_url": "https://www.drupal.org/node/3566688",
+   "source_url": "https://www.drupal.org/node/3566688"
+  },
+  {
+   "id": "recipes",
+   "name": "Recipes",
+   "summary": "Recipes are composable, declarative packages of config, content and module installs applied with a recipe.yml file. The Recipe API shipped as experimental in 10.3.0.",
+   "category": "recipes",
+   "introduced_in": "10.3.0",
+   "api": [
+    "recipe.yml",
+    "core/scripts/drupal recipe"
+   ],
+   "change_record_url": "https://www.drupal.org/node/3445169",
+   "source_url": "https://www.drupal.org/node/3445169",
+   "notes": "Experimental in 10.3.0. The 11.1.0 release notes and later change records treat recipes as supported, but no single change record marks stabilisation, so no stable version is claimed."
+  },
+  {
+   "id": "recipe-inputs",
+   "name": "Recipe inputs",
+   "summary": "Recipes accept input at the command line.",
+   "category": "recipes",
+   "introduced_in": "10.4.0",
+   "api": [
+    "input: key in recipe.yml"
+   ],
+   "change_record_url": "https://www.drupal.org/node/3470507",
+   "source_url": "https://www.drupal.org/node/3470507"
+  },
+  {
+   "id": "recipe-unpack",
+   "name": "Recipe Unpack Composer plugin",
+   "summary": "Composer plugin that unpacks a recipe's dependencies into the project composer.json.",
+   "category": "recipes",
+   "introduced_in": "11.2.0",
+   "api": [
+    "drupal/core-recipe-unpack"
+   ],
+   "change_record_url": "https://www.drupal.org/node/3522189",
+   "source_url": "https://www.drupal.org/node/3522189"
+  },
+  {
+   "id": "single-directory-components",
+   "name": "Single Directory Components (SDC)",
+   "summary": "Components live in one directory (Twig, YAML metadata, CSS, JS) under components/ in a module or theme and render with include or embed of a provider:component name. Experimental module in 10.1.0.",
+   "category": "frontend",
+   "introduced_in": "10.3.0",
+   "api": [
+    "components/*/*.component.yml",
+    "core/modules/sdc"
+   ],
+   "change_record_url": "https://www.drupal.org/node/3410260",
+   "source_url": "https://www.drupal.org/node/3410260",
+   "notes": "The change record 3355112 added SDC as an experimental module in 10.1.0; 3410260 made it stable and part of core in 10.3.0."
+  },
+  {
+   "id": "sdc-variants",
+   "name": "SDC component variants",
+   "summary": "Components can declare variants.",
+   "category": "frontend",
+   "introduced_in": "11.2.0",
+   "api": [
+    "variants: key in *.component.yml"
+   ],
+   "change_record_url": "https://www.drupal.org/node/3517062",
+   "source_url": "https://www.drupal.org/node/3517062"
+  },
+  {
+   "id": "sdc-form-elements",
+   "name": "SDC components as form elements",
+   "summary": "Single Directory Components can be used as form elements.",
+   "category": "frontend",
+   "introduced_in": "11.4.0",
+   "change_record_url": "https://www.drupal.org/node/3585881",
+   "source_url": "https://www.drupal.org/node/3585881"
+  },
+  {
+   "id": "htmx",
+   "name": "HTMX in core",
+   "summary": "The AJAX subsystem includes HTMX; core provides an HTMX renderer and a route option for routes that serve HTMX requests.",
+   "category": "frontend",
+   "introduced_in": "11.3.0",
+   "api": [
+    "core/htmx library",
+    "Drupal\\Core\\Htmx\\Htmx"
+   ],
+   "change_record_url": "https://www.drupal.org/node/3539472",
+   "source_url": "https://www.drupal.org/node/3539472",
+   "notes": "CR 3547745 adds the route option and CR 3549174 a trait for building render arrays for HTMX, both also in 11.3.0."
+  },
+  {
+   "id": "route-attributes",
+   "name": "PHP attributes for routes",
+   "summary": "Controller methods define routes with the #[Route] attribute instead of a routing.yml file.",
+   "category": "routing",
+   "introduced_in": "11.4.0",
+   "api": [
+    "Symfony\\Component\\Routing\\Attribute\\Route"
+   ],
+   "replaces": [
+    "*.routing.yml route definitions"
+   ],
+   "change_record_url": "https://www.drupal.org/node/3324758",
+   "source_url": "https://www.drupal.org/node/3324758"
+  },
+  {
+   "id": "bundle-classes",
+   "name": "Bundle classes",
+   "summary": "Entity bundles map to their own PHP classes, so node, media and other entity bundles can carry bundle-specific code.",
+   "category": "entity",
+   "introduced_in": "9.3.0",
+   "api": [
+    "hook_entity_bundle_info()"
+   ],
+   "change_record_url": "https://www.drupal.org/node/3191609",
+   "source_url": "https://www.drupal.org/node/3191609",
+   "notes": "The Bundle attribute for declaring and discovering bundle classes arrives in 11.4.0 (CR 3574891)."
+  },
+  {
+   "id": "bundle-attribute",
+   "name": "#[Bundle] attribute for bundle classes",
+   "summary": "Bundle classes declared with Drupal\\Core\\Entity\\Attribute\\Bundle are discovered without hook_entity_bundle_info_alter().",
+   "category": "entity",
+   "introduced_in": "11.4.0",
+   "api": [
+    "Drupal\\Core\\Entity\\Attribute\\Bundle"
+   ],
+   "change_record_url": "https://www.drupal.org/node/3574891",
+   "source_url": "https://www.drupal.org/node/3574891"
+  },
+  {
+   "id": "once-library",
+   "name": "core/once library",
+   "summary": "JavaScript behaviors attach once-only logic with once() from the core/once library, without jQuery.",
+   "category": "frontend",
+   "introduced_in": "9.2.0",
+   "api": [
+    "once()",
+    "core/once"
+   ],
+   "replaces": [
+    "deprecation:library:core/jquery.once"
+   ],
+   "change_record_url": "https://www.drupal.org/node/3158256",
+   "source_url": "https://www.drupal.org/node/3158256"
+  },
+  {
+   "id": "starterkit-theme",
+   "name": "Starterkit theme generator",
+   "summary": "Generate a new theme from core/themes/starterkit with core/scripts/drupal generate-theme instead of subthemeing Classy.",
+   "category": "theming",
+   "introduced_in": "9.3.0",
+   "api": [
+    "core/scripts/drupal generate-theme"
+   ],
+   "change_record_url": "https://www.drupal.org/node/3206389",
+   "source_url": "https://www.drupal.org/node/3206389"
+  },
+  {
+   "id": "config-target",
+   "name": "#config_target in ConfigFormBase",
+   "summary": "Config forms bind elements to config keys with #config_target and validate with config validation constraints.",
+   "category": "config",
+   "introduced_in": "10.2.0",
+   "api": [
+    "#config_target"
+   ],
+   "change_record_url": "https://www.drupal.org/node/3373502",
+   "source_url": "https://www.drupal.org/node/3373502"
+  },
+  {
+   "id": "file-validator",
+   "name": "file.validator service",
+   "summary": "File validation uses the file.validator service and constraint plugins instead of file_validate_* functions.",
+   "category": "entity",
+   "introduced_in": "10.2.0",
+   "api": [
+    "file.validator"
+   ],
+   "change_record_url": "https://www.drupal.org/node/3363700",
+   "source_url": "https://www.drupal.org/node/3363700"
+  },
+  {
+   "id": "phpunit-attributes",
+   "name": "PHPUnit attributes in tests",
+   "summary": "Core tests can use PHPUnit 10 attributes instead of @group-style annotations.",
+   "category": "testing",
+   "introduced_in": "11.2.0",
+   "change_record_url": "https://www.drupal.org/node/3447698",
+   "source_url": "https://www.drupal.org/node/3447698"
+  }
+ ]
+}

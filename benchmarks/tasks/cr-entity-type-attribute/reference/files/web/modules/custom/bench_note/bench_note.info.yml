@@ -1,0 +1,5 @@
+name: Bench note
+type: module
+description: A minimal content entity type.
+core_version_requirement: ^11.1
+package: Bench

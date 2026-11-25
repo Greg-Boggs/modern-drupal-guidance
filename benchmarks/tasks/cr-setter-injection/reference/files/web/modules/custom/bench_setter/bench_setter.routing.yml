@@ -1,0 +1,7 @@
+bench_setter.time:
+  path: '/bench-time'
+  defaults:
+    _controller: '\Drupal\bench_setter\Controller\TimeController::show'
+    _title: 'Time'
+  requirements:
+    _access: 'TRUE'

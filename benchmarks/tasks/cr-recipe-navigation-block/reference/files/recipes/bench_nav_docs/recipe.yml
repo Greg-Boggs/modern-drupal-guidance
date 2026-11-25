@@ -1,0 +1,16 @@
+name: Bench navigation docs link
+description: 'Adds a Drupal docs link to the admin navigation.'
+type: Administration
+config:
+  actions:
+    navigation.block_layout:
+      addNavigationBlock:
+        delta: 0
+        configuration:
+          id: navigation_link
+          label: Drupal docs
+          label_display: '0'
+          provider: navigation
+          title: Drupal docs
+          uri: 'https://www.drupal.org/docs'
+          icon_class: ''

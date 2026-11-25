@@ -1,0 +1,4 @@
+services:
+  bench_editorinfo.lookup:
+    class: Drupal\bench_editorinfo\EditorLookup
+    autowire: true

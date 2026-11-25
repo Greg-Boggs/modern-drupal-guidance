@@ -1,0 +1,4 @@
+services:
+  bench_typedesc.helper:
+    class: Drupal\bench_typedesc\TypeDescription
+    autowire: true

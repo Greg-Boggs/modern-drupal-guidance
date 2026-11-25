@@ -1,0 +1,8 @@
+name: bench_fileuse
+type: module
+description: Reference solution for cr-file-references.
+core_version_requirement: ^11.4
+package: Bench
+dependencies:
+  - drupal:file
+  - drupal:node

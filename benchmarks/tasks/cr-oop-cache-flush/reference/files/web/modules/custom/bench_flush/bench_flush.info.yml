@@ -1,0 +1,5 @@
+name: Bench flush
+type: module
+description: Counts cache flushes.
+core_version_requirement: ^11.1
+package: Bench

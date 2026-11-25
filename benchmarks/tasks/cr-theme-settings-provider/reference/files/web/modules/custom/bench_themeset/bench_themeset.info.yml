@@ -1,0 +1,5 @@
+name: bench_themeset
+type: module
+description: Reference solution for cr-theme-settings-provider.
+core_version_requirement: ^11.3
+package: Bench

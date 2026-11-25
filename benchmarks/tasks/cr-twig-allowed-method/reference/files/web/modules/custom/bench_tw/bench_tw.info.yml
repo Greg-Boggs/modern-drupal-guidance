@@ -1,0 +1,5 @@
+name: Bench Twig
+type: module
+description: A Twig-callable value object.
+core_version_requirement: ^11.3
+package: Bench

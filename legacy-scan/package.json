@@ -1,0 +1,29 @@
+{
+  "name": "modern-drupal-guidance-legacy-scan",
+  "version": "0.1.0",
+  "description": "Drupal legacy-pattern rules for legacy-scan, with a standalone runner.",
+  "type": "module",
+  "private": true,
+  "license": "Apache-2.0",
+  "engines": {
+    "node": ">=22.18.0"
+  },
+  "bin": {
+    "legacy-scan": "bin/legacy-scan.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "npm run build && node --test --test-reporter ${TEST_REPORTER:-spec} \"dist/**/*.test.js\"",
+    "scan": "node bin/legacy-scan.js"
+  },
+  "dependencies": {
+    "php-parser": "^3.7.0",
+    "ts-morph": "^27.0.2",
+    "yaml": "^2.9.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.5",
+    "typescript": "^5.9.3"
+  }
+}

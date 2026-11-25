@@ -1,0 +1,5 @@
+name: Bench where
+type: module
+description: Shows the current path.
+core_version_requirement: ^11.2
+package: Bench

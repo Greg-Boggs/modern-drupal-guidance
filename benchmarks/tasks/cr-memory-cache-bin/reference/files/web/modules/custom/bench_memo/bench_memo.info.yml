@@ -1,0 +1,5 @@
+name: Bench memo
+type: module
+description: Memoized squares.
+core_version_requirement: ^11.3
+package: Bench

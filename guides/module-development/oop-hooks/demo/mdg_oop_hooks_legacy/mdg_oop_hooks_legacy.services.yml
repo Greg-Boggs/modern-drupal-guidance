@@ -1,0 +1,4 @@
+services:
+  Drupal\mdg_oop_hooks_legacy\Hook\MdgOopHooksLegacyHooks:
+    class: Drupal\mdg_oop_hooks_legacy\Hook\MdgOopHooksLegacyHooks
+    autowire: true

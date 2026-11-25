@@ -1,0 +1,63 @@
+---
+layout: base.njk
+title: Current Drupal practices for AI coding agents
+---
+<section class="hero">
+  <h1>Make your coding agent write modern Drupal</h1>
+  <p class="lede">Modern Drupal Guidance gives AI coding agents short, tested guides at the moment they write code, so they use what Drupal core offers today instead of the legacy patterns that dominate their training data.</p>
+  <p><a class="btn" href="/guides/">Browse {{ guides.all.length }} guides</a> <a class="btn alt" href="#quickstart">Quickstart</a></p>
+</section>
+
+<section aria-labelledby="why">
+  <h2 id="why">Why it exists</h2>
+  <p>Language models have seen far more Drupal 7 and 8 code than Drupal 10 and 11 code. Left alone, agents write procedural hooks, plugin annotations, <code>\Drupal::</code> calls inside services, <code>drupal_set_message()</code> and <code>jQuery.once</code>. These APIs are deprecated or removed.</p>
+  <div class="grid">
+    <div class="card"><h3>Current</h3><p>OOP hooks with <code>#[Hook]</code>, PHP attributes, dependency injection, Single Directory Components, Recipes and cache metadata.</p></div>
+    <div class="card"><h3>Version aware</h3><p>Every guide states the Drupal core range it applies to, and gives fallbacks for older supported releases.</p></div>
+    <div class="card"><h3>Local and fast</h3><p>Search runs on your machine with no server and no API key. Agents read only the guides they need.</p></div>
+  </div>
+</section>
+
+<section aria-labelledby="quickstart" class="tabs-like">
+  <h2 id="quickstart">Quickstart</h2>
+
+  <section aria-labelledby="qs-cli">
+    <h3 id="qs-cli">Command line</h3>
+    <p>Search the guides, then retrieve the one you need.</p>
+<pre class="language-bash" tabindex="0"><code>npx modern-drupal-guidance search "hook on node insert"
+npx modern-drupal-guidance retrieve "hooks/oop-hooks"
+npx modern-drupal-guidance list</code></pre>
+    <p>Scan an existing codebase for legacy patterns and see which guide replaces each one:</p>
+<pre class="language-bash" tabindex="0"><code>npx modern-drupal-guidance legacy-scan web/modules/custom</code></pre>
+  </section>
+
+  <section aria-labelledby="qs-plugin">
+    <h3 id="qs-plugin">Agent plugins</h3>
+    <p>Install the Agent Skill or plugin for Claude Code, Codex, Cursor, Gemini CLI and other agents. The installer detects which agents you use.</p>
+<pre class="language-bash" tabindex="0"><code>npx modern-drupal-guidance install</code></pre>
+    <p>The agent then calls <code>search</code> and <code>retrieve</code> itself before writing Drupal code.</p>
+  </section>
+
+  <section aria-labelledby="qs-mcp">
+    <h3 id="qs-mcp">MCP server</h3>
+    <p>Prefer MCP over a skill? The MCP server exposes the same <code>search</code> and <code>retrieve</code> tools. Add it to your client's MCP configuration:</p>
+<pre class="language-json" tabindex="0"><code>{
+  "mcpServers": {
+    "modern-drupal-guidance": {
+      "command": "npx",
+      "args": ["-y", "modern-drupal-guidance-mcp"]
+    }
+  }
+}</code></pre>
+    <p>Package names are provisional until the first release. Check the project README for the published name.</p>
+  </section>
+</section>
+
+<section aria-labelledby="latest">
+  <h2 id="latest">Guides</h2>
+  <ul class="cat-list grid">
+  {%- for c in guides.categories %}
+    <li class="card"><h3><a href="/guides/#cat-{{ c.slug }}">{{ c.title }}</a></h3><p>{{ c.guides.length }} {{ "guide" if c.guides.length == 1 else "guides" }}</p></li>
+  {%- endfor %}
+  </ul>
+</section>

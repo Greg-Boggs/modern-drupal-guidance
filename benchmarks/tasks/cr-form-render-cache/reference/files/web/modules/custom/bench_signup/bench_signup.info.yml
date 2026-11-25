@@ -1,0 +1,5 @@
+name: Bench signup
+type: module
+description: A render-cacheable signup form.
+core_version_requirement: ^11.1
+package: Bench

@@ -1,0 +1,5 @@
+parameters:
+  # Hash new and changed passwords with bcrypt at cost 12.
+  password.algorithm: 2y
+  password.options:
+    cost: 12

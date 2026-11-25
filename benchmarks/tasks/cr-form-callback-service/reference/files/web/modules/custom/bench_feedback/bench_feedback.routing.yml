@@ -1,0 +1,7 @@
+bench_feedback.form:
+  path: '/feedback'
+  defaults:
+    _form: '\Drupal\bench_feedback\Form\FeedbackForm'
+    _title: 'Feedback'
+  requirements:
+    _access: 'TRUE'

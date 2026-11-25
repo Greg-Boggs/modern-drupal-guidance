@@ -1,0 +1,6 @@
+services:
+  bench_decor.ban_logger:
+    class: Drupal\bench_decor\BanLogger
+    decorates: ban.ip_manager
+    decoration_on_invalid: ignore
+    arguments: ['@.inner', '@logger.factory']

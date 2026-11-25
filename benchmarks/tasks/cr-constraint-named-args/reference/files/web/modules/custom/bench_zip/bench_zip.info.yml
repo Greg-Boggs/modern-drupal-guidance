@@ -1,0 +1,5 @@
+name: Bench postal code
+type: module
+description: Postal code constraint.
+core_version_requirement: ^11.2
+package: Bench

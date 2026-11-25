@@ -1,0 +1,9 @@
+name: Bench story
+description: 'Renames Article to Story.'
+type: Content type
+config:
+  actions:
+    node.type.article:
+      setProperties:
+        name: Story
+        description: 'Short stories from our writers.'

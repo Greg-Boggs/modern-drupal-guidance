@@ -1,0 +1,7 @@
+name: bench_typelabel
+type: module
+description: Reference solution for cr-node-type-label.
+core_version_requirement: ^11.3
+package: Bench
+dependencies:
+  - drupal:node

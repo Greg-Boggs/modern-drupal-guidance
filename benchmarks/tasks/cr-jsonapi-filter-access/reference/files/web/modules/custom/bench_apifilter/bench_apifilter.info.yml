@@ -1,0 +1,7 @@
+name: Bench API filter
+type: module
+description: JSON:API filter access for users.
+core_version_requirement: ^11.3
+package: Bench
+dependencies:
+  - drupal:jsonapi

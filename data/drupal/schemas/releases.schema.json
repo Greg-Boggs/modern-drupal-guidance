@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://modern-drupal-guidance.invalid/schemas/releases.schema.json",
+  "title": "Drupal core minor releases",
+  "description": "One entry per Drupal core minor release from 9.0 onward, plus announced upcoming minors.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["generated", "as_of", "current_release", "sources", "releases"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "generated": { "type": "string", "format": "date", "description": "Date the file was last refreshed." },
+    "as_of": { "type": "string", "format": "date", "description": "Date that the `supported` and `status` fields were computed for." },
+    "current_release": { "type": "string", "pattern": "^\\d+\\.\\d+$", "description": "Newest minor that has a stable .0 release." },
+    "sources": {
+      "type": "array", "minItems": 1,
+      "items": { "type": "string", "format": "uri", "pattern": "^https://" }
+    },
+    "releases": {
+      "type": "array", "minItems": 1,
+      "items": { "$ref": "#/$defs/release" }
+    }
+  },
+  "$defs": {
+    "release": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["minor", "major", "status", "supported", "min_php", "security_support_end", "security_support_end_precision", "source_urls"],
+      "properties": {
+        "minor": { "type": "string", "pattern": "^\\d+\\.\\d+$", "description": "Minor version, for example 11.4." },
+        "major": { "type": "integer", "minimum": 9 },
+        "first_release": { "type": ["string", "null"], "pattern": "^\\d+\\.\\d+\\.0$", "description": "The .0 release; null for an unreleased minor." },
+        "release_date": { "type": ["string", "null"], "format": "date", "description": "Date of the .0 release (UTC); null if not yet released." },
+        "planned_release": { "type": ["string", "null"], "description": "Planned release for an unreleased minor, as published on the release schedule." },
+        "latest_patch": { "type": ["string", "null"], "pattern": "^\\d+\\.\\d+\\.\\d+$", "description": "Newest stable patch release of the minor as of `as_of`." },
+        "security_support_end": {
+          "type": ["string", "null"],
+          "pattern": "^\\d{4}-\\d{2}(-\\d{2})?$",
+          "description": "End of security coverage. YYYY-MM-DD when drupal.org gives a day, YYYY-MM when it gives only a month."
+        },
+        "security_support_end_precision": { "enum": ["day", "month", "unknown"] },
+        "min_php": { "type": "string", "pattern": "^\\d+\\.\\d+$", "description": "Minimum PHP minor version required." },
+        "min_php_note": { "type": "string" },
+        "status": {
+          "enum": ["current", "supported", "end-of-life", "prerelease"],
+          "description": "current: newest stable minor. supported: older minor still receiving security fixes. end-of-life: security support ended. prerelease: no stable release yet."
+        },
+        "supported": { "type": "boolean", "description": "True when the minor currently receives security fixes (status current or supported)." },
+        "notes": { "type": "string" },
+        "source_urls": {
+          "type": "array", "minItems": 1,
+          "items": { "type": "string", "format": "uri", "pattern": "^https://" }
+        }
+      },
+      "allOf": [
+        { "if": { "properties": { "status": { "const": "prerelease" } } },
+          "then": { "properties": { "supported": { "const": false } } } },
+        { "if": { "properties": { "status": { "enum": ["current", "supported"] } } },
+          "then": { "properties": { "supported": { "const": true } } } },
+        { "if": { "properties": { "status": { "const": "end-of-life" } } },
+          "then": { "properties": { "supported": { "const": false } } } }
+      ]
+    }
+  }
+}

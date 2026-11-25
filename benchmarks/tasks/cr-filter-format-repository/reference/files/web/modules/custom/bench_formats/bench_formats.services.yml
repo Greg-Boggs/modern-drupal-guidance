@@ -1,0 +1,4 @@
+services:
+  bench_formats.lister:
+    class: Drupal\bench_formats\FormatLister
+    autowire: true

@@ -1,0 +1,7 @@
+bench_param.site_path:
+  path: '/bench-site-path'
+  defaults:
+    _controller: '\Drupal\bench_param\Controller\SitePathController::show'
+    _title: 'Site path'
+  requirements:
+    _access: 'TRUE'

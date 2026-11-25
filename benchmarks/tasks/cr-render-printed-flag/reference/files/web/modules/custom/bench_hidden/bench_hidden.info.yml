@@ -1,0 +1,5 @@
+name: Bench hidden
+type: module
+description: Hides a render child.
+core_version_requirement: ^11.0
+package: Bench

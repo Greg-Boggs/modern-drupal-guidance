@@ -1,0 +1,5 @@
+name: Bench ops
+type: module
+description: Adds a report operation.
+core_version_requirement: ^11.3
+package: Bench

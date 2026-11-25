@@ -1,0 +1,7 @@
+greeting:
+  js:
+    js/legacy-example.js: {}
+  dependencies:
+    - core/drupal
+    - core/jquery
+    - core/jquery.once

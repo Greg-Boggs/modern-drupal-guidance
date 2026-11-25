@@ -1,0 +1,4 @@
+services:
+  bench_typelabel.helper:
+    class: Drupal\bench_typelabel\TypeLabel
+    autowire: true

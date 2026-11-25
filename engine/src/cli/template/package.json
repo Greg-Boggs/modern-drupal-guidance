@@ -1,0 +1,34 @@
+{
+  "name": "modern-drupal-guidance",
+  "displayName": "Modern Drupal Guidance",
+  "description": "Keeps your coding agent on current Drupal 10 and 11 practices instead of legacy Drupal 7 and 8 patterns.",
+  "license": "Apache-2.0",
+  "version": "0.0.0",
+  "engines": {
+    "vscode": "^1.90.0",
+    "node": ">=22.0.0"
+  },
+  "categories": [
+    "AI",
+    "Other"
+  ],
+  "contributes": {
+    "chatSkills": [
+      {
+        "path": "./skills/modern-drupal-guidance/SKILL.md"
+      }
+    ]
+  },
+  "bin": {
+    "modern-drupal-guidance": "skills/modern-drupal-guidance/modern-drupal-guidance.mjs"
+  },
+  "keywords": [
+    "pi-package",
+    "drupal"
+  ],
+  "pi": {
+    "skills": [
+      "./skills"
+    ]
+  }
+}

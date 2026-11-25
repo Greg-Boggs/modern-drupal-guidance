@@ -1,0 +1,13 @@
+name: Bench language for all content types
+description: 'Lets editors choose a language on every content type.'
+type: Multilingual
+install:
+  - language
+config:
+  actions:
+    node.type.*:
+      createForEach:
+        language.content_settings.node.%bundle:
+          target_entity_type_id: node
+          target_bundle: '%bundle'
+          language_alterable: true

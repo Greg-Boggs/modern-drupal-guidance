@@ -1,0 +1,6 @@
+name: Legacy example
+type: module
+description: 'Fixture: Drupal 8/9-era patterns that legacy-scan should flag.'
+package: Custom
+core: 8.x
+core_version_requirement: ^8.8 || ^9

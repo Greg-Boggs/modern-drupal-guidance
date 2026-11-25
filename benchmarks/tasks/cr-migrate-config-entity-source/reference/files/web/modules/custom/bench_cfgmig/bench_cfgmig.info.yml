@@ -1,0 +1,7 @@
+name: Bench config migration
+type: module
+description: Reads node type config with Migrate.
+core_version_requirement: ^11.2
+package: Bench
+dependencies:
+  - drupal:migrate

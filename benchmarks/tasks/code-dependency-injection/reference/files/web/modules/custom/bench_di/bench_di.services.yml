@@ -1,0 +1,5 @@
+services:
+  bench_di.latest_article:
+    class: Drupal\bench_di\LatestArticle
+    autowire: true
+  Drupal\bench_di\LatestArticle: '@bench_di.latest_article'

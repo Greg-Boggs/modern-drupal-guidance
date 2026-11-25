@@ -1,0 +1,5 @@
+name: 'MDG demo: plugin attributes'
+type: module
+description: 'Reference implementation for the plugin-attributes guide.'
+package: Modern Drupal Guidance
+core_version_requirement: '>=10.3'

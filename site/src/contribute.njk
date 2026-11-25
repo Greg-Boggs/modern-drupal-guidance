@@ -1,0 +1,128 @@
+---
+layout: base.njk
+title: Contribute
+description: Guides that need review or writing, with a suggested curated source for each, and how to send them as a pull request.
+permalink: /contribute/
+---
+{%- set statusLabels = { "needs-review": "Needs review", "wanted": "Wanted", "skipped": "Skipped by the importer" } %}
+
+{%- macro statusPill(status, labels) -%}
+<span class="pill"><strong>Status</strong> {{ labels[status] or status }}</span>
+{%- endmacro %}
+
+{%- macro sourceList(label, sources) %}
+<p class="sources-label">{{ label }}:</p>
+<ul class="sources">
+{%- for s in sources %}
+  <li><a href="{{ s.url }}">{{ s.label }}</a></li>
+{%- endfor %}
+</ul>
+{%- endmacro %}
+
+{%- macro repoPath(repo, path, kind) -%}
+{% if repo %}<a href="{{ repo }}/{{ kind }}/main/{{ path }}"><code>{{ path }}</code></a>{% else %}<code>{{ path }}</code>{% endif %}
+{%- endmacro %}
+
+<div class="guide-body contribute">
+<h1>Contribute</h1>
+<p class="lede">Pick an item below and send it as a pull request. This page lists the drafts that need a reviewer and the developer topics that have no guide yet.</p>
+{% if not contribute.repository %}<p>The public repository address is not available yet, so folder paths on this page are shown as text. They are relative to the repository root.</p>{% endif %}
+
+<nav aria-label="On this page">
+  <ul>
+    <li><a href="#how">How to contribute</a></li>
+    <li><a href="#needs-review">Needs review ({{ contribute.needsReview.length }})</a></li>
+    <li><a href="#wanted">Wanted guides ({{ contribute.wantedGuides.length }})</a></li>
+    <li><a href="#user-guide">User Guide pages not imported ({{ contribute.userGuideSkipped.length }})</a></li>
+  </ul>
+</nav>
+
+<h2 id="how">How to contribute</h2>
+
+<h3 id="content-rule">Where guide text comes from</h3>
+<p><strong>Guide text must come from curated, human-reviewed sources. Do not submit AI-written prose.</strong> AI may help write import scripts, build code and other tooling, but it does not author published guide text. A guide is not released until a person has reviewed it.</p>
+<p>Each item below suggests a source to start from. Name the sources you used in your pull request, check each source's license and keep any attribution it requires.</p>
+
+<h3 id="contract">The guide format</h3>
+<p>Each guide is <code>guides/&lt;category&gt;/&lt;slug&gt;/guide.md</code> and starts with YAML frontmatter. These are the basic fields:</p>
+<pre class="language-yaml" tabindex="0"><code>---
+name: my-guide-slug          # same as the folder name, unique across categories
+description: "Do the task with the modern approach instead of the legacy one."
+drupal-core: "&gt;=11.1"        # Composer constraint; verify the lower bound
+draft: wip                   # optional: stub, wip or blocked; remove to publish
+---</code></pre>
+<ul>
+  <li><code>name</code> and <code>drupal-core</code> are always required. <code>description</code> is required for use-case guides.</li>
+  <li>Quote a <code>description</code> that contains <code>#</code> or <code>:</code>, or YAML will cut it short or fail to parse it.</li>
+  <li>Optional fields include <code>replaces</code>, <code>deprecated-apis</code> and <code>requires-modules</code>.</li>
+  <li>A published use-case guide also needs <code>expectations.md</code> and a working <code>demo/</code> extension beside it.</li>
+</ul>
+<p>The full rules are in {{ repoPath(contribute.repository, "guides/CONTRIBUTING.md", "blob") }}, including the category list, body order, verification and the pull request checklist. The basic contract is in the root <code>README.md</code>.</p>
+
+<h3 id="reviewing">Reviewing a draft</h3>
+<ol>
+  <li>Check every API, class, service ID, hook name, YAML key and version number against Drupal core at a release tag and against its change records.</li>
+  <li>Fix or cut anything that is wrong or that you cannot verify. Replacement text follows the same source rule as new guides.</li>
+  <li>Check that the demo module in the guide's <code>demo/</code> folder matches the guide and installs cleanly.</li>
+  <li>Say in your pull request what you checked and on which core versions.</li>
+  <li>Remove the guide from the data file and from the “Content awaiting review” table in the root <code>README.md</code>.</li>
+</ol>
+
+<h3 id="pull-request">Open a pull request</h3>
+<ol>
+  <li>Add or edit <code>guides/&lt;category&gt;/&lt;slug&gt;/guide.md</code>.</li>
+  <li>Run <code>pnpm validate</code> in <code>engine/</code>.</li>
+  <li>In the same pull request, remove the item from <code>site/_data/contribute.json</code>, the data file behind this page. If a guide is still a draft, leave its item in the list.</li>
+</ol>
+
+<h2 id="needs-review">Needs review</h2>
+<p>AI drafted these developer guides. No person has reviewed them yet, so <strong>do not treat them as reliable guidance</strong>. They ship in development builds for benchmarking and must not be released until reviewed.</p>
+{% if contribute.needsReview.length %}
+<ul class="guide-list">
+{%- for item in contribute.needsReview %}
+  <li>
+    <h3 id="review-{{ item.id }}">{{ item.title }}</h3>
+    {{ statusPill(item.status, statusLabels) | safe }}
+    <p>Folder: {{ repoPath(contribute.repository, item.path, "tree") | safe }}</p>
+    {%- for g in guides.all %}{% if "guides/" + g.id + "/" == item.path %}
+    <p><a href="{{ g.url }}">Read the unreviewed draft<span class="sr-only">: {{ item.title }}</span></a></p>
+    {%- endif %}{% endfor %}
+    {{- sourceList("Check against", item.sources) | safe }}
+  </li>
+{%- endfor %}
+</ul>
+{% else %}<p>No drafts are waiting for review.</p>{% endif %}
+
+<h2 id="wanted">Wanted guides</h2>
+<p>These developer topics have no guide yet. Each path is a proposal: <code>guides/CONTRIBUTING.md</code> decides the final category and name. Source links to core files point at the <code>11.x</code> branch; verify versions against release tags.</p>
+{% if contribute.wantedGuides.length %}
+<ul class="guide-list">
+{%- for item in contribute.wantedGuides %}
+  <li>
+    <h3 id="wanted-{{ item.id }}">{{ item.title }}</h3>
+    {{ statusPill(item.status, statusLabels) | safe }}
+    <p>Proposed file: <code>{{ item.path }}</code></p>
+    {%- if item.note %}
+    <p>{{ item.note }}</p>
+    {%- endif %}
+    {{- sourceList("Suggested sources", item.sources) | safe }}
+  </li>
+{%- endfor %}
+</ul>
+{% else %}<p>No topics are on the wanted list.</p>{% endif %}
+
+<h2 id="user-guide">User Guide pages not imported</h2>
+<p>A script imports the <a href="https://www.drupal.org/docs/user_guide/en/index.html">Drupal User Guide</a> without rewording it. It skips the pages below on purpose, so none of them is an open writing task. If you think one belongs in the guides, propose a change to the skip list in <code>import/user-guide/import.mjs</code> and explain why. Do not add or edit these guides by hand: the import script owns the imported files.</p>
+{% if contribute.userGuideSkipped.length %}
+<ul class="guide-list">
+{%- for item in contribute.userGuideSkipped %}
+  <li>
+    <h3 id="skipped-{{ item.id }}"><code>{{ item.id }}</code>: {{ item.title }}</h3>
+    {{ statusPill(item.status, statusLabels) | safe }}
+    <p>Why it was skipped: {{ item.reason }}</p>
+    {{- sourceList("Source", item.sources) | safe }}
+  </li>
+{%- endfor %}
+</ul>
+{% else %}<p>The importer skips no pages.</p>{% endif %}
+</div>

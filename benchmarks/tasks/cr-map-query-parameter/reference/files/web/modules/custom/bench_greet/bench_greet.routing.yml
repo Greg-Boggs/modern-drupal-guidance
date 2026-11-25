@@ -1,0 +1,7 @@
+bench_greet.page:
+  path: '/bench-greet'
+  defaults:
+    _controller: '\Drupal\bench_greet\Controller\GreetController::greet'
+    _title: 'Greeting'
+  requirements:
+    _access: 'TRUE'

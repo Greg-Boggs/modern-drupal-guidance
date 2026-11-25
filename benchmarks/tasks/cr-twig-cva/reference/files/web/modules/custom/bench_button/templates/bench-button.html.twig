@@ -1,0 +1,9 @@
+{% set button = html_cva(
+  base: ['btn'],
+  variants: {
+    intent: { primary: 'btn--primary', danger: 'btn--danger' },
+    size: { sm: 'btn--sm', lg: 'btn--lg' },
+  },
+  default_variant: { intent: 'primary', size: 'sm' },
+) %}
+<button type="button" class="{{ button.apply({ intent: intent, size: size }) }}">{{ label }}</button>

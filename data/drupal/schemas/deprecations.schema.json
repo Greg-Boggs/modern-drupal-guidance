@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://modern-drupal-guidance.invalid/schemas/deprecations.schema.json",
+  "title": "Drupal core deprecated and removed APIs",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["generated", "as_of", "latest_stable", "sources", "deprecations"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "generated": { "type": "string", "format": "date" },
+    "as_of": { "type": "string", "format": "date" },
+    "latest_stable": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$", "description": "Newest stable core release the `status` field was computed against." },
+    "sources": { "type": "array", "minItems": 1, "items": { "type": "string", "format": "uri", "pattern": "^https://" } },
+    "deprecations": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/deprecation" } }
+  },
+  "$defs": {
+    "version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+(-(alpha|beta|rc)\\d+)?$" },
+    "deprecation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "symbol", "type", "status", "deprecated_in", "removed_in", "replacement", "source_url", "origin"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z_]+:[^\\s]+$", "description": "Stable unique key: <type>:<symbol> lowercased, or a short slug for curated entries." },
+        "symbol": { "type": "string", "minLength": 1, "description": "The deprecated symbol exactly as it appears in code: function(), \\Fully\\Qualified\\Class, Class::method(), service id, hook_name, library name (module/library), YAML key." },
+        "type": { "enum": ["function", "class", "interface", "trait", "method", "constant", "property", "service", "hook", "annotation", "library", "yaml_key", "other"] },
+        "status": { "enum": ["deprecated", "removed"], "description": "removed: removed_in is at or before the newest stable release. deprecated: still present." },
+        "deprecated_in": { "$ref": "#/$defs/version" },
+        "removed_in": { "$ref": "#/$defs/version", "description": "Version that removes the symbol, as stated by core." },
+        "replacement": { "type": "string", "description": "Replacement guidance, quoted or condensed from the core deprecation message. Empty string when core states none." },
+        "change_record_url": { "type": ["string", "null"], "pattern": "^https://www\\.drupal\\.org/node/\\d+$" },
+        "source_url": { "type": "string", "pattern": "^https://", "description": "Where the entry was verified: the change record when there is one, otherwise the core source file at the tag where the notice appears." },
+        "origin": { "enum": ["core-source", "curated"], "description": "core-source: extracted from the @deprecated notice in core. curated: added by hand and checked against a change record." },
+        "priority": { "enum": ["high", "normal"], "description": "high: an API coding agents are known to still emit." },
+        "tags": { "type": "array", "items": { "type": "string", "pattern": "^[a-z0-9-]+$" }, "uniqueItems": true },
+        "notes": { "type": "string" }
+      },
+      "allOf": [
+        { "if": { "properties": { "origin": { "const": "curated" } } },
+          "then": { "required": ["change_record_url"], "properties": { "change_record_url": { "type": "string" } } } }
+      ]
+    }
+  }
+}

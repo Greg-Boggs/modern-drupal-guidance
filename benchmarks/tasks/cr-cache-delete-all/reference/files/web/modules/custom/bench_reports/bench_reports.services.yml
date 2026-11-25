@@ -1,0 +1,10 @@
+services:
+  cache.bench_reports:
+    class: Drupal\Core\Cache\CacheBackendInterface
+    tags:
+      - { name: cache.bin }
+    factory: ['@cache_factory', 'get']
+    arguments: [bench_reports]
+  bench_reports.store:
+    class: Drupal\bench_reports\ReportStore
+    arguments: ['@cache.bench_reports']

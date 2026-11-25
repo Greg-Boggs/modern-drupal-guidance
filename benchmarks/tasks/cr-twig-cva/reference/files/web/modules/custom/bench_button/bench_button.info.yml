@@ -1,0 +1,5 @@
+name: Bench button
+type: module
+description: A button template with CVA classes.
+core_version_requirement: ^11.4
+package: Bench

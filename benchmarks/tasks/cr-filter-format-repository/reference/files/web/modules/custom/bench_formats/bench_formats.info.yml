@@ -1,0 +1,7 @@
+name: bench_formats
+type: module
+description: Reference solution for cr-filter-format-repository.
+core_version_requirement: ^11.3
+package: Bench
+dependencies:
+  - drupal:filter

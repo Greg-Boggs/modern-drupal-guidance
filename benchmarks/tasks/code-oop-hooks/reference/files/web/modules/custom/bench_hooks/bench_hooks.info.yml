@@ -1,0 +1,5 @@
+name: Bench hooks
+type: module
+description: Tidies article titles.
+core_version_requirement: ^11.1
+package: Benchmark

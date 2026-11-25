@@ -1,0 +1,5 @@
+name: Bench decorator
+type: module
+description: Optional decorator for the ban IP manager.
+core_version_requirement: ^11.1
+package: Bench

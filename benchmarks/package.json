@@ -1,0 +1,14 @@
+{
+  "name": "modern-drupal-guidance-benchmarks",
+  "private": true,
+  "type": "module",
+  "description": "Community-run Drupal benchmark for Modern Drupal Guidance.",
+  "scripts": {
+    "bench": "node bin/bench.mjs",
+    "bench:dry-run": "node bin/bench.mjs --dry-run",
+    "bench:setup": "node bin/bench.mjs setup",
+    "bench:calibrate": "node bin/bench.mjs calibrate",
+    "bench:regrade": "node bin/bench.mjs regrade",
+    "bench:dashboard": "node bin/bench.mjs dashboard"
+  }
+}

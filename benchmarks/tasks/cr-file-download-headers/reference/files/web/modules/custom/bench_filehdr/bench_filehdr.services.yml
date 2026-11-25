@@ -1,0 +1,4 @@
+services:
+  bench_filehdr.headers:
+    class: Drupal\bench_filehdr\DownloadHeaders
+    autowire: true

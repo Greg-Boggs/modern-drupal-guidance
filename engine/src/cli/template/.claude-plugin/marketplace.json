@@ -1,0 +1,15 @@
+{
+  "name": "modern-drupal-guidance",
+  "description": "Current Drupal development guidance for AI coding agents.",
+  "owner": {
+    "name": "Modern Drupal Guidance contributors"
+  },
+  "plugins": [
+    {
+      "name": "modern-drupal-guidance",
+      "source": "./",
+      "description": "Keeps your coding agent on current Drupal 10 and 11 practices instead of legacy Drupal 7 and 8 patterns.",
+      "version": "0.0.0"
+    }
+  ]
+}

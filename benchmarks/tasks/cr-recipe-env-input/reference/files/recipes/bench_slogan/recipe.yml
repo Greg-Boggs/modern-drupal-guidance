@@ -1,0 +1,16 @@
+name: Bench slogan
+description: 'Sets the site slogan from the BENCH_SLOGAN environment variable.'
+type: Site
+input:
+  slogan:
+    data_type: string
+    description: The site slogan.
+    default:
+      source: env
+      env: BENCH_SLOGAN
+      fallback: Made with Drupal
+config:
+  actions:
+    system.site:
+      simpleConfigUpdate:
+        slogan: ${slogan}

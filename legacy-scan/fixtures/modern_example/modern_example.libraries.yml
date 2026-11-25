@@ -1,0 +1,6 @@
+greeting:
+  js:
+    js/modern-example.js: {}
+  dependencies:
+    - core/drupal
+    - core/once

@@ -1,0 +1,5 @@
+name: Bench feedback
+type: module
+description: Feedback form with a service submit handler.
+core_version_requirement: ^11.3
+package: Bench

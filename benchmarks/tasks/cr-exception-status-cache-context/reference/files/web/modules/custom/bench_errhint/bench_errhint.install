@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * @file
+ * Install hooks for bench_errhint.
+ */
+
+declare(strict_types=1);
+
+use Drupal\block\Entity\Block;
+
+/**
+ * Implements hook_install().
+ */
+function bench_errhint_install(): void {
+  Block::create([
+    'id' => 'olivero_bench_errhint',
+    'theme' => 'olivero',
+    'region' => 'content',
+    'plugin' => 'bench_errhint',
+    'weight' => -20,
+    'settings' => ['id' => 'bench_errhint', 'label' => 'Error hint', 'label_display' => '0', 'provider' => 'bench_errhint'],
+  ])->save();
+}

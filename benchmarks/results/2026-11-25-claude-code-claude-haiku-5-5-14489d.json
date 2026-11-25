@@ -1,0 +1,425 @@
+{
+  "schema": "modern-drupal-guidance-bench/1",
+  "id": "14489d",
+  "createdAt": "2026-11-25T00:56:07.405Z",
+  "agent": {
+    "id": "claude-code",
+    "version": "2.1.308",
+    "model": "claude-haiku-5-5"
+  },
+  "guidance": {
+    "skillVersion": "2026_11_24-9a0ea49d",
+    "repoCommit": "uncommitted",
+    "guideCount": 827
+  },
+  "drupal": {
+    "core": "11.4.13",
+    "drush": "13.8.1",
+    "php": "8.3.33",
+    "profile": "standard",
+    "recipes": [
+      "page_content_type",
+      "article_content_type",
+      "article_tags"
+    ]
+  },
+  "os": {
+    "platform": "linux",
+    "release": "7.0.0-44-generic",
+    "arch": "x64"
+  },
+  "harness": {
+    "tasks": "change-records",
+    "modes": [
+      "unguided",
+      "skill"
+    ],
+    "runs": 1,
+    "allowWeb": false,
+    "timeoutMin": 20,
+    "trialCap": 5,
+    "seed": 1437826083,
+    "skipSolved": true
+  },
+  "solvedUnguided": [
+    {
+      "task": "cr-recipe-navigation-block",
+      "run": 1
+    }
+  ],
+  "summary": {
+    "byMode": {
+      "unguided": {
+        "trials": 3,
+        "errored": 0,
+        "tasksFullyPassed": 1,
+        "taskPassRate": 33.3,
+        "checksPassed": 12,
+        "checksTotal": 14,
+        "checkPassRate": 85.7,
+        "tokens": {
+          "input": 72,
+          "output": 19400,
+          "cacheRead": 845619,
+          "cacheCreation": 57687,
+          "total": 922778
+        },
+        "costUsd": 0.03
+      },
+      "skill": {
+        "trials": 2,
+        "errored": 0,
+        "tasksFullyPassed": 1,
+        "taskPassRate": 50,
+        "checksPassed": 9,
+        "checksTotal": 10,
+        "checkPassRate": 90,
+        "tokens": {
+          "input": 40,
+          "output": 10384,
+          "cacheRead": 529476,
+          "cacheCreation": 49751,
+          "total": 589651
+        },
+        "costUsd": 0.02
+      }
+    },
+    "uplift": {
+      "skill": {
+        "pairs": 2,
+        "taskPassRatePts": 50,
+        "checkPassRatePts": 10
+      }
+    },
+    "solvedUnguided": 1
+  },
+  "trials": [
+    {
+      "task": "cr-recipe-navigation-block",
+      "mode": "unguided",
+      "run": 1,
+      "startedAt": "2026-11-25T00:52:50.111Z",
+      "agent": {
+        "exitCode": 0,
+        "timedOut": false,
+        "durationSec": 34,
+        "guidanceCalls": {
+          "search": 0,
+          "retrieve": 0,
+          "mcp": 0,
+          "skill": 0
+        },
+        "model": "claude-haiku-5-5",
+        "tokens": {
+          "input": 20,
+          "output": 5557,
+          "cacheRead": 226457,
+          "cacheCreation": 19074,
+          "total": 251108
+        },
+        "costUsd": 0.00885987,
+        "numTurns": 10
+      },
+      "checks": [
+        {
+          "id": "recipe",
+          "kind": "must",
+          "text": "",
+          "pass": true
+        },
+        {
+          "id": "action",
+          "kind": "must",
+          "text": "The recipe uses the addNavigationBlock action on navigation.block_layout.",
+          "pass": true
+        },
+        {
+          "id": "applied",
+          "kind": "must",
+          "text": "The active navigation.block_layout has a navigation_link component with uri https://www.drupal.org/docs and title \"Drupal docs\", and still has the Content menu block.",
+          "pass": true,
+          "detail": "navigation_shortcuts,navigation_menu:content,navigation_menu:admin,navigation_user,navigation_link,navigation_link"
+        },
+        {
+          "id": "no-config-copy",
+          "kind": "must_not",
+          "text": "The recipe ships navigation.block_layout.yml in its config folder.",
+          "pass": true
+        }
+      ],
+      "passed": 4,
+      "total": 4,
+      "diff": "diff --git a/config/sync/navigation.block_layout.yml b/config/sync/navigation.block_layout.yml\nindex bae2ecd..6cfe70e 100644\n--- a/config/sync/navigation.block_layout.yml\n+++ b/config/sync/navigation.block_layout.yml\n@@ -39,7 +39,7 @@ sections:\n           provider: navigation\n           level: 2\n           depth: 2\n-        weight: 2\n+        weight: 3\n         additional: {  }\n       283da777-e051-4571-8089-47633a9ce706:\n         uuid: 283da777-e051-4571-8089-47633a9ce706\n@@ -65,4 +65,18 @@ sections:\n           icon_class: help\n         weight: -2\n         additional: {  }\n+      b9577eca-7891-4cd3-a986-4b26ab6d2873:\n+        uuid: b9577eca-7891-4cd3-a986-4b26ab6d2873\n+        region: content\n+        configuration:\n+          id: navigation_link\n+          label: 'Drupal docs'\n+          label_display: '0'\n+          provider: navigation\n+          context_mapping: {  }\n+          title: 'Drupal docs'\n+          uri: 'https://www.drupal.org/docs'\n+          icon_class: ''\n+        weight: 2\n+        additional: {  }\n     third_party_settings: {  }\ndiff --git a/recipes/bench_nav_docs/recipe.yml b/recipes/bench_nav_docs/recipe.yml\nnew file mode 100644\nindex 0000000..df46a32\n--- /dev/null\n+++ b/recipes/bench_nav_docs/recipe.yml\n@@ -0,0 +1,24 @@\n+name: 'Drupal docs navigation link'\n+description: 'Adds a \"Drupal docs\" link to the content section of the Navigation administrative sidebar.'\n+type: Administration\n+install:\n+  - navigation\n+config:\n+  actions:\n+    navigation.block_layout:\n+      # Appends a navigation link block to the existing Navigation layout\n+      # rather than replacing it. The delta is the position within the\n+      # content region: 0 is Shortcuts and 1 is the Content menu, so 2 places\n+      # the link directly after the Content menu and before Administration.\n+      addNavigationBlock:\n+        delta: 2\n+        configuration:\n+          id: navigation_link\n+          label: 'Drupal docs'\n+          label_display: '0'\n+          provider: navigation\n+          context_mapping: {}\n+          title: 'Drupal docs'\n+          uri: 'https://www.drupal.org/docs'\n+          icon_class: ''\n+        additional: {}\n",
+      "diffTruncated": false,
+      "diffBytes": 2163
+    },
+    {
+      "task": "cr-recipe-toolbar-items",
+      "mode": "unguided",
+      "run": 1,
+      "startedAt": "2026-11-25T00:53:27.747Z",
+      "agent": {
+        "exitCode": 0,
+        "timedOut": false,
+        "durationSec": 44,
+        "guidanceCalls": {
+          "search": 0,
+          "retrieve": 0,
+          "mcp": 0,
+          "skill": 0
+        },
+        "model": "claude-haiku-5-5",
+        "tokens": {
+          "input": 36,
+          "output": 7643,
+          "cacheRead": 460488,
+          "cacheCreation": 24712,
+          "total": 492879
+        },
+        "costUsd": 0.01337238,
+        "numTurns": 18
+      },
+      "checks": [
+        {
+          "id": "recipe",
+          "kind": "must",
+          "text": "recipes/bench_editor_tools/recipe.yml exists and is named \"Bench editor tools\".",
+          "pass": true
+        },
+        {
+          "id": "one-action",
+          "kind": "must",
+          "text": "The recipe has one config action entry for editor.editor.full_html that adds both items as a list (addItemToToolbar or addItemsToToolbar).",
+          "pass": false,
+          "detail": "{\"editor:addItemToToolbar\":[\"specialCharacters\",\"code\"]}"
+        },
+        {
+          "id": "applied",
+          "kind": "must",
+          "text": "The active full_html editor toolbar contains specialCharacters and code and still contains bold, link and sourceEditing.",
+          "pass": true,
+          "detail": "bold,italic,strikethrough,superscript,subscript,removeFormat,|,link,|,bulletedList,numberedList,|,blockQuote,drupalInsertImage,insertTable,horizontalLine,|,heading,codeBlock,|,sourceEditing,specialCharacters,code"
+        },
+        {
+          "id": "no-config-copy",
+          "kind": "must_not",
+          "text": "The recipe ships editor.editor.full_html.yml in its config folder.",
+          "pass": true
+        }
+      ],
+      "passed": 3,
+      "total": 4,
+      "diff": "diff --git a/config/sync/editor.editor.full_html.yml b/config/sync/editor.editor.full_html.yml\nindex a8aaed8..7a988a9 100644\n--- a/config/sync/editor.editor.full_html.yml\n+++ b/config/sync/editor.editor.full_html.yml\n@@ -34,6 +34,8 @@ settings:\n       - codeBlock\n       - '|'\n       - sourceEditing\n+      - specialCharacters\n+      - code\n   plugins:\n     ckeditor5_codeBlock:\n       languages:\ndiff --git a/recipes/bench_editor_tools/recipe.yml b/recipes/bench_editor_tools/recipe.yml\nnew file mode 100644\nindex 0000000..b63072b\n--- /dev/null\n+++ b/recipes/bench_editor_tools/recipe.yml\n@@ -0,0 +1,12 @@\n+name: 'Bench editor tools'\n+description: 'Adds the Special characters and Code toolbar items to the Full HTML CKEditor 5 editor.'\n+type: 'Text format editor'\n+install:\n+  - ckeditor5\n+config:\n+  actions:\n+    editor.editor.full_html:\n+      # Appends the items to the end of the existing toolbar; no items are removed.\n+      editor:addItemToToolbar:\n+        - specialCharacters\n+        - code\n",
+      "diffTruncated": false,
+      "diffBytes": 1004
+    },
+    {
+      "task": "cr-recipe-toolbar-items",
+      "mode": "skill",
+      "run": 1,
+      "startedAt": "2026-11-25T00:54:15.575Z",
+      "agent": {
+        "exitCode": 0,
+        "timedOut": false,
+        "durationSec": 29,
+        "guidanceCalls": {
+          "search": 1,
+          "retrieve": 1,
+          "mcp": 0,
+          "skill": 1
+        },
+        "model": "claude-haiku-5-5",
+        "tokens": {
+          "input": 22,
+          "output": 4638,
+          "cacheRead": 303734,
+          "cacheCreation": 25980,
+          "total": 334374
+        },
+        "costUsd": 0.010554540000000001,
+        "numTurns": 14
+      },
+      "checks": [
+        {
+          "id": "recipe",
+          "kind": "must",
+          "text": "recipes/bench_editor_tools/recipe.yml exists and is named \"Bench editor tools\".",
+          "pass": true
+        },
+        {
+          "id": "one-action",
+          "kind": "must",
+          "text": "The recipe has one config action entry for editor.editor.full_html that adds both items as a list (addItemToToolbar or addItemsToToolbar).",
+          "pass": false,
+          "detail": "{\"editor:addItemsToToolbar\":[\"specialCharacters\",\"code\"]}"
+        },
+        {
+          "id": "applied",
+          "kind": "must",
+          "text": "The active full_html editor toolbar contains specialCharacters and code and still contains bold, link and sourceEditing.",
+          "pass": true,
+          "detail": "bold,italic,strikethrough,superscript,subscript,removeFormat,|,link,|,bulletedList,numberedList,|,blockQuote,drupalInsertImage,insertTable,horizontalLine,|,heading,codeBlock,|,sourceEditing,specialCharacters,code"
+        },
+        {
+          "id": "no-config-copy",
+          "kind": "must_not",
+          "text": "The recipe ships editor.editor.full_html.yml in its config folder.",
+          "pass": true
+        }
+      ],
+      "passed": 3,
+      "total": 4,
+      "diff": "diff --git a/config/sync/editor.editor.full_html.yml b/config/sync/editor.editor.full_html.yml\nindex a8aaed8..7a988a9 100644\n--- a/config/sync/editor.editor.full_html.yml\n+++ b/config/sync/editor.editor.full_html.yml\n@@ -34,6 +34,8 @@ settings:\n       - codeBlock\n       - '|'\n       - sourceEditing\n+      - specialCharacters\n+      - code\n   plugins:\n     ckeditor5_codeBlock:\n       languages:\ndiff --git a/recipes/bench_editor_tools/recipe.yml b/recipes/bench_editor_tools/recipe.yml\nnew file mode 100644\nindex 0000000..a055a65\n--- /dev/null\n+++ b/recipes/bench_editor_tools/recipe.yml\n@@ -0,0 +1,11 @@\n+name: 'Bench editor tools'\n+description: 'Adds the Special characters and Code toolbar items to the Full HTML CKEditor 5 editor.'\n+type: 'Text format editor'\n+install:\n+  - ckeditor5\n+config:\n+  actions:\n+    editor.editor.full_html:\n+      editor:addItemsToToolbar:\n+        - specialCharacters\n+        - code\n",
+      "diffTruncated": false,
+      "diffBytes": 920
+    },
+    {
+      "task": "cr-form-autowire",
+      "mode": "unguided",
+      "run": 1,
+      "startedAt": "2026-11-25T00:54:47.970Z",
+      "agent": {
+        "exitCode": 0,
+        "timedOut": false,
+        "durationSec": 36,
+        "guidanceCalls": {
+          "search": 0,
+          "retrieve": 0,
+          "mcp": 0,
+          "skill": 0
+        },
+        "model": "claude-haiku-5-5",
+        "tokens": {
+          "input": 16,
+          "output": 6200,
+          "cacheRead": 158674,
+          "cacheCreation": 13901,
+          "total": 178791
+        },
+        "costUsd": 0.00746854,
+        "numTurns": 8
+      },
+      "checks": [
+        {
+          "id": "module-enabled",
+          "kind": "must",
+          "text": "Module bench_autoform exists in web/modules/custom/bench_autoform and is enabled.",
+          "pass": true,
+          "detail": "info=true enabled=true"
+        },
+        {
+          "id": "page",
+          "kind": "must",
+          "text": "GET /bench-autoform returns 200 with \"Last saved: never\" and a note field.",
+          "pass": false,
+          "detail": "status 200"
+        },
+        {
+          "id": "submit",
+          "kind": "must",
+          "text": "Submitting the form with note \"Hi\" stores it in state bench_autoform.last.",
+          "pass": true,
+          "detail": "\"Hi\""
+        },
+        {
+          "id": "inherited-create",
+          "kind": "must",
+          "text": "The form class does not declare create(); the method comes from core.",
+          "pass": true,
+          "detail": "\"Drupal\\\\Core\\\\Form\\\\FormBase\""
+        },
+        {
+          "id": "no-static",
+          "kind": "must_not",
+          "text": "The module calls \\Drupal::.",
+          "pass": true
+        },
+        {
+          "id": "no-deprecated-api",
+          "kind": "must_not",
+          "text": "The module uses no core API that data/drupal/deprecations.json lists as deprecated or removed.",
+          "pass": true
+        }
+      ],
+      "passed": 5,
+      "total": 6,
+      "diff": "diff --git a/config/sync/core.extension.yml b/config/sync/core.extension.yml\nindex 28a14b2..bb91ee2 100644\n--- a/config/sync/core.extension.yml\n+++ b/config/sync/core.extension.yml\n@@ -3,6 +3,7 @@ _core:\n module:\n   announcements_feed: 0\n   automated_cron: 0\n+  bench_autoform: 0\n   big_pipe: 0\n   block: 0\n   block_content: 0\ndiff --git a/web/modules/custom/bench_autoform/bench_autoform.info.yml b/web/modules/custom/bench_autoform/bench_autoform.info.yml\nnew file mode 100644\nindex 0000000..713a7f6\n--- /dev/null\n+++ b/web/modules/custom/bench_autoform/bench_autoform.info.yml\n@@ -0,0 +1,5 @@\n+name: Bench Autoform\n+type: module\n+description: 'Form that stores a note in state and shows when it was last saved.'\n+package: Custom\n+core_version_requirement: ^11\ndiff --git a/web/modules/custom/bench_autoform/bench_autoform.routing.yml b/web/modules/custom/bench_autoform/bench_autoform.routing.yml\nnew file mode 100644\nindex 0000000..4ae4d73\n--- /dev/null\n+++ b/web/modules/custom/bench_autoform/bench_autoform.routing.yml\n@@ -0,0 +1,7 @@\n+bench_autoform.form:\n+  path: '/bench-autoform'\n+  defaults:\n+    _form: '\\Drupal\\bench_autoform\\Form\\BenchAutoformForm'\n+    _title: 'Bench autoform'\n+  requirements:\n+    _access: 'TRUE'\ndiff --git a/web/modules/custom/bench_autoform/src/Form/BenchAutoformForm.php b/web/modules/custom/bench_autoform/src/Form/BenchAutoformForm.php\nnew file mode 100644\nindex 0000000..b94cba9\n--- /dev/null\n+++ b/web/modules/custom/bench_autoform/src/Form/BenchAutoformForm.php\n@@ -0,0 +1,66 @@\n+<?php\n+\n+declare(strict_types=1);\n+\n+namespace Drupal\\bench_autoform\\Form;\n+\n+use Drupal\\Core\\Form\\FormBase;\n+use Drupal\\Core\\Form\\FormStateInterface;\n+use Drupal\\Core\\State\\StateInterface;\n+\n+/**\n+ * Saves a note to state and shows when it was last saved.\n+ */\n+class BenchAutoformForm extends FormBase {\n+\n+  /**\n+   * Constructs a BenchAutoformForm object.\n+   *\n+   * @param \\Drupal\\Core\\State\\StateInterface $state\n+   *   The state service.\n+   */\n+  public function __construct(private readonly StateInterface $state) {\n+  }\n+\n+  /**\n+   * {@inheritdoc}\n+   */\n+  public function getFormId(): string {\n+    return 'bench_autoform';\n+  }\n+\n+  /**\n+   * {@inheritdoc}\n+   */\n+  public function buildForm(array $form, FormStateInterface $form_state): array {\n+    $last = $this->state->get('bench_autoform.last', 'never');\n+\n+    $form['last_saved'] = [\n+      '#markup' => '<p>' . $this->t('Last saved: @value', ['@value' => $last]) . '</p>',\n+    ];\n+    $form['note'] = [\n+      '#type' => 'textfield',\n+      '#title' => $this->t('Note'),\n+      '#required' => TRUE,\n+    ];\n+    $form['actions'] = [\n+      '#type' => 'actions',\n+    ];\n+    $form['actions']['submit'] = [\n+      '#type' => 'submit',\n+      '#value' => $this->t('Save'),\n+    ];\n+\n+    return $form;\n+  }\n+\n+  /**\n+   * {@inheritdoc}\n+   */\n+  public function submitForm(array &$form, FormStateInterface $form_state): void {\n+    $this->state->set('bench_autoform.last', (string) $form_state->getValue('note'));\n+    $this->messenger()->addStatus($this->t('Note saved.'));\n+    $form_state->setRebuild();\n+  }\n+\n+}\n",
+      "diffTruncated": false,
+      "diffBytes": 3114
+    },
+    {
+      "task": "cr-form-autowire",
+      "mode": "skill",
+      "run": 1,
+      "startedAt": "2026-11-25T00:55:29.417Z",
+      "agent": {
+        "exitCode": 0,
+        "timedOut": false,
+        "durationSec": 34,
+        "guidanceCalls": {
+          "search": 1,
+          "retrieve": 1,
+          "mcp": 0,
+          "skill": 1
+        },
+        "model": "claude-haiku-5-5",
+        "tokens": {
+          "input": 18,
+          "output": 5746,
+          "cacheRead": 225742,
+          "cacheCreation": 23771,
+          "total": 255277
+        },
+        "costUsd": 0.00988642,
+        "numTurns": 11
+      },
+      "checks": [
+        {
+          "id": "module-enabled",
+          "kind": "must",
+          "text": "Module bench_autoform exists in web/modules/custom/bench_autoform and is enabled.",
+          "pass": true,
+          "detail": "info=true enabled=true"
+        },
+        {
+          "id": "page",
+          "kind": "must",
+          "text": "GET /bench-autoform returns 200 with \"Last saved: never\" and a note field.",
+          "pass": true,
+          "detail": "status 200"
+        },
+        {
+          "id": "submit",
+          "kind": "must",
+          "text": "Submitting the form with note \"Hi\" stores it in state bench_autoform.last.",
+          "pass": true,
+          "detail": "\"Hi\""
+        },
+        {
+          "id": "inherited-create",
+          "kind": "must",
+          "text": "The form class does not declare create(); the method comes from core.",
+          "pass": true,
+          "detail": "\"Drupal\\\\Core\\\\Form\\\\FormBase\""
+        },
+        {
+          "id": "no-static",
+          "kind": "must_not",
+          "text": "The module calls \\Drupal::.",
+          "pass": true
+        },
+        {
+          "id": "no-deprecated-api",
+          "kind": "must_not",
+          "text": "The module uses no core API that data/drupal/deprecations.json lists as deprecated or removed.",
+          "pass": true
+        }
+      ],
+      "passed": 6,
+      "total": 6,
+      "diff": "diff --git a/config/sync/core.extension.yml b/config/sync/core.extension.yml\nindex 28a14b2..bb91ee2 100644\n--- a/config/sync/core.extension.yml\n+++ b/config/sync/core.extension.yml\n@@ -3,6 +3,7 @@ _core:\n module:\n   announcements_feed: 0\n   automated_cron: 0\n+  bench_autoform: 0\n   big_pipe: 0\n   block: 0\n   block_content: 0\ndiff --git a/web/modules/custom/bench_autoform/bench_autoform.info.yml b/web/modules/custom/bench_autoform/bench_autoform.info.yml\nnew file mode 100644\nindex 0000000..c58e9d2\n--- /dev/null\n+++ b/web/modules/custom/bench_autoform/bench_autoform.info.yml\n@@ -0,0 +1,4 @@\n+name: Bench Autoform\n+type: module\n+description: Demonstrates a form with autowired constructor services and state storage.\n+core_version_requirement: ^11\ndiff --git a/web/modules/custom/bench_autoform/bench_autoform.routing.yml b/web/modules/custom/bench_autoform/bench_autoform.routing.yml\nnew file mode 100644\nindex 0000000..4ae4d73\n--- /dev/null\n+++ b/web/modules/custom/bench_autoform/bench_autoform.routing.yml\n@@ -0,0 +1,7 @@\n+bench_autoform.form:\n+  path: '/bench-autoform'\n+  defaults:\n+    _form: '\\Drupal\\bench_autoform\\Form\\BenchAutoformForm'\n+    _title: 'Bench autoform'\n+  requirements:\n+    _access: 'TRUE'\ndiff --git a/web/modules/custom/bench_autoform/src/Form/BenchAutoformForm.php b/web/modules/custom/bench_autoform/src/Form/BenchAutoformForm.php\nnew file mode 100644\nindex 0000000..d64b1b2\n--- /dev/null\n+++ b/web/modules/custom/bench_autoform/src/Form/BenchAutoformForm.php\n@@ -0,0 +1,56 @@\n+<?php\n+\n+declare(strict_types=1);\n+\n+namespace Drupal\\bench_autoform\\Form;\n+\n+use Drupal\\Core\\Form\\FormBase;\n+use Drupal\\Core\\Form\\FormStateInterface;\n+use Drupal\\Core\\State\\StateInterface;\n+\n+/**\n+ * Stores a note in state and shows when it was last saved.\n+ */\n+class BenchAutoformForm extends FormBase {\n+\n+  public function __construct(\n+    protected readonly StateInterface $state,\n+  ) {}\n+\n+  /**\n+   * {@inheritdoc}\n+   */\n+  public function getFormId(): string {\n+    return 'bench_autoform';\n+  }\n+\n+  /**\n+   * {@inheritdoc}\n+   */\n+  public function buildForm(array $form, FormStateInterface $form_state): array {\n+    $last = $this->state->get('bench_autoform.last', 'never');\n+    $form['last_saved'] = [\n+      '#markup' => $this->t('Last saved: @value', ['@value' => $last]),\n+    ];\n+    $form['note'] = [\n+      '#type' => 'textfield',\n+      '#title' => $this->t('Note'),\n+      '#required' => TRUE,\n+    ];\n+    $form['actions'] = ['#type' => 'actions'];\n+    $form['actions']['submit'] = [\n+      '#type' => 'submit',\n+      '#value' => $this->t('Save'),\n+    ];\n+    return $form;\n+  }\n+\n+  /**\n+   * {@inheritdoc}\n+   */\n+  public function submitForm(array &$form, FormStateInterface $form_state): void {\n+    $this->state->set('bench_autoform.last', $form_state->getValue('note'));\n+    $this->messenger()->addStatus($this->t('Note saved.'));\n+  }\n+\n+}\n",
+      "diffTruncated": false,
+      "diffBytes": 2890
+    }
+  ]
+}

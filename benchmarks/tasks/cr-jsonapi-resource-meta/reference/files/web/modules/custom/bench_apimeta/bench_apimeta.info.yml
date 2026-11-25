@@ -1,0 +1,7 @@
+name: Bench API meta
+type: module
+description: Adds title length to JSON:API meta.
+core_version_requirement: ^11.2
+package: Bench
+dependencies:
+  - drupal:jsonapi

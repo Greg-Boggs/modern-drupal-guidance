@@ -1,0 +1,17 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "modern-drupal-guidance",
+  "version": "0.0.0",
+  "description": "Keeps your coding agent on current Drupal 10 and 11 practices instead of legacy Drupal 7 and 8 patterns.",
+  "author": {
+    "name": "Modern Drupal Guidance contributors"
+  },
+  "license": "Apache-2.0",
+  "keywords": [
+    "drupal",
+    "php",
+    "twig",
+    "symfony",
+    "best-practices"
+  ]
+}

@@ -1,0 +1,5 @@
+name: 'MDG demo: behaviors and once'
+type: module
+description: 'Reference implementation for the behaviors-and-once guide.'
+package: Modern Drupal Guidance
+core_version_requirement: '>=10.3'

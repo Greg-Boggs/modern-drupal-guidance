@@ -1,0 +1,4 @@
+services:
+  bench_login.links:
+    class: Drupal\bench_login\LoginLinks
+    autowire: true

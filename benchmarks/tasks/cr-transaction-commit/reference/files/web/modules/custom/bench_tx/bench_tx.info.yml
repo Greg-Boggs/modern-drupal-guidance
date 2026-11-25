@@ -1,0 +1,5 @@
+name: Bench transaction
+type: module
+description: Writes two rows in one transaction.
+core_version_requirement: ^11.2
+package: Bench

@@ -1,0 +1,2 @@
+parameters:
+  bench_helpers.skip_procedural_hook_scan: true

@@ -1,0 +1,7 @@
+bench_autoform.form:
+  path: '/bench-autoform'
+  defaults:
+    _form: '\Drupal\bench_autoform\Form\NoteForm'
+    _title: 'Note'
+  requirements:
+    _access: 'TRUE'

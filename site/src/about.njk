@@ -1,0 +1,25 @@
+---
+layout: base.njk
+title: About
+description: About Modern Drupal Guidance and the upstream Modern Web Guidance project it forks.
+permalink: /about/
+---
+<div class="guide-body">
+<h1>About</h1>
+<p class="lede">Modern Drupal Guidance keeps AI coding agents on current Drupal practice.</p>
+
+<h2 id="upstream">Credit to Modern Web Guidance</h2>
+<p>This project is a fork of <a href="{{ site.upstream }}">Modern Web Guidance</a> by the Google Chrome team (<a href="{{ site.upstreamSrc }}">source repository</a>). The idea, the search engine, the command-line tool, the agent plugin layout and the MCP approach all come from that work. We kept the engine and replaced the content with Drupal guidance.</p>
+<p>Upstream code is licensed under Apache-2.0 and is copyright Google LLC. This fork keeps the upstream <code>LICENSE</code> and a <code>NOTICE</code> file crediting the original authors.</p>
+
+<h2 id="independence">Independence</h2>
+<p>This is an independent community project. It is not affiliated with, sponsored by or endorsed by Google, Chrome or the Drupal Association. Drupal is a registered trademark of Dries Buytaert.</p>
+
+<h2 id="how">How it works</h2>
+<ul>
+  <li>Guides are Markdown files with YAML frontmatter: a name, a description and the Drupal core range they support.</li>
+  <li>Guides marked as drafts are not published here or distributed to agents.</li>
+  <li>Search combines BM25 with static word embeddings, locally, with no API key.</li>
+  <li>Legacy-scan rules for PHP, Twig, YAML and JavaScript point from an old pattern to the guide that replaces it.</li>
+</ul>
+</div>

@@ -1,0 +1,16 @@
+{
+  "name": "pilot",
+  "description": "Pilot task set: five site-building tasks from the Drupal User Guide and five code tasks from the code guides.",
+  "tasks": [
+    "sb-content-type",
+    "sb-view",
+    "sb-block",
+    "sb-roles",
+    "sb-menu",
+    "code-oop-hooks",
+    "code-plugin-attributes",
+    "code-dependency-injection",
+    "code-cache-metadata",
+    "code-behaviors-once"
+  ]
+}

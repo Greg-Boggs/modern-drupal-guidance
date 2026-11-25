@@ -1,0 +1,5 @@
+name: Bench quote
+type: module
+description: HTMX quote page.
+core_version_requirement: ^11.3
+package: Bench

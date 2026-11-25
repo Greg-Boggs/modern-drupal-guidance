@@ -1,0 +1,4 @@
+services:
+  plugin.manager.mdg_plugin_attributes_greeter:
+    class: Drupal\mdg_plugin_attributes\GreeterPluginManager
+    parent: default_plugin_manager

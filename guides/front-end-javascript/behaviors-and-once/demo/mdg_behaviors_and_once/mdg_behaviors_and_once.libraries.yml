@@ -1,0 +1,6 @@
+toggle:
+  js:
+    js/toggle.js: {}
+  dependencies:
+    - core/drupal
+    - core/once

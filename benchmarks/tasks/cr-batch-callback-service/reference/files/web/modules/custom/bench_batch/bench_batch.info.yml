@@ -1,0 +1,5 @@
+name: Bench batch
+type: module
+description: Batch callbacks on a service.
+core_version_requirement: ^11.3
+package: Bench

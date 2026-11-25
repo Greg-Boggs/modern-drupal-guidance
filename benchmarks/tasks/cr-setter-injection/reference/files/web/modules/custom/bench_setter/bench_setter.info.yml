@@ -1,0 +1,5 @@
+name: Bench setter
+type: module
+description: Controller with setter injection.
+core_version_requirement: ^11.4
+package: Bench

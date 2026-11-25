@@ -1,0 +1,7 @@
+mdg_single_directory_components.page:
+  path: '/mdg/cards'
+  defaults:
+    _controller: '\Drupal\mdg_single_directory_components\Controller\CardController::page'
+    _title: 'Cards'
+  requirements:
+    _permission: 'access content'

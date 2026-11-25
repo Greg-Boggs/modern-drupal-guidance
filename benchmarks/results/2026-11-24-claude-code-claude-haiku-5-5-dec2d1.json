@@ -1,0 +1,345 @@
+{
+  "schema": "modern-drupal-guidance-bench/1",
+  "id": "dec2d1",
+  "createdAt": "2026-11-24T23:49:44.706Z",
+  "agent": {
+    "id": "claude-code",
+    "version": "2.1.308",
+    "model": "claude-haiku-5-5"
+  },
+  "guidance": {
+    "skillVersion": "2026_11_24-9a0ea49d",
+    "repoCommit": "uncommitted",
+    "guideCount": 827
+  },
+  "drupal": {
+    "core": "11.4.13",
+    "drush": "13.8.1",
+    "php": "8.3.33",
+    "profile": "standard",
+    "recipes": [
+      "page_content_type",
+      "article_content_type",
+      "article_tags"
+    ]
+  },
+  "os": {
+    "platform": "linux",
+    "release": "7.0.0-44-generic",
+    "arch": "x64"
+  },
+  "harness": {
+    "tasks": "change-records",
+    "modes": [
+      "unguided",
+      "skill"
+    ],
+    "runs": 1,
+    "allowWeb": false,
+    "timeoutMin": 20,
+    "trialCap": 5,
+    "seed": 1493861180,
+    "skipSolved": true
+  },
+  "solvedUnguided": [
+    {
+      "task": "cr-original-entity",
+      "run": 1
+    },
+    {
+      "task": "cr-text-summary-service",
+      "run": 1
+    },
+    {
+      "task": "cr-aggregate-compression-off",
+      "run": 1
+    },
+    {
+      "task": "cr-remove-hook",
+      "run": 1
+    }
+  ],
+  "summary": {
+    "byMode": {
+      "unguided": {
+        "trials": 4,
+        "errored": 0,
+        "tasksFullyPassed": 4,
+        "taskPassRate": 100,
+        "checksPassed": 19,
+        "checksTotal": 19,
+        "checkPassRate": 100,
+        "tokens": {
+          "input": 48,
+          "output": 14959,
+          "cacheRead": 477016,
+          "cacheCreation": 55156,
+          "total": 547179
+        },
+        "costUsd": 0.02
+      }
+    },
+    "uplift": {},
+    "solvedUnguided": 4
+  },
+  "trials": [
+    {
+      "task": "cr-original-entity",
+      "mode": "unguided",
+      "run": 1,
+      "startedAt": "2026-11-24T23:47:58.350Z",
+      "agent": {
+        "exitCode": 0,
+        "timedOut": false,
+        "durationSec": 27,
+        "guidanceCalls": {
+          "search": 0,
+          "retrieve": 0,
+          "mcp": 0,
+          "skill": 0
+        },
+        "model": "claude-haiku-5-5",
+        "tokens": {
+          "input": 14,
+          "output": 4290,
+          "cacheRead": 130971,
+          "cacheCreation": 11146,
+          "total": 146421
+        },
+        "costUsd": 0.00568531,
+        "numTurns": 7
+      },
+      "checks": [
+        {
+          "id": "module-enabled",
+          "kind": "must",
+          "text": "Module bench_retitle exists in web/modules/custom/bench_retitle and is enabled.",
+          "pass": true,
+          "detail": "info=true enabled=true"
+        },
+        {
+          "id": "logs-change",
+          "kind": "must",
+          "text": "Creating \"Alpha\", re-saving it unchanged, then renaming it to \"Beta\" logs exactly [\"Alpha -> Beta\"].",
+          "pass": true,
+          "detail": "[\"Alpha -> Beta\"]"
+        },
+        {
+          "id": "no-original-property",
+          "kind": "must_not",
+          "text": "The module does not read the legacy $entity->original property.",
+          "pass": true
+        },
+        {
+          "id": "no-legacy-pattern",
+          "kind": "must_not",
+          "text": "No procedural hook implementations (legacy-scan oop-hooks rules).",
+          "pass": true
+        },
+        {
+          "id": "no-deprecated-api",
+          "kind": "must_not",
+          "text": "The module uses no core API that data/drupal/deprecations.json lists as deprecated or removed.",
+          "pass": true
+        }
+      ],
+      "passed": 5,
+      "total": 5,
+      "diff": "diff --git a/config/sync/core.extension.yml b/config/sync/core.extension.yml\nindex 28a14b2..5b39dc8 100644\n--- a/config/sync/core.extension.yml\n+++ b/config/sync/core.extension.yml\n@@ -3,6 +3,7 @@ _core:\n module:\n   announcements_feed: 0\n   automated_cron: 0\n+  bench_retitle: 0\n   big_pipe: 0\n   block: 0\n   block_content: 0\ndiff --git a/web/modules/custom/bench_retitle/bench_retitle.info.yml b/web/modules/custom/bench_retitle/bench_retitle.info.yml\nnew file mode 100644\nindex 0000000..0ecbc7b\n--- /dev/null\n+++ b/web/modules/custom/bench_retitle/bench_retitle.info.yml\n@@ -0,0 +1,7 @@\n+name: Bench Retitle\n+type: module\n+description: 'Logs node title changes to the bench_retitle.log state key.'\n+core_version_requirement: ^10 || ^11\n+package: Custom\n+dependencies:\n+  - drupal:node\ndiff --git a/web/modules/custom/bench_retitle/src/Hook/BenchRetitleHooks.php b/web/modules/custom/bench_retitle/src/Hook/BenchRetitleHooks.php\nnew file mode 100644\nindex 0000000..79d9ae1\n--- /dev/null\n+++ b/web/modules/custom/bench_retitle/src/Hook/BenchRetitleHooks.php\n@@ -0,0 +1,41 @@\n+<?php\n+\n+declare(strict_types=1);\n+\n+namespace Drupal\\bench_retitle\\Hook;\n+\n+use Drupal\\Core\\Hook\\Attribute\\Hook;\n+use Drupal\\Core\\State\\StateInterface;\n+use Drupal\\node\\NodeInterface;\n+\n+/**\n+ * Hook implementations for bench_retitle.\n+ */\n+class BenchRetitleHooks {\n+\n+  /**\n+   * Constructs a BenchRetitleHooks object.\n+   */\n+  public function __construct(\n+    protected StateInterface $state,\n+  ) {}\n+\n+  /**\n+   * Implements hook_node_update().\n+   *\n+   * Appends \"<old title> -> <new title>\" to bench_retitle.log when the title\n+   * of an existing node changes.\n+   */\n+  #[Hook('node_update')]\n+  public function nodeUpdate(NodeInterface $node): void {\n+    $original = $node->getOriginal();\n+    if ($original === NULL || $original->getTitle() === $node->getTitle()) {\n+      return;\n+    }\n+\n+    $log = $this->state->get('bench_retitle.log', []);\n+    $log[] = $original->getTitle() . ' -> ' . $node->getTitle();\n+    $this->state->set('bench_retitle.log', $log);\n+  }\n+\n+}\n",
+      "diffTruncated": false,
+      "diffBytes": 2065
+    },
+    {
+      "task": "cr-text-summary-service",
+      "mode": "unguided",
+      "run": 1,
+      "startedAt": "2026-11-24T23:48:30.263Z",
+      "agent": {
+        "exitCode": 0,
+        "timedOut": false,
+        "durationSec": 22,
+        "guidanceCalls": {
+          "search": 0,
+          "retrieve": 0,
+          "mcp": 0,
+          "skill": 0
+        },
+        "model": "claude-haiku-5-5",
+        "tokens": {
+          "input": 12,
+          "output": 3851,
+          "cacheRead": 114358,
+          "cacheCreation": 13669,
+          "total": 131890
+        },
+        "costUsd": 0.00580408,
+        "numTurns": 8
+      },
+      "checks": [
+        {
+          "id": "module-enabled",
+          "kind": "must",
+          "text": "Module bench_summary exists in web/modules/custom/bench_summary and is enabled.",
+          "pass": true,
+          "detail": "info=true enabled=true"
+        },
+        {
+          "id": "summary",
+          "kind": "must",
+          "text": "summarize() returns the same string as core's TextSummary service for two inputs.",
+          "pass": true,
+          "detail": "\"<p>First sentence here.\""
+        },
+        {
+          "id": "no-legacy-api",
+          "kind": "must_not",
+          "text": "The module does not call text_summary().",
+          "pass": true
+        },
+        {
+          "id": "no-deprecated-api",
+          "kind": "must_not",
+          "text": "The module uses no core API that data/drupal/deprecations.json lists as deprecated or removed.",
+          "pass": true
+        }
+      ],
+      "passed": 4,
+      "total": 4,
+      "diff": "diff --git a/config/sync/core.extension.yml b/config/sync/core.extension.yml\nindex 28a14b2..245b582 100644\n--- a/config/sync/core.extension.yml\n+++ b/config/sync/core.extension.yml\n@@ -3,6 +3,7 @@ _core:\n module:\n   announcements_feed: 0\n   automated_cron: 0\n+  bench_summary: 0\n   big_pipe: 0\n   block: 0\n   block_content: 0\ndiff --git a/web/modules/custom/bench_summary/bench_summary.info.yml b/web/modules/custom/bench_summary/bench_summary.info.yml\nnew file mode 100644\nindex 0000000..3550e5a\n--- /dev/null\n+++ b/web/modules/custom/bench_summary/bench_summary.info.yml\n@@ -0,0 +1,7 @@\n+name: 'Bench summary'\n+type: module\n+description: 'Provides a service that generates text summaries the same way the text-with-summary formatter does.'\n+core_version_requirement: ^11\n+package: Custom\n+dependencies:\n+  - drupal:text\ndiff --git a/web/modules/custom/bench_summary/bench_summary.services.yml b/web/modules/custom/bench_summary/bench_summary.services.yml\nnew file mode 100644\nindex 0000000..0d1d03b\n--- /dev/null\n+++ b/web/modules/custom/bench_summary/bench_summary.services.yml\n@@ -0,0 +1,4 @@\n+services:\n+  bench_summary.teaser:\n+    class: Drupal\\bench_summary\\TeaserSummary\n+    arguments: ['@Drupal\\text\\TextSummary']\ndiff --git a/web/modules/custom/bench_summary/src/TeaserSummary.php b/web/modules/custom/bench_summary/src/TeaserSummary.php\nnew file mode 100644\nindex 0000000..cb637d4\n--- /dev/null\n+++ b/web/modules/custom/bench_summary/src/TeaserSummary.php\n@@ -0,0 +1,35 @@\n+<?php\n+\n+declare(strict_types=1);\n+\n+namespace Drupal\\bench_summary;\n+\n+use Drupal\\text\\TextSummary;\n+\n+/**\n+ * Generates teaser summaries of HTML using the text module's algorithm.\n+ */\n+class TeaserSummary {\n+\n+  public function __construct(\n+    protected readonly TextSummary $textSummary,\n+  ) {}\n+\n+  /**\n+   * Summarizes HTML to the given size, cutting at paragraph or sentence ends.\n+   *\n+   * No text format is used, so no format-specific filters are applied.\n+   *\n+   * @param string $html\n+   *   The HTML to summarize.\n+   * @param int $size\n+   *   The desired character length of the summary.\n+   *\n+   * @return string\n+   *   The generated summary.\n+   */\n+  public function summarize(string $html, int $size): string {\n+    return (string) $this->textSummary->generate($html, NULL, $size);\n+  }\n+\n+}\n",
+      "diffTruncated": false,
+      "diffBytes": 2306
+    },
+    {
+      "task": "cr-aggregate-compression-off",
+      "mode": "unguided",
+      "run": 1,
+      "startedAt": "2026-11-24T23:48:55.866Z",
+      "agent": {
+        "exitCode": 0,
+        "timedOut": false,
+        "durationSec": 9,
+        "guidanceCalls": {
+          "search": 0,
+          "retrieve": 0,
+          "mcp": 0,
+          "skill": 0
+        },
+        "model": "claude-haiku-5-5",
+        "tokens": {
+          "input": 6,
+          "output": 1007,
+          "cacheRead": 46204,
+          "cacheCreation": 7406,
+          "total": 54623
+        },
+        "costUsd": 0.00244734,
+        "numTurns": 3
+      },
+      "checks": [
+        {
+          "id": "css-off",
+          "kind": "must",
+          "text": "system.performance css.compress is false.",
+          "pass": true,
+          "detail": "{\"preprocess\":false,\"compress\":false}"
+        },
+        {
+          "id": "js-off",
+          "kind": "must",
+          "text": "system.performance js.compress is false.",
+          "pass": true,
+          "detail": "{\"preprocess\":false,\"compress\":false}"
+        },
+        {
+          "id": "no-legacy-keys",
+          "kind": "must_not",
+          "text": "system.performance has the removed css.gzip or js.gzip keys.",
+          "pass": true
+        },
+        {
+          "id": "aggregation-unchanged",
+          "kind": "must_not",
+          "text": "CSS or JS aggregation (preprocess) was changed from the base app's setting (off).",
+          "pass": true
+        }
+      ],
+      "passed": 4,
+      "total": 4,
+      "diff": "diff --git a/config/sync/system.performance.yml b/config/sync/system.performance.yml\nindex e7e2a57..f7db8a7 100644\n--- a/config/sync/system.performance.yml\n+++ b/config/sync/system.performance.yml\n@@ -5,7 +5,7 @@ cache:\n     max_age: 0\n css:\n   preprocess: false\n-  compress: true\n+  compress: false\n fast_404:\n   enabled: true\n   paths: '/\\.(?:txt|png|gif|jpe?g|css|js|ico|swf|flv|cgi|bat|pl|dll|exe|asp)$/i'\n@@ -13,4 +13,4 @@ fast_404:\n   html: '<!DOCTYPE html><html><head><title>404 Not Found</title></head><body><h1>Not Found</h1><p>The requested URL \"@path\" was not found on this server.</p></body></html>'\n js:\n   preprocess: false\n-  compress: true\n+  compress: false\n",
+      "diffTruncated": false,
+      "diffBytes": 675
+    },
+    {
+      "task": "cr-remove-hook",
+      "mode": "unguided",
+      "run": 1,
+      "startedAt": "2026-11-24T23:49:08.606Z",
+      "agent": {
+        "exitCode": 0,
+        "timedOut": false,
+        "durationSec": 32,
+        "guidanceCalls": {
+          "search": 0,
+          "retrieve": 0,
+          "mcp": 0,
+          "skill": 0
+        },
+        "model": "claude-haiku-5-5",
+        "tokens": {
+          "input": 16,
+          "output": 5811,
+          "cacheRead": 185483,
+          "cacheCreation": 22935,
+          "total": 214245
+        },
+        "costUsd": 0.00934893,
+        "numTurns": 8
+      },
+      "checks": [
+        {
+          "id": "module-enabled",
+          "kind": "must",
+          "text": "Module bench_nohelp exists in web/modules/custom/bench_nohelp and is enabled.",
+          "pass": true,
+          "detail": "info=true enabled=true"
+        },
+        {
+          "id": "removed",
+          "kind": "must",
+          "text": "announcements_feed no longer has a help implementation, while it stays enabled.",
+          "pass": true,
+          "detail": "false"
+        },
+        {
+          "id": "others-kept",
+          "kind": "must",
+          "text": "Other modules' help hooks still run (node has a help implementation).",
+          "pass": true
+        },
+        {
+          "id": "no-implements-alter",
+          "kind": "must_not",
+          "text": "The module implements hook_module_implements_alter().",
+          "pass": true
+        },
+        {
+          "id": "no-legacy-pattern",
+          "kind": "must_not",
+          "text": "No procedural hook implementations (legacy-scan oop-hooks rules).",
+          "pass": true
+        },
+        {
+          "id": "no-deprecated-api",
+          "kind": "must_not",
+          "text": "The module uses no core API that data/drupal/deprecations.json lists as deprecated or removed.",
+          "pass": true
+        }
+      ],
+      "passed": 6,
+      "total": 6,
+      "diff": "diff --git a/config/sync/core.extension.yml b/config/sync/core.extension.yml\nindex 28a14b2..2d50713 100644\n--- a/config/sync/core.extension.yml\n+++ b/config/sync/core.extension.yml\n@@ -3,6 +3,7 @@ _core:\n module:\n   announcements_feed: 0\n   automated_cron: 0\n+  bench_nohelp: 0\n   big_pipe: 0\n   block: 0\n   block_content: 0\ndiff --git a/web/modules/custom/bench_nohelp/bench_nohelp.info.yml b/web/modules/custom/bench_nohelp/bench_nohelp.info.yml\nnew file mode 100644\nindex 0000000..9fb233d\n--- /dev/null\n+++ b/web/modules/custom/bench_nohelp/bench_nohelp.info.yml\n@@ -0,0 +1,5 @@\n+name: 'Bench No Help'\n+type: module\n+description: 'Stops the Announcements Feed module from providing its hook_help() implementation.'\n+core_version_requirement: ^10 || ^11\n+package: Custom\ndiff --git a/web/modules/custom/bench_nohelp/src/Hook/BenchNohelpHooks.php b/web/modules/custom/bench_nohelp/src/Hook/BenchNohelpHooks.php\nnew file mode 100644\nindex 0000000..514fd9e\n--- /dev/null\n+++ b/web/modules/custom/bench_nohelp/src/Hook/BenchNohelpHooks.php\n@@ -0,0 +1,14 @@\n+<?php\n+\n+namespace Drupal\\bench_nohelp\\Hook;\n+\n+use Drupal\\announcements_feed\\Hook\\AnnouncementsFeedHelpHooks;\n+use Drupal\\Core\\Hook\\Attribute\\RemoveHook;\n+\n+/**\n+ * Removes the help hook implementation provided by Announcements Feed.\n+ */\n+#[RemoveHook('help', class: AnnouncementsFeedHelpHooks::class, method: 'help')]\n+class BenchNohelpHooks {\n+\n+}\n",
+      "diffTruncated": false,
+      "diffBytes": 1408
+    }
+  ]
+}

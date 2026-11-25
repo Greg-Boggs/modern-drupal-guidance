@@ -1,0 +1,4 @@
+services:
+  bench_feedback.recorder:
+    class: Drupal\bench_feedback\FeedbackRecorder
+    arguments: ['@state']

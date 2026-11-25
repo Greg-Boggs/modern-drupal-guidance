@@ -1,0 +1,5 @@
+name: Bench reports
+type: module
+description: A cache bin that resets completely.
+core_version_requirement: ^11.2
+package: Bench

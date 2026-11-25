@@ -1,0 +1,13 @@
+{
+  "baseVocabSize": 29165,
+  "derivedWords": 346,
+  "corpus": {
+    "roots": [
+      "../guides",
+      "test-fixtures/guides"
+    ],
+    "guides": 9,
+    "chunks": 75
+  },
+  "generatedAt": "2026-11-24"
+}

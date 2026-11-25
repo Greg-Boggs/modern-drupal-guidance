@@ -1,0 +1,77 @@
+{
+ "_comment": "Hand-curated entries not expressible as an @deprecated docblock. Every entry needs a change record URL and a deprecation notice checked in core source.",
+ "entries": [
+  {
+   "symbol": "@Plugin annotations (docblock plugin discovery, for example @Block, @FieldType, @Action)",
+   "type": "annotation",
+   "deprecated_in": "11.2.0",
+   "removed_in": "13.0.0",
+   "replacement": "Use the matching PHP attribute class on the plugin class, for example #[Block(id: ..., admin_label: ...)] from Drupal\\Core\\Block\\Attribute\\Block.",
+   "change_record_url": "https://www.drupal.org/node/3395575",
+   "priority": "high",
+   "tags": [
+    "plugin",
+    "attributes"
+   ],
+   "notes": "Core emits the deprecation at runtime from AttributeDiscoveryWithAnnotations since 11.2.0. Attributes were introduced in 10.2.0 and DefaultPluginManager prefers them over annotations since 11.2.0 (CR 3521588).",
+   "id": "annotation:plugin-annotations"
+  },
+  {
+   "symbol": "*.theme file extension for theme code",
+   "type": "other",
+   "deprecated_in": "11.5.0",
+   "removed_in": "13.0.0",
+   "replacement": "Use classes (OOP hooks in the theme, services) instead of a procedural .theme file.",
+   "change_record_url": "https://www.drupal.org/node/3581222",
+   "priority": "high",
+   "tags": [
+    "theme",
+    "hook"
+   ],
+   "notes": "11.5.0 is not yet released as of the as_of date; the version comes from the notice in core 12.0.0-beta2.",
+   "id": "other:theme-file-extension"
+  },
+  {
+   "symbol": "'file' and 'includes' keys in hook_theme() definitions, and template_preprocess_HOOK() functions in include files",
+   "type": "other",
+   "deprecated_in": "11.3.0",
+   "removed_in": "12.0.0",
+   "replacement": "Use initial preprocess (a #[Hook] class method or a preprocess callback registered through the theme hook) instead of file/includes keys.",
+   "change_record_url": "https://www.drupal.org/node/3549500",
+   "priority": "high",
+   "tags": [
+    "theme",
+    "hook"
+   ],
+   "id": "other:hook-theme-file-includes"
+  },
+  {
+   "symbol": "Hook implementations autoloaded from include files (for example module.tokens.inc, via hook_hook_info())",
+   "type": "other",
+   "deprecated_in": "11.2.0",
+   "removed_in": "12.0.0",
+   "replacement": "Move the functions into the .module file or into a #[Hook] class.",
+   "change_record_url": "https://www.drupal.org/node/3489765",
+   "priority": "high",
+   "tags": [
+    "hook"
+   ],
+   "id": "other:hook-include-file-autoload"
+  },
+  {
+   "symbol": "jQuery.once() and jQuery.fn.once()",
+   "type": "other",
+   "deprecated_in": "9.3.0",
+   "removed_in": "10.0.0",
+   "replacement": "Use the core/once library and the once() function, for example once(\"my-behavior\", \".selector\", context).forEach(...).",
+   "change_record_url": "https://www.drupal.org/node/3158256",
+   "priority": "high",
+   "tags": [
+    "javascript",
+    "jquery"
+   ],
+   "notes": "The matching library entry is library:core/jquery.once. The change record was created for 9.2.0 when core/once was added; the library deprecation notice in core says 9.3.0.",
+   "id": "other:jquery-once-function"
+  }
+ ]
+}

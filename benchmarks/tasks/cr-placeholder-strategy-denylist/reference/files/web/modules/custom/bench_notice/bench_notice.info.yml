@@ -1,0 +1,5 @@
+name: Bench notice
+type: module
+description: Maintenance notice block.
+core_version_requirement: ^11.2
+package: Bench

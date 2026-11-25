@@ -1,0 +1,4 @@
+services:
+  bench_grantinfo.reporter:
+    class: Drupal\bench_grantinfo\Reporter
+    autowire: true

@@ -1,0 +1,37 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "erasableSyntaxOnly": true,
+    "verbatimModuleSyntax": true,
+    "allowImportingTsExtensions": true,
+    "allowJs": true,
+    "checkJs": true
+  },
+  "include": [
+    "scripts/**/*",
+    "src/core/**/*",
+    "src/rag/**/*",
+    "src/build/**/*",
+    "src/cli/**/*",
+    "src/legacy-scan/**/*"
+  ],
+  "exclude": [
+    "**/node_modules",
+    "**/dist",
+    "out",
+    "results",
+    "src/core/eval-inventory.ts",
+    "src/core/grader-*.ts",
+    "src/core/patch-utils*.ts",
+    "src/build/collect-eval-results*.ts",
+    "src/legacy-scan/eval/**/*",
+    "src/legacy-scan/llm-verifier*.ts"
+  ]
+}

@@ -1,0 +1,7 @@
+name: Bench word count
+type: module
+description: Adds a data-words attribute to nodes.
+core_version_requirement: ^11.2
+package: Bench
+dependencies:
+  - drupal:node

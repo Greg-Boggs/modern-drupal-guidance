@@ -1,0 +1,7 @@
+name: bench_bulk
+type: module
+description: Reference solution for cr-node-bulk-update.
+core_version_requirement: ^11.3
+package: Bench
+dependencies:
+  - drupal:node

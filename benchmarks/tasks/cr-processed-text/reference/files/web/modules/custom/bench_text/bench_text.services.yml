@@ -1,0 +1,4 @@
+services:
+  bench_text.formatter:
+    class: Drupal\bench_text\TextFormatter
+    autowire: true

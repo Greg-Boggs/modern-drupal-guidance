@@ -1,0 +1,13 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the Modern example module.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function modern_example_install($is_syncing) {
+  // hook_install() must stay procedural.
+}

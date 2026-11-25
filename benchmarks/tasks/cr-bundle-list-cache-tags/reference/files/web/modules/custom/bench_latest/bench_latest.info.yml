@@ -1,0 +1,7 @@
+name: Bench latest
+type: module
+description: Latest articles block.
+core_version_requirement: ^11.2
+package: Bench
+dependencies:
+  - drupal:node

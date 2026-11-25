@@ -1,0 +1,28 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+out/
+results/
+**/test-results/
+
+# Written by tests and the CLI at runtime
+src/cli/skill-version.txt
+*.log
+.mdgrc
+
+# Environment and editor
+.env
+.vscode/*
+!.vscode/extensions.json
+.DS_Store
+
+# Local agent state
+.claude/
+.gemini/
+.antigravitycli/
+GEMINI.md
+
+# Local eval config (disabled harness)
+/config.ts

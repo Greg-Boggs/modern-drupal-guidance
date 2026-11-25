@@ -1,0 +1,10 @@
+name: Bench article layouts
+description: 'Layout Builder with per-article overrides.'
+type: Content type
+install:
+  - layout_builder
+config:
+  actions:
+    core.entity_view_display.node.article.default:
+      enableLayoutBuilder: []
+      allowLayoutOverrides: true

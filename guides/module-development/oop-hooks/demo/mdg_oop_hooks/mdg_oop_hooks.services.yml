@@ -1,0 +1,7 @@
+parameters:
+  mdg_oop_hooks.skip_procedural_hook_scan: true
+
+services:
+  logger.channel.mdg_oop_hooks:
+    parent: logger.channel_base
+    arguments: ['mdg_oop_hooks']

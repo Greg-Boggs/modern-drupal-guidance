@@ -1,0 +1,5 @@
+name: Bench once batch
+type: module
+description: Adds a batch set once per request.
+core_version_requirement: ^11.2
+package: Bench

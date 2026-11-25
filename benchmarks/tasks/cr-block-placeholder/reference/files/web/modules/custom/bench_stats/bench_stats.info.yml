@@ -1,0 +1,7 @@
+name: Bench stats
+type: module
+description: Content count block.
+core_version_requirement: ^11.2
+package: Bench
+dependencies:
+  - drupal:node

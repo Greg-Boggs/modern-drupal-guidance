@@ -1,0 +1,11 @@
+name: Bench quiet footer
+description: 'Disables footer blocks if they exist.'
+type: Site
+config:
+  actions:
+    ?block.block.olivero_powered:
+      disable: []
+    ?block.block.olivero_syndicate:
+      disable: []
+    ?block.block.bench_promo:
+      disable: []

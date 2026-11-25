@@ -1,0 +1,29 @@
+{
+  "name": "modern-drupal-guidance-mcp",
+  "version": "0.1.0",
+  "description": "MCP server that exposes Modern Drupal Guidance (search, retrieve, list) to MCP clients.",
+  "type": "module",
+  "license": "Apache-2.0",
+  "bin": {
+    "modern-drupal-guidance-mcp": "dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "npm run build && node --test dist/test/*.test.js",
+    "smoke": "npm run build && node scripts/smoke.mjs"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.32.2",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.6",
+    "typescript": "^7.0.2"
+  }
+}

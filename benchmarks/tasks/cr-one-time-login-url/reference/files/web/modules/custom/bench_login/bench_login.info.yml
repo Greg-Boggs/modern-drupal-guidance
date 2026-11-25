@@ -1,0 +1,7 @@
+name: bench_login
+type: module
+description: Reference solution for cr-one-time-login-url.
+core_version_requirement: ^11.4
+package: Bench
+dependencies:
+  - drupal:user

@@ -1,0 +1,507 @@
+{
+  "repository": "",
+  "needsReview": [
+    {
+      "id": "oop-hooks",
+      "title": "OOP hooks",
+      "path": "guides/module-development/oop-hooks/",
+      "status": "needs-review",
+      "sources": [
+        {
+          "label": "core/lib/Drupal/Core/Extension/module.api.php",
+          "url": "https://git.drupalcode.org/project/drupal/-/blob/11.x/core/lib/Drupal/Core/Extension/module.api.php"
+        },
+        {
+          "label": "drupal.org change records for Drupal core",
+          "url": "https://www.drupal.org/list-changes/drupal"
+        }
+      ]
+    },
+    {
+      "id": "plugin-attributes",
+      "title": "Plugin attributes",
+      "path": "guides/module-development/plugin-attributes/",
+      "status": "needs-review",
+      "sources": [
+        {
+          "label": "core/core.api.php (Plugin API topic)",
+          "url": "https://git.drupalcode.org/project/drupal/-/blob/11.x/core/core.api.php"
+        },
+        {
+          "label": "drupal.org change records for Drupal core",
+          "url": "https://www.drupal.org/list-changes/drupal"
+        }
+      ]
+    },
+    {
+      "id": "dependency-injection",
+      "title": "Dependency injection",
+      "path": "guides/module-development/dependency-injection/",
+      "status": "needs-review",
+      "sources": [
+        {
+          "label": "core/core.api.php (Services and Dependency Injection Container topic)",
+          "url": "https://git.drupalcode.org/project/drupal/-/blob/11.x/core/core.api.php"
+        },
+        {
+          "label": "drupal.org change records for Drupal core",
+          "url": "https://www.drupal.org/list-changes/drupal"
+        }
+      ]
+    },
+    {
+      "id": "cache-metadata",
+      "title": "Cache metadata",
+      "path": "guides/caching-and-performance/cache-metadata/",
+      "status": "needs-review",
+      "sources": [
+        {
+          "label": "core/core.api.php (Cache API topic)",
+          "url": "https://git.drupalcode.org/project/drupal/-/blob/11.x/core/core.api.php"
+        },
+        {
+          "label": "drupal.org change records for Drupal core",
+          "url": "https://www.drupal.org/list-changes/drupal"
+        }
+      ]
+    },
+    {
+      "id": "lazy-builders",
+      "title": "Lazy builders",
+      "path": "guides/caching-and-performance/lazy-builders/",
+      "status": "needs-review",
+      "sources": [
+        {
+          "label": "core/lib/Drupal/Core/Render/theme.api.php (Render API topic)",
+          "url": "https://git.drupalcode.org/project/drupal/-/blob/11.x/core/lib/Drupal/Core/Render/theme.api.php"
+        },
+        {
+          "label": "drupal.org change records for Drupal core",
+          "url": "https://www.drupal.org/list-changes/drupal"
+        }
+      ]
+    },
+    {
+      "id": "behaviors-and-once",
+      "title": "Behaviors and once",
+      "path": "guides/front-end-javascript/behaviors-and-once/",
+      "status": "needs-review",
+      "sources": [
+        {
+          "label": "core/core.libraries.yml (core/once library definition)",
+          "url": "https://git.drupalcode.org/project/drupal/-/blob/11.x/core/core.libraries.yml"
+        },
+        {
+          "label": "drupal.org change records for Drupal core",
+          "url": "https://www.drupal.org/list-changes/drupal"
+        },
+        {
+          "label": "drupal.org developer documentation",
+          "url": "https://www.drupal.org/docs/develop"
+        }
+      ]
+    },
+    {
+      "id": "single-directory-components",
+      "title": "Single Directory Components",
+      "path": "guides/theming-and-components/single-directory-components/",
+      "status": "needs-review",
+      "sources": [
+        {
+          "label": "drupal.org developer documentation",
+          "url": "https://www.drupal.org/docs/develop"
+        },
+        {
+          "label": "drupal.org change records for Drupal core",
+          "url": "https://www.drupal.org/list-changes/drupal"
+        }
+      ]
+    }
+  ],
+  "wantedGuides": [
+    {
+      "id": "recipes",
+      "title": "Recipes",
+      "path": "guides/configuration-and-recipes/recipes/guide.md",
+      "status": "wanted",
+      "sources": [
+        {
+          "label": "core/lib/Drupal/Core/Recipe/ (source code and its doc comments)",
+          "url": "https://git.drupalcode.org/project/drupal/-/tree/11.x/core/lib/Drupal/Core/Recipe"
+        },
+        {
+          "label": "drupal.org change records for Drupal core",
+          "url": "https://www.drupal.org/list-changes/drupal"
+        },
+        {
+          "label": "drupal.org developer documentation",
+          "url": "https://www.drupal.org/docs/develop"
+        }
+      ],
+      "note": "Core has no *.api.php file for Recipes."
+    },
+    {
+      "id": "config-schema",
+      "title": "Configuration management and config schema",
+      "path": "guides/configuration-and-recipes/config-schema/guide.md",
+      "status": "wanted",
+      "sources": [
+        {
+          "label": "core/core.api.php (Configuration API topic)",
+          "url": "https://git.drupalcode.org/project/drupal/-/blob/11.x/core/core.api.php"
+        },
+        {
+          "label": "core/config/schema/core.data_types.schema.yml",
+          "url": "https://git.drupalcode.org/project/drupal/-/blob/11.x/core/config/schema/core.data_types.schema.yml"
+        },
+        {
+          "label": "drupal.org change records for Drupal core",
+          "url": "https://www.drupal.org/list-changes/drupal"
+        }
+      ]
+    },
+    {
+      "id": "routing-and-controllers",
+      "title": "Routing and controllers",
+      "path": "guides/module-development/routing-and-controllers/guide.md",
+      "status": "wanted",
+      "sources": [
+        {
+          "label": "core/lib/Drupal/Core/Routing/routing.api.php",
+          "url": "https://git.drupalcode.org/project/drupal/-/blob/11.x/core/lib/Drupal/Core/Routing/routing.api.php"
+        },
+        {
+          "label": "Examples for Developers module",
+          "url": "https://www.drupal.org/project/examples"
+        },
+        {
+          "label": "drupal.org change records for Drupal core",
+          "url": "https://www.drupal.org/list-changes/drupal"
+        }
+      ]
+    },
+    {
+      "id": "build-forms",
+      "title": "Form API",
+      "path": "guides/form-api/build-forms/guide.md",
+      "status": "wanted",
+      "sources": [
+        {
+          "label": "core/lib/Drupal/Core/Form/form.api.php",
+          "url": "https://git.drupalcode.org/project/drupal/-/blob/11.x/core/lib/Drupal/Core/Form/form.api.php"
+        },
+        {
+          "label": "core/core.api.php (Form generation topic)",
+          "url": "https://git.drupalcode.org/project/drupal/-/blob/11.x/core/core.api.php"
+        },
+        {
+          "label": "Examples for Developers module",
+          "url": "https://www.drupal.org/project/examples"
+        },
+        {
+          "label": "drupal.org change records for Drupal core",
+          "url": "https://www.drupal.org/list-changes/drupal"
+        }
+      ]
+    },
+    {
+      "id": "custom-entities",
+      "title": "Custom entities, entity hooks and events (for example, reacting to an entity save)",
+      "path": "guides/entities-and-fields/custom-entities/guide.md",
+      "status": "wanted",
+      "sources": [
+        {
+          "label": "core/lib/Drupal/Core/Entity/entity.api.php",
+          "url": "https://git.drupalcode.org/project/drupal/-/blob/11.x/core/lib/Drupal/Core/Entity/entity.api.php"
+        },
+        {
+          "label": "Examples for Developers module",
+          "url": "https://www.drupal.org/project/examples"
+        },
+        {
+          "label": "drupal.org change records for Drupal core",
+          "url": "https://www.drupal.org/list-changes/drupal"
+        }
+      ]
+    },
+    {
+      "id": "event-subscribers",
+      "title": "Event subscribers",
+      "path": "guides/module-development/event-subscribers/guide.md",
+      "status": "wanted",
+      "sources": [
+        {
+          "label": "core/core.api.php (Events topic)",
+          "url": "https://git.drupalcode.org/project/drupal/-/blob/11.x/core/core.api.php"
+        },
+        {
+          "label": "Examples for Developers module",
+          "url": "https://www.drupal.org/project/examples"
+        },
+        {
+          "label": "drupal.org change records for Drupal core",
+          "url": "https://www.drupal.org/list-changes/drupal"
+        }
+      ]
+    },
+    {
+      "id": "queue-workers-and-cron",
+      "title": "Queue workers and cron",
+      "path": "guides/module-development/queue-workers-and-cron/guide.md",
+      "status": "wanted",
+      "sources": [
+        {
+          "label": "core/core.api.php (Queue operations topic and hook_cron())",
+          "url": "https://git.drupalcode.org/project/drupal/-/blob/11.x/core/core.api.php"
+        },
+        {
+          "label": "Examples for Developers module",
+          "url": "https://www.drupal.org/project/examples"
+        },
+        {
+          "label": "drupal.org change records for Drupal core",
+          "url": "https://www.drupal.org/list-changes/drupal"
+        }
+      ]
+    },
+    {
+      "id": "migrate-api",
+      "title": "Migrate API",
+      "path": "guides/migration/migrate-api/guide.md",
+      "status": "wanted",
+      "sources": [
+        {
+          "label": "core/modules/migrate/migrate.api.php",
+          "url": "https://git.drupalcode.org/project/drupal/-/blob/11.x/core/modules/migrate/migrate.api.php"
+        },
+        {
+          "label": "drupal.org developer documentation",
+          "url": "https://www.drupal.org/docs/develop"
+        },
+        {
+          "label": "drupal.org change records for Drupal core",
+          "url": "https://www.drupal.org/list-changes/drupal"
+        }
+      ]
+    },
+    {
+      "id": "phpunit-tests",
+      "title": "Automated tests: PHPUnit kernel and functional",
+      "path": "guides/testing/phpunit-tests/guide.md",
+      "status": "wanted",
+      "sources": [
+        {
+          "label": "core/core.api.php (Automated tests topic)",
+          "url": "https://git.drupalcode.org/project/drupal/-/blob/11.x/core/core.api.php"
+        },
+        {
+          "label": "core/tests/README.md",
+          "url": "https://git.drupalcode.org/project/drupal/-/blob/11.x/core/tests/README.md"
+        },
+        {
+          "label": "Examples for Developers module",
+          "url": "https://www.drupal.org/project/examples"
+        },
+        {
+          "label": "drupal.org change records for Drupal core",
+          "url": "https://www.drupal.org/list-changes/drupal"
+        }
+      ]
+    },
+    {
+      "id": "access-control",
+      "title": "Access control",
+      "path": "guides/security/access-control/guide.md",
+      "status": "wanted",
+      "sources": [
+        {
+          "label": "core/core.api.php (User accounts, permissions, and roles topic)",
+          "url": "https://git.drupalcode.org/project/drupal/-/blob/11.x/core/core.api.php"
+        },
+        {
+          "label": "core/lib/Drupal/Core/Entity/entity.api.php (entity access hooks)",
+          "url": "https://git.drupalcode.org/project/drupal/-/blob/11.x/core/lib/Drupal/Core/Entity/entity.api.php"
+        },
+        {
+          "label": "Examples for Developers module",
+          "url": "https://www.drupal.org/project/examples"
+        },
+        {
+          "label": "drupal.org change records for Drupal core",
+          "url": "https://www.drupal.org/list-changes/drupal"
+        }
+      ]
+    },
+    {
+      "id": "twig-templates-and-suggestions",
+      "title": "Twig templates and theme suggestions",
+      "path": "guides/theming-and-components/twig-templates-and-suggestions/guide.md",
+      "status": "wanted",
+      "sources": [
+        {
+          "label": "core/lib/Drupal/Core/Render/theme.api.php",
+          "url": "https://git.drupalcode.org/project/drupal/-/blob/11.x/core/lib/Drupal/Core/Render/theme.api.php"
+        },
+        {
+          "label": "drupal.org developer documentation",
+          "url": "https://www.drupal.org/docs/develop"
+        },
+        {
+          "label": "drupal.org change records for Drupal core",
+          "url": "https://www.drupal.org/list-changes/drupal"
+        }
+      ]
+    },
+    {
+      "id": "asset-libraries",
+      "title": "Asset libraries",
+      "path": "guides/theming-and-components/asset-libraries/guide.md",
+      "status": "wanted",
+      "sources": [
+        {
+          "label": "core/lib/Drupal/Core/Render/theme.api.php (Theme system overview and library hooks)",
+          "url": "https://git.drupalcode.org/project/drupal/-/blob/11.x/core/lib/Drupal/Core/Render/theme.api.php"
+        },
+        {
+          "label": "drupal.org developer documentation",
+          "url": "https://www.drupal.org/docs/develop"
+        },
+        {
+          "label": "drupal.org change records for Drupal core",
+          "url": "https://www.drupal.org/list-changes/drupal"
+        }
+      ]
+    },
+    {
+      "id": "update-hooks",
+      "title": "Update and post-update hooks",
+      "path": "guides/module-development/update-hooks/guide.md",
+      "status": "wanted",
+      "sources": [
+        {
+          "label": "core/lib/Drupal/Core/Extension/module.api.php (Update API topic, hook_update_N() and hook_post_update_NAME())",
+          "url": "https://git.drupalcode.org/project/drupal/-/blob/11.x/core/lib/Drupal/Core/Extension/module.api.php"
+        },
+        {
+          "label": "drupal.org change records for Drupal core",
+          "url": "https://www.drupal.org/list-changes/drupal"
+        }
+      ]
+    },
+    {
+      "id": "drush-commands",
+      "title": "Drush commands",
+      "path": "guides/composer-and-tooling/drush-commands/guide.md",
+      "status": "wanted",
+      "sources": [
+        {
+          "label": "drupal.org developer documentation",
+          "url": "https://www.drupal.org/docs/develop"
+        },
+        {
+          "label": "drupal.org change records for Drupal core",
+          "url": "https://www.drupal.org/list-changes/drupal"
+        }
+      ],
+      "note": "Drush is not part of Drupal core, so core files and core change records may not cover it. If you need Drush's own documentation, propose it as a curated source in your pull request."
+    }
+  ],
+  "userGuideSkipped": [
+    {
+      "id": "index",
+      "title": "User Guide index",
+      "status": "skipped",
+      "reason": "Table of contents.",
+      "sources": [
+        {
+          "label": "Drupal User Guide page",
+          "url": "https://www.drupal.org/docs/user_guide/en/index.html"
+        }
+      ]
+    },
+    {
+      "id": "copyright",
+      "title": "Copyright",
+      "status": "skipped",
+      "reason": "Covered by guides/LICENSE-user-guide.md and guides/ATTRIBUTION-user-guide.md.",
+      "sources": [
+        {
+          "label": "Drupal User Guide page",
+          "url": "https://www.drupal.org/docs/user_guide/en/copyright.html"
+        }
+      ]
+    },
+    {
+      "id": "attributions",
+      "title": "Attributions",
+      "status": "skipped",
+      "reason": "Imported as guides/ATTRIBUTION-user-guide.md instead of as a guide.",
+      "sources": [
+        {
+          "label": "Drupal User Guide page",
+          "url": "https://www.drupal.org/docs/user_guide/en/attributions.html"
+        }
+      ]
+    },
+    {
+      "id": "preface-audience",
+      "title": "Preface: audience",
+      "status": "skipped",
+      "reason": "Preface page. The importer's skip list holds pages that are not guidance.",
+      "sources": [
+        {
+          "label": "Drupal User Guide page",
+          "url": "https://www.drupal.org/docs/user_guide/en/preface-audience.html"
+        }
+      ]
+    },
+    {
+      "id": "preface-organization",
+      "title": "Preface: organization",
+      "status": "skipped",
+      "reason": "Preface page. The importer's skip list holds pages that are not guidance.",
+      "sources": [
+        {
+          "label": "Drupal User Guide page",
+          "url": "https://www.drupal.org/docs/user_guide/en/preface-organization.html"
+        }
+      ]
+    },
+    {
+      "id": "preface-reporting",
+      "title": "Preface: reporting",
+      "status": "skipped",
+      "reason": "Preface page. The importer's skip list holds pages that are not guidance.",
+      "sources": [
+        {
+          "label": "Drupal User Guide page",
+          "url": "https://www.drupal.org/docs/user_guide/en/preface-reporting.html"
+        }
+      ]
+    },
+    {
+      "id": "preface-conventions",
+      "title": "Preface: conventions",
+      "status": "skipped",
+      "reason": "Preface page. The importer's skip list holds pages that are not guidance.",
+      "sources": [
+        {
+          "label": "Drupal User Guide page",
+          "url": "https://www.drupal.org/docs/user_guide/en/preface-conventions.html"
+        }
+      ]
+    },
+    {
+      "id": "preface-scenario",
+      "title": "Preface: scenario",
+      "status": "skipped",
+      "reason": "Preface page. The importer's skip list holds pages that are not guidance.",
+      "sources": [
+        {
+          "label": "Drupal User Guide page",
+          "url": "https://www.drupal.org/docs/user_guide/en/preface-scenario.html"
+        }
+      ]
+    }
+  ]
+}

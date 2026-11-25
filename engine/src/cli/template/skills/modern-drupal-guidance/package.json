@@ -1,0 +1,8 @@
+{
+  "name": "modern-drupal-guidance",
+  "version": "1.0.0",
+  "type": "module",
+  "bin": {
+    "modern-drupal-guidance": "modern-drupal-guidance.mjs"
+  }
+}

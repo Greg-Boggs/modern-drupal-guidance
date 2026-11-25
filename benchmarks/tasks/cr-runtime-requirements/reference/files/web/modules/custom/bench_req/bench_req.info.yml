@@ -1,0 +1,5 @@
+name: Bench requirements
+type: module
+description: Status report check.
+core_version_requirement: ^11.3
+package: Bench

@@ -1,0 +1,7 @@
+name: Bench node form
+type: module
+description: Custom node form class.
+core_version_requirement: ^11.2
+package: Bench
+dependencies:
+  - drupal:node

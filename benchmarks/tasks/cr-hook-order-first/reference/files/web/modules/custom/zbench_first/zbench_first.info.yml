@@ -1,0 +1,5 @@
+name: Bench first
+type: module
+description: Form alter that runs first.
+core_version_requirement: ^11.2
+package: Bench

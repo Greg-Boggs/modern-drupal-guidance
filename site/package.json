@@ -1,0 +1,18 @@
+{
+  "name": "modern-drupal-guidance-site",
+  "private": true,
+  "type": "module",
+  "version": "0.1.0",
+  "scripts": {
+    "build": "eleventy",
+    "start": "eleventy --serve",
+    "clean": "rm -rf _site"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^3.1.8",
+    "gray-matter": "^4.0.3",
+    "markdown-it": "^15.0.3",
+    "prismjs": "^1.30.0",
+    "semver": "^7.8.6"
+  }
+}

@@ -1,0 +1,5 @@
+name: Bench autowired form
+type: module
+description: Form with autowired constructor.
+core_version_requirement: ^11.4
+package: Bench

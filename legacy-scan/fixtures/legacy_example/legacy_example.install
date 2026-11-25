@@ -1,0 +1,21 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the Legacy example module.
+ */
+
+/**
+ * Implements hook_requirements().
+ */
+function legacy_example_requirements($phase) {
+  $requirements = [];
+  if ($phase === 'runtime' && !db_table_exists('legacy_example_log')) {
+    $requirements['legacy_example'] = [
+      'title' => t('Legacy example'),
+      'value' => t('Log table missing'),
+      'severity' => REQUIREMENT_WARNING,
+    ];
+  }
+  return $requirements;
+}

@@ -1,0 +1,9 @@
+name: Bench editor tools
+description: 'Adds the special characters and inline code buttons to the Full HTML editor.'
+type: 'Text format editor'
+config:
+  actions:
+    editor.editor.full_html:
+      addItemsToToolbar:
+        - specialCharacters
+        - code

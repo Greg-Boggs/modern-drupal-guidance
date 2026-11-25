@@ -1,0 +1,6 @@
+{
+  "api": "https://www.drupal.org/api-d7/node.json",
+  "query": "https://www.drupal.org/api-d7/node.json?type=changenotice&field_project=3060&limit=50&sort=created&direction=DESC&page=N",
+  "cutoff": "2023-01-01",
+  "fetched": "2026-11-24"
+}

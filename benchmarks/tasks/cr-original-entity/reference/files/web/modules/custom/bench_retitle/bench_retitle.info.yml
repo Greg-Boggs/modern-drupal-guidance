@@ -1,0 +1,7 @@
+name: Bench retitle
+type: module
+description: Logs node title changes.
+core_version_requirement: ^11.2
+package: Bench
+dependencies:
+  - drupal:node

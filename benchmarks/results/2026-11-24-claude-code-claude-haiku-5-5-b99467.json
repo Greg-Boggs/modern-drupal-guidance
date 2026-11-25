@@ -1,0 +1,2501 @@
+{
+  "schema": "modern-drupal-guidance-bench/1",
+  "id": "b99467",
+  "createdAt": "2026-11-24T20:16:16.016Z",
+  "agent": {
+    "id": "claude-code",
+    "version": "2.1.308",
+    "model": "claude-haiku-5-5"
+  },
+  "guidance": {
+    "skillVersion": "2026_11_24-9a0ea49d",
+    "repoCommit": "uncommitted",
+    "guideCount": 100
+  },
+  "drupal": {
+    "core": "11.4.13",
+    "drush": "13.8.1",
+    "php": "8.3.33",
+    "profile": "standard",
+    "recipes": [
+      "page_content_type",
+      "article_content_type",
+      "article_tags"
+    ]
+  },
+  "os": {
+    "platform": "linux",
+    "release": "7.0.0-44-generic",
+    "arch": "x64"
+  },
+  "harness": {
+    "tasks": "pilot",
+    "modes": [
+      "unguided",
+      "skill",
+      "mcp"
+    ],
+    "runs": 1,
+    "allowWeb": false,
+    "timeoutMin": 20
+  },
+  "summary": {
+    "byMode": {
+      "unguided": {
+        "trials": 10,
+        "errored": 0,
+        "tasksFullyPassed": 10,
+        "taskPassRate": 100,
+        "checksPassed": 71,
+        "checksTotal": 71,
+        "checkPassRate": 100,
+        "tokens": {
+          "input": 116,
+          "output": 43411,
+          "cacheRead": 1122134,
+          "cacheCreation": 124146,
+          "total": 1289807
+        },
+        "costUsd": 0.06
+      },
+      "skill": {
+        "trials": 10,
+        "errored": 0,
+        "tasksFullyPassed": 10,
+        "taskPassRate": 100,
+        "checksPassed": 71,
+        "checksTotal": 71,
+        "checkPassRate": 100,
+        "tokens": {
+          "input": 162,
+          "output": 50456,
+          "cacheRead": 1957605,
+          "cacheCreation": 216199,
+          "total": 2224422
+        },
+        "costUsd": 0.09
+      },
+      "mcp": {
+        "trials": 10,
+        "errored": 0,
+        "tasksFullyPassed": 9,
+        "taskPassRate": 90,
+        "checksPassed": 69,
+        "checksTotal": 71,
+        "checkPassRate": 97.2,
+        "tokens": {
+          "input": 164,
+          "output": 48956,
+          "cacheRead": 1850501,
+          "cacheCreation": 175228,
+          "total": 2074849
+        },
+        "costUsd": 0.08
+      }
+    },
+    "uplift": {
+      "skill": {
+        "taskPassRatePts": 0,
+        "checkPassRatePts": 0
+      },
+      "mcp": {
+        "taskPassRatePts": -10,
+        "checkPassRatePts": -2.8
+      }
+    }
+  },
+  "trials": [
+    {
+      "task": "sb-content-type",
+      "mode": "unguided",
+      "run": 1,
+      "startedAt": "2026-11-24T19:58:08.308Z",
+      "agent": {
+        "exitCode": 0,
+        "timedOut": false,
+        "durationSec": 26,
+        "guidanceCalls": {
+          "search": 0,
+          "retrieve": 0,
+          "mcp": 0,
+          "skill": 0
+        },
+        "model": "claude-haiku-5-5",
+        "tokens": {
+          "input": 10,
+          "output": 4485,
+          "cacheRead": 86886,
+          "cacheCreation": 10956,
+          "total": 102337
+        },
+        "costUsd": 0.0053035600000000006,
+        "numTurns": 5
+      },
+      "checks": [
+        {
+          "id": "type-exists",
+          "kind": "must",
+          "text": "Content type event exists with the label Event.",
+          "pass": true
+        },
+        {
+          "id": "date-field",
+          "kind": "must",
+          "text": "field_event_date is a required date-only datetime field on event.",
+          "pass": true,
+          "detail": "storage=datetime/date required=true"
+        },
+        {
+          "id": "location-field",
+          "kind": "must",
+          "text": "field_event_location is a plain text (string) field on event.",
+          "pass": true
+        },
+        {
+          "id": "link-field",
+          "kind": "must",
+          "text": "field_event_registration is a link field on event.",
+          "pass": true
+        },
+        {
+          "id": "form-display",
+          "kind": "must",
+          "text": "The default form display shows all three fields.",
+          "pass": true
+        },
+        {
+          "id": "view-display",
+          "kind": "must",
+          "text": "The default view display shows all three fields.",
+          "pass": true
+        },
+        {
+          "id": "renders",
+          "kind": "must",
+          "text": "An event shows its location to anonymous visitors.",
+          "pass": true,
+          "detail": "HTTP 200"
+        },
+        {
+          "id": "no-other-bundles",
+          "kind": "must_not",
+          "text": "The event fields are not attached to other content types.",
+          "pass": true
+        }
+      ],
+      "passed": 8,
+      "total": 8,
+      "diff": "diff --git a/config/sync/core.entity_form_display.node.event.default.yml b/config/sync/core.entity_form_display.node.event.default.yml\nnew file mode 100644\nindex 0000000..0773104\n--- /dev/null\n+++ b/config/sync/core.entity_form_display.node.event.default.yml\n@@ -0,0 +1,80 @@\n+uuid: c96c3ede-5d8e-46ca-a18a-f4f1b28179f1\n+langcode: en\n+status: true\n+dependencies:\n+  config:\n+    - field.field.node.event.field_event_date\n+    - field.field.node.event.field_event_location\n+    - field.field.node.event.field_event_registration\n+    - node.type.event\n+  module:\n+    - datetime\n+    - link\n+    - path\n+id: node.event.default\n+targetEntityType: node\n+bundle: event\n+mode: default\n+content:\n+  created:\n+    type: datetime_timestamp\n+    weight: 10\n+    region: content\n+    settings: {  }\n+    third_party_settings: {  }\n+  field_event_date:\n+    type: datetime_default\n+    weight: 1\n+    region: content\n+    settings: {  }\n+    third_party_settings: {  }\n+  field_event_location:\n+    type: string_textfield\n+    weight: 2\n+    region: content\n+    settings:\n+      size: 60\n+      placeholder: ''\n+    third_party_settings: {  }\n+  field_event_registration:\n+    type: link_default\n+    weight: 3\n+    region: content\n+    settings:\n+      placeholder_url: ''\n+      placeholder_title: ''\n+    third_party_settings: {  }\n+  path:\n+    type: path\n+    weight: 30\n+    region: content\n+    settings: {  }\n+    third_party_settings: {  }\n+  status:\n+    type: boolean_checkbox\n+    weight: 120\n+    region: content\n+    settings:\n+      display_label: true\n+    third_party_settings: {  }\n+  title:\n+    type: string_textfield\n+    weight: -5\n+    region: content\n+    settings:\n+      size: 60\n+      placeholder: ''\n+    third_party_settings: {  }\n+  uid:\n+    type: entity_reference_autocomplete\n+    weight: 5\n+    region: content\n+    settings:\n+      match_operator: CONTAINS\n+      match_limit: 10\n+      size: 60\n+      placeholder: ''\n+    third_party_settings: {  }\n+hidden:\n+  promote: true\n+  sticky: true\ndiff --git a/config/sync/core.entity_view_display.node.event.default.yml b/config/sync/core.entity_view_display.node.event.default.yml\nnew file mode 100644\nindex 0000000..90889a3\n--- /dev/null\n+++ b/config/sync/core.entity_view_display.node.event.default.yml\n@@ -0,0 +1,54 @@\n+uuid: 34552eab-5c41-424b-8515-8e47acbbc907\n+langcode: en\n+status: true\n+dependencies:\n+  config:\n+    - field.field.node.event.field_event_date\n+    - field.field.node.event.field_event_location\n+    - field.field.node.event.field_event_registration\n+    - node.type.event\n+  module:\n+    - datetime\n+    - link\n+    - user\n+id: node.event.default\n+targetEntityType: node\n+bundle: event\n+mode: default\n+content:\n+  field_event_date:\n+    type: datetime_default\n+    label: above\n+    settings:\n+      timezone_override: ''\n+      format_type: medium\n+    third_party_settings: {  }\n+    weight: 1\n+    region: content\n+  field_event_location:\n+    type: string\n+    label: above\n+    settings:\n+      link_to_entity: false\n+      link_rel: canonical\n+    third_party_settings: {  }\n+    weight: 2\n+    region: content\n+  field_event_registration:\n+    type: link\n+    label: above\n+    settings:\n+      trim_length: 80\n+      url_only: false\n+      url_plain: false\n+      rel: ''\n+      target: ''\n+    third_party_settings: {  }\n+    weight: 3\n+    region: content\n+  links:\n+    settings: {  }\n+    third_party_settings: {  }\n+    weight: 100\n+    region: content\n+hidden: {  }\ndiff --git a/config/sync/field.field.node.event.field_event_date.yml b/config/sync/field.field.node.event.field_event_date.yml\nnew file mode 100644\nindex 0000000..928738c\n--- /dev/null\n+++ b/config/sync/field.field.node.event.field_event_date.yml\n@@ -0,0 +1,21 @@\n+uuid: 970fe537-efcf-4d72-a66d-5e425297e7b8\n+langcode: en\n+status: true\n+dependencies:\n+  config:\n+    - field.storage.node.field_event_date\n+    - node.type.event\n+  module:\n+    - datetime\n+id: node.event.field_event_date\n+field_name: field_event_date\n+entity_type: node\n+bundle: event\n+label: 'Event date'\n+description: ''\n+required: true\n+translatable: true\n+default_value: {  }\n+default_value_callback: ''\n+settings: {  }\n+field_type: datetime\ndiff --git a/config/sync/field.field.node.event.field_event_location.yml b/config/sync/field.field.node.event.field_event_location.yml\nnew file mode 100644\nindex 0000000..3e25e4a\n--- /dev/null\n+++ b/config/sync/field.field.node.event.field_event_location.yml\n@@ -0,0 +1,19 @@\n+uuid: bc0f49ee-e347-4e3c-8aa9-17c89f5e6f70\n+langcode: en\n+status: true\n+dependencies:\n+  config:\n+    - field.storage.node.field_event_location\n+    - node.type.event\n+id: node.event.field_event_location\n+field_name: field_event_location\n+entity_type: node\n+bundle: event\n+label: 'Event location'\n+description: ''\n+required: false\n+translatable: true\n+default_value: {  }\n+default_value_callback: ''\n+settings: {  }\n+field_type: string\ndiff --git a/config/sync/field.field.node.event.field_event_registration.yml b/config/sync/field.field.node.event.field_event_registration.yml\nnew file mode 100644\nindex 0000000..35be288\n--- /dev/null\n+++ b/config/sync/field.field.node.event.field_event_registration.yml\n@@ -0,0 +1,23 @@\n+uuid: a2b3c258-79a3-4b57-bdc2-cb78c581f117\n+langcode: en\n+status: true\n+dependencies:\n+  config:\n+    - field.storage.node.field_event_registration\n+    - node.type.event\n+  module:\n+    - link\n+id: node.event.field_event_registration\n+field_name: field_event_registration\n+entity_type: node\n+bundle: event\n+label: 'Registration link'\n+description: ''\n+required: false\n+translatable: true\n+default_value: {  }\n+default_value_callback: ''\n+settings:\n+  title: 0\n+  link_type: 16\n+field_type: link\ndiff --git a/config/sync/field.storage.node.field_event_date.yml b/config/sync/field.storage.node.field_event_date.yml\nnew file mode 100644\nindex 0000000..4894c48\n--- /dev/null\n+++ b/config/sync/field.storage.node.field_event_date.yml\n@@ -0,0 +1,20 @@\n+uuid: 78bf5846-ef0c-4d41-b612-c7e57feea553\n+langcode: en\n+status: true\n+dependencies:\n+  module:\n+    - datetime\n+    - node\n+id: node.field_event_date\n+field_name: field_event_date\n+entity_type: node\n+type: datetime\n+settings:\n+  datetime_type: date\n+module: datetime\n+locked: false\n+cardinality: 1\n+translatable: true\n+indexes: {  }\n+persist_with_no_fields: false\n+custom_storage: false\ndiff --git a/config/sync/field.storage.node.field_event_location.yml b/config/sync/field.storage.node.field_event_location.yml\nnew file mode 100644\nindex 0000000..bb44db8\n--- /dev/null\n+++ b/config/sync/field.storage.node.field_event_location.yml\n@@ -0,0 +1,21 @@\n+uuid: 23c04116-facd-4b6a-aad8-d1edf7bbc4ce\n+langcode: en\n+status: true\n+dependencies:\n+  module:\n+    - node\n+id: node.field_event_location\n+field_name: field_event_location\n+entity_type: node\n+type: string\n+settings:\n+  max_length: 255\n+  case_sensitive: false\n+  is_ascii: false\n+module: core\n+locked: false\n+cardinality: 1\n+translatable: true\n+indexes: {  }\n+persist_with_no_fields: false\n+custom_storage: false\ndiff --git a/config/sync/field.storage.node.field_event_registration.yml b/config/sync/field.storage.node.field_event_registration.yml\nnew file mode 100644\nindex 0000000..8c3fd8e\n--- /dev/null\n+++ b/config/sync/field.storage.node.field_event_registration.yml\n@@ -0,0 +1,19 @@\n+uuid: 11798e0b-2c7b-4e2c-850d-ef0261835c5b\n+langcode: en\n+status: true\n+dependencies:\n+  module:\n+    - link\n+    - node\n+id: node.field_event_registration\n+field_name: field_event_registration\n+entity_type: node\n+type: link\n+settings: {  }\n+module: link\n+locked: false\n+cardinality: 1\n+translatable: true\n+indexes: {  }\n+persist_with_no_fields: false\n+custom_storage: false\ndiff --git a/config/sync/node.type.event.yml b/config/sync/node.type.event.yml\nnew file mode 100644\nindex 0000000..62dd7ea\n--- /dev/null\n+++ b/config/sync/node.type.event.yml\n@@ -0,0 +1,11 @@\n+uuid: 91079987-924b-484e-82ce-7e8b3944714a\n+langcode: en\n+status: true\n+dependencies: {  }\n+name: Event\n+type: event\n+description: 'A community event listing.'\n+help: null\n+new_revision: true\n+preview_mode: 1\n+display_submitted: true\n",
+      "diffTruncated": false,
+      "diffBytes": 8088
+    },
+    {
+      "task": "sb-content-type",
+      "mode": "skill",
+      "run": 1,
+      "startedAt": "2026-11-24T19:58:39.112Z",
+      "agent": {
+        "exitCode": 0,
+        "timedOut": false,
+        "durationSec": 33,
+        "guidanceCalls": {
+          "search": 1,
+          "retrieve": 1,
+          "mcp": 0,
+          "skill": 1
+        },
+        "model": "claude-haiku-5-5",
+        "tokens": {
+          "input": 16,
+          "output": 5654,
+          "cacheRead": 180787,
+          "cacheCreation": 21005,
+          "total": 207462
+        },
+        "costUsd": 0.008837469999999998,
+        "numTurns": 10
+      },
+      "checks": [
+        {
+          "id": "type-exists",
+          "kind": "must",
+          "text": "Content type event exists with the label Event.",
+          "pass": true
+        },
+        {
+          "id": "date-field",
+          "kind": "must",
+          "text": "field_event_date is a required date-only datetime field on event.",
+          "pass": true,
+          "detail": "storage=datetime/date required=true"
+        },
+        {
+          "id": "location-field",
+          "kind": "must",
+          "text": "field_event_location is a plain text (string) field on event.",
+          "pass": true
+        },
+        {
+          "id": "link-field",
+          "kind": "must",
+          "text": "field_event_registration is a link field on event.",
+          "pass": true
+        },
+        {
+          "id": "form-display",
+          "kind": "must",
+          "text": "The default form display shows all three fields.",
+          "pass": true
+        },
+        {
+          "id": "view-display",
+          "kind": "must",
+          "text": "The default view display shows all three fields.",
+          "pass": true
+        },
+        {
+          "id": "renders",
+          "kind": "must",
+          "text": "An event shows its location to anonymous visitors.",
+          "pass": true,
+          "detail": "HTTP 200"
+        },
+        {
+          "id": "no-other-bundles",
+          "kind": "must_not",
+          "text": "The event fields are not attached to other content types.",
+          "pass": true
+        }
+      ],
+      "passed": 8,
+      "total": 8,
+      "diff": "diff --git a/config/sync/core.entity_form_display.node.event.default.yml b/config/sync/core.entity_form_display.node.event.default.yml\nnew file mode 100644\nindex 0000000..a132b65\n--- /dev/null\n+++ b/config/sync/core.entity_form_display.node.event.default.yml\n@@ -0,0 +1,80 @@\n+uuid: 249ca0f0-f30b-4649-8b6f-10e9fe73eebc\n+langcode: en\n+status: true\n+dependencies:\n+  config:\n+    - field.field.node.event.field_event_date\n+    - field.field.node.event.field_event_location\n+    - field.field.node.event.field_event_registration\n+    - node.type.event\n+  module:\n+    - datetime\n+    - link\n+    - path\n+id: node.event.default\n+targetEntityType: node\n+bundle: event\n+mode: default\n+content:\n+  created:\n+    type: datetime_timestamp\n+    weight: 10\n+    region: content\n+    settings: {  }\n+    third_party_settings: {  }\n+  field_event_date:\n+    type: datetime_default\n+    weight: 1\n+    region: content\n+    settings: {  }\n+    third_party_settings: {  }\n+  field_event_location:\n+    type: string_textfield\n+    weight: 2\n+    region: content\n+    settings:\n+      size: 60\n+      placeholder: ''\n+    third_party_settings: {  }\n+  field_event_registration:\n+    type: link_default\n+    weight: 3\n+    region: content\n+    settings:\n+      placeholder_url: ''\n+      placeholder_title: ''\n+    third_party_settings: {  }\n+  path:\n+    type: path\n+    weight: 30\n+    region: content\n+    settings: {  }\n+    third_party_settings: {  }\n+  status:\n+    type: boolean_checkbox\n+    weight: 120\n+    region: content\n+    settings:\n+      display_label: true\n+    third_party_settings: {  }\n+  title:\n+    type: string_textfield\n+    weight: -5\n+    region: content\n+    settings:\n+      size: 60\n+      placeholder: ''\n+    third_party_settings: {  }\n+  uid:\n+    type: entity_reference_autocomplete\n+    weight: 5\n+    region: content\n+    settings:\n+      match_operator: CONTAINS\n+      match_limit: 10\n+      size: 60\n+      placeholder: ''\n+    third_party_settings: {  }\n+hidden:\n+  promote: true\n+  sticky: true\ndiff --git a/config/sync/core.entity_view_display.node.event.default.yml b/config/sync/core.entity_view_display.node.event.default.yml\nnew file mode 100644\nindex 0000000..aa2d2f4\n--- /dev/null\n+++ b/config/sync/core.entity_view_display.node.event.default.yml\n@@ -0,0 +1,52 @@\n+uuid: aa8e0daa-d8ce-4f57-9e5f-eea90483326c\n+langcode: en\n+status: true\n+dependencies:\n+  config:\n+    - field.field.node.event.field_event_date\n+    - field.field.node.event.field_event_location\n+    - field.field.node.event.field_event_registration\n+    - node.type.event\n+  module:\n+    - datetime\n+    - link\n+    - user\n+id: node.event.default\n+targetEntityType: node\n+bundle: event\n+mode: default\n+content:\n+  field_event_date:\n+    type: datetime_default\n+    label: above\n+    settings:\n+      timezone_override: ''\n+      format_type: medium\n+    third_party_settings: {  }\n+    weight: 1\n+    region: content\n+  field_event_location:\n+    type: basic_string\n+    label: above\n+    settings: {  }\n+    third_party_settings: {  }\n+    weight: 2\n+    region: content\n+  field_event_registration:\n+    type: link\n+    label: above\n+    settings:\n+      trim_length: 80\n+      url_only: false\n+      url_plain: false\n+      rel: ''\n+      target: ''\n+    third_party_settings: {  }\n+    weight: 3\n+    region: content\n+  links:\n+    settings: {  }\n+    third_party_settings: {  }\n+    weight: 100\n+    region: content\n+hidden: {  }\ndiff --git a/config/sync/field.field.node.event.field_event_date.yml b/config/sync/field.field.node.event.field_event_date.yml\nnew file mode 100644\nindex 0000000..45f22b4\n--- /dev/null\n+++ b/config/sync/field.field.node.event.field_event_date.yml\n@@ -0,0 +1,21 @@\n+uuid: 27015606-619c-49f0-b24d-023abd898be5\n+langcode: en\n+status: true\n+dependencies:\n+  config:\n+    - field.storage.node.field_event_date\n+    - node.type.event\n+  module:\n+    - datetime\n+id: node.event.field_event_date\n+field_name: field_event_date\n+entity_type: node\n+bundle: event\n+label: 'Event date'\n+description: ''\n+required: true\n+translatable: true\n+default_value: {  }\n+default_value_callback: ''\n+settings: {  }\n+field_type: datetime\ndiff --git a/config/sync/field.field.node.event.field_event_location.yml b/config/sync/field.field.node.event.field_event_location.yml\nnew file mode 100644\nindex 0000000..b979a27\n--- /dev/null\n+++ b/config/sync/field.field.node.event.field_event_location.yml\n@@ -0,0 +1,19 @@\n+uuid: a6ec02fa-0717-4936-acfe-2e0f3d933819\n+langcode: en\n+status: true\n+dependencies:\n+  config:\n+    - field.storage.node.field_event_location\n+    - node.type.event\n+id: node.event.field_event_location\n+field_name: field_event_location\n+entity_type: node\n+bundle: event\n+label: 'Event location'\n+description: ''\n+required: false\n+translatable: true\n+default_value: {  }\n+default_value_callback: ''\n+settings: {  }\n+field_type: string\ndiff --git a/config/sync/field.field.node.event.field_event_registration.yml b/config/sync/field.field.node.event.field_event_registration.yml\nnew file mode 100644\nindex 0000000..abd9a61\n--- /dev/null\n+++ b/config/sync/field.field.node.event.field_event_registration.yml\n@@ -0,0 +1,23 @@\n+uuid: 90be9cbd-d771-4d89-8401-196f60e836f8\n+langcode: en\n+status: true\n+dependencies:\n+  config:\n+    - field.storage.node.field_event_registration\n+    - node.type.event\n+  module:\n+    - link\n+id: node.event.field_event_registration\n+field_name: field_event_registration\n+entity_type: node\n+bundle: event\n+label: 'Registration page'\n+description: ''\n+required: false\n+translatable: true\n+default_value: {  }\n+default_value_callback: ''\n+settings:\n+  title: 0\n+  link_type: 17\n+field_type: link\ndiff --git a/config/sync/field.storage.node.field_event_date.yml b/config/sync/field.storage.node.field_event_date.yml\nnew file mode 100644\nindex 0000000..7da93ad\n--- /dev/null\n+++ b/config/sync/field.storage.node.field_event_date.yml\n@@ -0,0 +1,20 @@\n+uuid: 6fcc900f-728f-44e0-9500-5fda3a074677\n+langcode: en\n+status: true\n+dependencies:\n+  module:\n+    - datetime\n+    - node\n+id: node.field_event_date\n+field_name: field_event_date\n+entity_type: node\n+type: datetime\n+settings:\n+  datetime_type: date\n+module: datetime\n+locked: false\n+cardinality: 1\n+translatable: true\n+indexes: {  }\n+persist_with_no_fields: false\n+custom_storage: false\ndiff --git a/config/sync/field.storage.node.field_event_location.yml b/config/sync/field.storage.node.field_event_location.yml\nnew file mode 100644\nindex 0000000..5f32ffd\n--- /dev/null\n+++ b/config/sync/field.storage.node.field_event_location.yml\n@@ -0,0 +1,21 @@\n+uuid: 18450517-f197-40d3-8315-8cadf4602a92\n+langcode: en\n+status: true\n+dependencies:\n+  module:\n+    - node\n+id: node.field_event_location\n+field_name: field_event_location\n+entity_type: node\n+type: string\n+settings:\n+  max_length: 255\n+  case_sensitive: false\n+  is_ascii: false\n+module: core\n+locked: false\n+cardinality: 1\n+translatable: true\n+indexes: {  }\n+persist_with_no_fields: false\n+custom_storage: false\ndiff --git a/config/sync/field.storage.node.field_event_registration.yml b/config/sync/field.storage.node.field_event_registration.yml\nnew file mode 100644\nindex 0000000..cf35cc8\n--- /dev/null\n+++ b/config/sync/field.storage.node.field_event_registration.yml\n@@ -0,0 +1,19 @@\n+uuid: a6f9f0f6-9b73-4423-b916-02ee858596e5\n+langcode: en\n+status: true\n+dependencies:\n+  module:\n+    - link\n+    - node\n+id: node.field_event_registration\n+field_name: field_event_registration\n+entity_type: node\n+type: link\n+settings: {  }\n+module: link\n+locked: false\n+cardinality: 1\n+translatable: true\n+indexes: {  }\n+persist_with_no_fields: false\n+custom_storage: false\ndiff --git a/config/sync/node.type.event.yml b/config/sync/node.type.event.yml\nnew file mode 100644\nindex 0000000..6a3a65a\n--- /dev/null\n+++ b/config/sync/node.type.event.yml\n@@ -0,0 +1,11 @@\n+uuid: ae38df9f-ddc0-4269-8535-8eecd59f82d1\n+langcode: en\n+status: true\n+dependencies: {  }\n+name: Event\n+type: event\n+description: 'A community event listing.'\n+help: null\n+new_revision: true\n+preview_mode: 1\n+display_submitted: false\n",
+      "diffTruncated": false,
+      "diffBytes": 8044
+    },
+    {
+      "task": "sb-content-type",
+      "mode": "mcp",
+      "run": 1,
+      "startedAt": "2026-11-24T19:59:16.721Z",
+      "agent": {
+        "exitCode": 0,
+        "timedOut": false,
+        "durationSec": 33,
+        "guidanceCalls": {
+          "search": 0,
+          "retrieve": 0,
+          "mcp": 3,
+          "skill": 0
+        },
+        "model": "claude-haiku-5-5",
+        "tokens": {
+          "input": 22,
+          "output": 5422,
+          "cacheRead": 265065,
+          "cacheCreation": 21117,
+          "total": 291626
+        },
+        "costUsd": 0.009587249999999999,
+        "numTurns": 13
+      },
+      "checks": [
+        {
+          "id": "type-exists",
+          "kind": "must",
+          "text": "Content type event exists with the label Event.",
+          "pass": true
+        },
+        {
+          "id": "date-field",
+          "kind": "must",
+          "text": "field_event_date is a required date-only datetime field on event.",
+          "pass": true,
+          "detail": "storage=datetime/date required=true"
+        },
+        {
+          "id": "location-field",
+          "kind": "must",
+          "text": "field_event_location is a plain text (string) field on event.",
+          "pass": true
+        },
+        {
+          "id": "link-field",
+          "kind": "must",
+          "text": "field_event_registration is a link field on event.",
+          "pass": true
+        },
+        {
+          "id": "form-display",
+          "kind": "must",
+          "text": "The default form display shows all three fields.",
+          "pass": true
+        },
+        {
+          "id": "view-display",
+          "kind": "must",
+          "text": "The default view display shows all three fields.",
+          "pass": true
+        },
+        {
+          "id": "renders",
+          "kind": "must",
+          "text": "An event shows its location to anonymous visitors.",
+          "pass": true,
+          "detail": "HTTP 200"
+        },
+        {
+          "id": "no-other-bundles",
+          "kind": "must_not",
+          "text": "The event fields are not attached to other content types.",
+          "pass": true
+        }
+      ],
+      "passed": 8,
+      "total": 8,
+      "diff": "diff --git a/config/sync/core.entity_form_display.node.event.default.yml b/config/sync/core.entity_form_display.node.event.default.yml\nnew file mode 100644\nindex 0000000..412841a\n--- /dev/null\n+++ b/config/sync/core.entity_form_display.node.event.default.yml\n@@ -0,0 +1,78 @@\n+uuid: caa4f389-8508-4299-93e1-1c8524501634\n+langcode: en\n+status: true\n+dependencies:\n+  config:\n+    - field.field.node.event.field_event_date\n+    - field.field.node.event.field_event_location\n+    - field.field.node.event.field_event_registration\n+    - node.type.event\n+  module:\n+    - path\n+id: node.event.default\n+targetEntityType: node\n+bundle: event\n+mode: default\n+content:\n+  created:\n+    type: datetime_timestamp\n+    weight: 10\n+    region: content\n+    settings: {  }\n+    third_party_settings: {  }\n+  field_event_date:\n+    type: datetime_default\n+    weight: 10\n+    region: content\n+    settings: {  }\n+    third_party_settings: {  }\n+  field_event_location:\n+    type: string_textfield\n+    weight: 11\n+    region: content\n+    settings:\n+      size: 60\n+      placeholder: ''\n+    third_party_settings: {  }\n+  field_event_registration:\n+    type: link_default\n+    weight: 12\n+    region: content\n+    settings:\n+      placeholder_url: ''\n+      placeholder_title: ''\n+    third_party_settings: {  }\n+  path:\n+    type: path\n+    weight: 30\n+    region: content\n+    settings: {  }\n+    third_party_settings: {  }\n+  status:\n+    type: boolean_checkbox\n+    weight: 120\n+    region: content\n+    settings:\n+      display_label: true\n+    third_party_settings: {  }\n+  title:\n+    type: string_textfield\n+    weight: -5\n+    region: content\n+    settings:\n+      size: 60\n+      placeholder: ''\n+    third_party_settings: {  }\n+  uid:\n+    type: entity_reference_autocomplete\n+    weight: 5\n+    region: content\n+    settings:\n+      match_operator: CONTAINS\n+      match_limit: 10\n+      size: 60\n+      placeholder: ''\n+    third_party_settings: {  }\n+hidden:\n+  promote: true\n+  sticky: true\ndiff --git a/config/sync/core.entity_view_display.node.event.default.yml b/config/sync/core.entity_view_display.node.event.default.yml\nnew file mode 100644\nindex 0000000..4a63ff3\n--- /dev/null\n+++ b/config/sync/core.entity_view_display.node.event.default.yml\n@@ -0,0 +1,51 @@\n+uuid: b4807821-b222-4c03-b479-689ec712cc30\n+langcode: en\n+status: true\n+dependencies:\n+  config:\n+    - field.field.node.event.field_event_date\n+    - field.field.node.event.field_event_location\n+    - field.field.node.event.field_event_registration\n+    - node.type.event\n+  module:\n+    - user\n+id: node.event.default\n+targetEntityType: node\n+bundle: event\n+mode: default\n+content:\n+  field_event_date:\n+    type: datetime_default\n+    label: above\n+    settings:\n+      timezone_override: ''\n+      format_type: medium\n+    third_party_settings: {  }\n+    weight: 10\n+    region: content\n+  field_event_location:\n+    type: string\n+    label: above\n+    settings:\n+      link_to_entity: false\n+    third_party_settings: {  }\n+    weight: 11\n+    region: content\n+  field_event_registration:\n+    type: link\n+    label: above\n+    settings:\n+      trim_length: 80\n+      url_only: false\n+      url_plain: false\n+      rel: ''\n+      target: ''\n+    third_party_settings: {  }\n+    weight: 12\n+    region: content\n+  links:\n+    settings: {  }\n+    third_party_settings: {  }\n+    weight: 100\n+    region: content\n+hidden: {  }\ndiff --git a/config/sync/field.field.node.event.field_event_date.yml b/config/sync/field.field.node.event.field_event_date.yml\nnew file mode 100644\nindex 0000000..194319c\n--- /dev/null\n+++ b/config/sync/field.field.node.event.field_event_date.yml\n@@ -0,0 +1,21 @@\n+uuid: 73add74c-9c41-43b0-9fb4-42b292a07962\n+langcode: en\n+status: true\n+dependencies:\n+  config:\n+    - field.storage.node.field_event_date\n+    - node.type.event\n+  module:\n+    - datetime\n+id: node.event.field_event_date\n+field_name: field_event_date\n+entity_type: node\n+bundle: event\n+label: 'Event date'\n+description: ''\n+required: true\n+translatable: true\n+default_value: {  }\n+default_value_callback: ''\n+settings: {  }\n+field_type: datetime\ndiff --git a/config/sync/field.field.node.event.field_event_location.yml b/config/sync/field.field.node.event.field_event_location.yml\nnew file mode 100644\nindex 0000000..100fab4\n--- /dev/null\n+++ b/config/sync/field.field.node.event.field_event_location.yml\n@@ -0,0 +1,19 @@\n+uuid: 9085d0f3-e9b3-4e44-b674-d94b79e1c6c0\n+langcode: en\n+status: true\n+dependencies:\n+  config:\n+    - field.storage.node.field_event_location\n+    - node.type.event\n+id: node.event.field_event_location\n+field_name: field_event_location\n+entity_type: node\n+bundle: event\n+label: 'Event location'\n+description: ''\n+required: false\n+translatable: true\n+default_value: {  }\n+default_value_callback: ''\n+settings: {  }\n+field_type: string\ndiff --git a/config/sync/field.field.node.event.field_event_registration.yml b/config/sync/field.field.node.event.field_event_registration.yml\nnew file mode 100644\nindex 0000000..ddd1f45\n--- /dev/null\n+++ b/config/sync/field.field.node.event.field_event_registration.yml\n@@ -0,0 +1,23 @@\n+uuid: b68eea5c-2b21-4e8a-bc5e-67ca61895cd1\n+langcode: en\n+status: true\n+dependencies:\n+  config:\n+    - field.storage.node.field_event_registration\n+    - node.type.event\n+  module:\n+    - link\n+id: node.event.field_event_registration\n+field_name: field_event_registration\n+entity_type: node\n+bundle: event\n+label: 'Registration page'\n+description: ''\n+required: false\n+translatable: true\n+default_value: {  }\n+default_value_callback: ''\n+settings:\n+  title: 1\n+  link_type: 17\n+field_type: link\ndiff --git a/config/sync/field.storage.node.field_event_date.yml b/config/sync/field.storage.node.field_event_date.yml\nnew file mode 100644\nindex 0000000..97a0f52\n--- /dev/null\n+++ b/config/sync/field.storage.node.field_event_date.yml\n@@ -0,0 +1,20 @@\n+uuid: d4db35ba-7e22-43cf-8a70-872b3e787b47\n+langcode: en\n+status: true\n+dependencies:\n+  module:\n+    - datetime\n+    - node\n+id: node.field_event_date\n+field_name: field_event_date\n+entity_type: node\n+type: datetime\n+settings:\n+  datetime_type: date\n+module: datetime\n+locked: false\n+cardinality: 1\n+translatable: true\n+indexes: {  }\n+persist_with_no_fields: false\n+custom_storage: false\ndiff --git a/config/sync/field.storage.node.field_event_location.yml b/config/sync/field.storage.node.field_event_location.yml\nnew file mode 100644\nindex 0000000..8a2b66b\n--- /dev/null\n+++ b/config/sync/field.storage.node.field_event_location.yml\n@@ -0,0 +1,21 @@\n+uuid: 59e6f847-9b85-423c-b78c-be5b43b6278c\n+langcode: en\n+status: true\n+dependencies:\n+  module:\n+    - node\n+id: node.field_event_location\n+field_name: field_event_location\n+entity_type: node\n+type: string\n+settings:\n+  max_length: 255\n+  case_sensitive: false\n+  is_ascii: false\n+module: core\n+locked: false\n+cardinality: 1\n+translatable: true\n+indexes: {  }\n+persist_with_no_fields: false\n+custom_storage: false\ndiff --git a/config/sync/field.storage.node.field_event_registration.yml b/config/sync/field.storage.node.field_event_registration.yml\nnew file mode 100644\nindex 0000000..5fcc531\n--- /dev/null\n+++ b/config/sync/field.storage.node.field_event_registration.yml\n@@ -0,0 +1,19 @@\n+uuid: 5bb1bd37-0a19-4c47-8a5c-d393af354aca\n+langcode: en\n+status: true\n+dependencies:\n+  module:\n+    - link\n+    - node\n+id: node.field_event_registration\n+field_name: field_event_registration\n+entity_type: node\n+type: link\n+settings: {  }\n+module: link\n+locked: false\n+cardinality: 1\n+translatable: true\n+indexes: {  }\n+persist_with_no_fields: false\n+custom_storage: false\ndiff --git a/config/sync/node.type.event.yml b/config/sync/node.type.event.yml\nnew file mode 100644\nindex 0000000..46240c2\n--- /dev/null\n+++ b/config/sync/node.type.event.yml\n@@ -0,0 +1,11 @@\n+uuid: 07e71a6f-d98f-448d-a4b2-c2a974c96daf\n+langcode: en\n+status: true\n+dependencies: {  }\n+name: Event\n+type: event\n+description: 'A community event.'\n+help: null\n+new_revision: true\n+preview_mode: 1\n+display_submitted: false\n",
+      "diffTruncated": false,
+      "diffBytes": 8004
+    },
+    {
+      "task": "sb-view",
+      "mode": "unguided",
+      "run": 1,
+      "startedAt": "2026-11-24T19:59:53.801Z",
+      "agent": {
+        "exitCode": 0,
+        "timedOut": false,
+        "durationSec": 35,
+        "guidanceCalls": {
+          "search": 0,
+          "retrieve": 0,
+          "mcp": 0,
+          "skill": 0
+        },
+        "model": "claude-haiku-5-5",
+        "tokens": {
+          "input": 12,
+          "output": 6087,
+          "cacheRead": 111269,
+          "cacheCreation": 12846,
+          "total": 130214
+        },
+        "costUsd": 0.00672659,
+        "numTurns": 6
+      },
+      "checks": [
+        {
+          "id": "view-exists",
+          "kind": "must",
+          "text": "View recent_articles exists, is enabled and lists content.",
+          "pass": true
+        },
+        {
+          "id": "filters",
+          "kind": "must",
+          "text": "The view filters on the article type and on published status.",
+          "pass": true,
+          "detail": "type=true status=true"
+        },
+        {
+          "id": "sort",
+          "kind": "must",
+          "text": "The view sorts by created date, newest first.",
+          "pass": true
+        },
+        {
+          "id": "pager",
+          "kind": "must",
+          "text": "The view shows 5 items.",
+          "pass": true,
+          "detail": "items_per_page=5"
+        },
+        {
+          "id": "page-display",
+          "kind": "must",
+          "text": "A page display exists at /recent-articles.",
+          "pass": true
+        },
+        {
+          "id": "block-display",
+          "kind": "must",
+          "text": "A block display exists.",
+          "pass": true
+        },
+        {
+          "id": "renders",
+          "kind": "must",
+          "text": "/recent-articles lists the five newest published articles, newest first, as links.",
+          "pass": true,
+          "detail": "HTTP 200 shown=true order=true hidden=true"
+        },
+        {
+          "id": "block-not-placed",
+          "kind": "must_not",
+          "text": "The view block is not placed in any region.",
+          "pass": true
+        }
+      ],
+      "passed": 8,
+      "total": 8,
+      "diff": "diff --git a/config/sync/views.view.recent_articles.yml b/config/sync/views.view.recent_articles.yml\nnew file mode 100644\nindex 0000000..07eb4b6\n--- /dev/null\n+++ b/config/sync/views.view.recent_articles.yml\n@@ -0,0 +1,203 @@\n+uuid: 4b8fb2c8-d364-44e6-90b6-70fdcec68f07\n+langcode: en\n+status: true\n+dependencies:\n+  config:\n+    - node.type.article\n+  module:\n+    - node\n+    - user\n+id: recent_articles\n+label: 'Recent articles'\n+module: views\n+description: 'The five most recently created published articles.'\n+tag: default\n+base_table: node_field_data\n+base_field: nid\n+display:\n+  default:\n+    id: default\n+    display_title: Default\n+    display_plugin: default\n+    position: 0\n+    display_options:\n+      title: 'Recent articles'\n+      fields:\n+        title:\n+          id: title\n+          table: node_field_data\n+          field: title\n+          entity_type: node\n+          entity_field: title\n+          plugin_id: field\n+          label: ''\n+          exclude: false\n+          alter:\n+            alter_text: false\n+          element_type: ''\n+          hide_empty: false\n+          empty_zero: false\n+          hide_alter_empty: true\n+          click_sort_column: value\n+          type: string\n+          settings:\n+            link_to_entity: true\n+          group_column: value\n+          group_columns: {  }\n+          group_rows: true\n+          delta_limit: 0\n+          delta_offset: 0\n+          delta_reversed: false\n+          delta_first_last: false\n+          multi_type: separator\n+          separator: ', '\n+          field_api_classes: false\n+          click_sorter: true\n+      pager:\n+        type: some\n+        options:\n+          offset: 0\n+          items_per_page: 5\n+      exposed_form:\n+        type: basic\n+        options: {  }\n+      access:\n+        type: perm\n+        options:\n+          perm: 'access content'\n+      cache:\n+        type: tag\n+        options: {  }\n+      empty: {  }\n+      sorts:\n+        created:\n+          id: created\n+          table: node_field_data\n+          field: created\n+          entity_type: node\n+          entity_field: created\n+          plugin_id: date\n+          order: DESC\n+          expose:\n+            label: ''\n+          exposed: false\n+      arguments: {  }\n+      filters:\n+        status:\n+          id: status\n+          table: node_field_data\n+          field: status\n+          entity_type: node\n+          entity_field: status\n+          plugin_id: boolean\n+          operator: '='\n+          value: '1'\n+          group: 1\n+          exposed: false\n+          expose:\n+            operator_id: ''\n+            label: ''\n+            description: null\n+            identifier: ''\n+          is_grouped: false\n+        type:\n+          id: type\n+          table: node_field_data\n+          field: type\n+          entity_type: node\n+          entity_field: type\n+          plugin_id: bundle\n+          operator: in\n+          value:\n+            article: article\n+          group: 1\n+          exposed: false\n+          expose:\n+            operator_id: ''\n+            label: ''\n+            description: null\n+            identifier: ''\n+            multiple: false\n+          is_grouped: false\n+      filter_groups:\n+        operator: AND\n+        groups:\n+          1: AND\n+      style:\n+        type: default\n+        options: {  }\n+      row:\n+        type: fields\n+        options: {  }\n+      query:\n+        type: views_query\n+        options: {  }\n+      relationships: {  }\n+      css_class: ''\n+      use_ajax: false\n+      group_by: false\n+      show_admin_links: false\n+      use_more: false\n+      use_more_always: false\n+      use_more_text: more\n+      link_display: custom_url\n+      link_url: ''\n+      header: {  }\n+      footer: {  }\n+      display_extenders: {  }\n+      style_options: {  }\n+    cache_metadata:\n+      max-age: -1\n+      contexts:\n+        - 'languages:language_content'\n+        - 'languages:language_interface'\n+        - 'user.node_grants:view'\n+        - user.permissions\n+      tags: {  }\n+  block_1:\n+    id: block_1\n+    display_title: Block\n+    display_plugin: block\n+    position: 2\n+    display_options:\n+      display_extenders: {  }\n+      block_description: 'Recent articles'\n+      block_category: 'Lists (Views)'\n+    cache_metadata:\n+      max-age: -1\n+      contexts:\n+        - 'languages:language_content'\n+        - 'languages:language_interface'\n+        - 'user.node_grants:view'\n+        - user.permissions\n+      tags: {  }\n+  page_1:\n+    id: page_1\n+    display_title: Page\n+    display_plugin: page\n+    position: 1\n+    display_options:\n+      display_extenders: {  }\n+      path: recent-articles\n+      menu:\n+        type: none\n+        title: 'Recent articles'\n+        description: ''\n+        weight: 0\n+        expanded: false\n+        menu_name: main\n+        parent: ''\n+      tab_options:\n+        type: none\n+        title: ''\n+        description: ''\n+        weight: 0\n+        menu_name: main\n+    cache_metadata:\n+      max-age: -1\n+      contexts:\n+        - 'languages:language_content'\n+        - 'languages:language_interface'\n+        - 'user.node_grants:view'\n+        - user.permissions\n+      tags: {  }\n",
+      "diffTruncated": false,
+      "diffBytes": 5193
+    },
+    {
+      "task": "sb-view",
+      "mode": "skill",
+      "run": 1,
+      "startedAt": "2026-11-24T20:00:36.353Z",
+      "agent": {
+        "exitCode": 0,
+        "timedOut": false,
+        "durationSec": 42,
+        "guidanceCalls": {
+          "search": 1,
+          "retrieve": 1,
+          "mcp": 0,
+          "skill": 1
+        },
+        "model": "claude-haiku-5-5",
+        "tokens": {
+          "input": 16,
+          "output": 7292,
+          "cacheRead": 201451,
+          "cacheCreation": 24097,
+          "total": 232856
+        },
+        "costUsd": 0.01048151,
+        "numTurns": 10
+      },
+      "checks": [
+        {
+          "id": "view-exists",
+          "kind": "must",
+          "text": "View recent_articles exists, is enabled and lists content.",
+          "pass": true
+        },
+        {
+          "id": "filters",
+          "kind": "must",
+          "text": "The view filters on the article type and on published status.",
+          "pass": true,
+          "detail": "type=true status=true"
+        },
+        {
+          "id": "sort",
+          "kind": "must",
+          "text": "The view sorts by created date, newest first.",
+          "pass": true
+        },
+        {
+          "id": "pager",
+          "kind": "must",
+          "text": "The view shows 5 items.",
+          "pass": true,
+          "detail": "items_per_page=5"
+        },
+        {
+          "id": "page-display",
+          "kind": "must",
+          "text": "A page display exists at /recent-articles.",
+          "pass": true
+        },
+        {
+          "id": "block-display",
+          "kind": "must",
+          "text": "A block display exists.",
+          "pass": true
+        },
+        {
+          "id": "renders",
+          "kind": "must",
+          "text": "/recent-articles lists the five newest published articles, newest first, as links.",
+          "pass": true,
+          "detail": "HTTP 200 shown=true order=true hidden=true"
+        },
+        {
+          "id": "block-not-placed",
+          "kind": "must_not",
+          "text": "The view block is not placed in any region.",
+          "pass": true
+        }
+      ],
+      "passed": 8,
+      "total": 8,
+      "diff": "diff --git a/config/sync/views.view.recent_articles.yml b/config/sync/views.view.recent_articles.yml\nnew file mode 100644\nindex 0000000..8aa7731\n--- /dev/null\n+++ b/config/sync/views.view.recent_articles.yml\n@@ -0,0 +1,167 @@\n+uuid: fdc11309-7079-4f8c-8a67-239561ccb10d\n+langcode: en\n+status: true\n+dependencies:\n+  config:\n+    - node.type.article\n+  module:\n+    - node\n+    - user\n+id: recent_articles\n+label: 'Recent articles'\n+module: views\n+description: 'Titles of the five most recently created published articles.'\n+tag: default\n+base_table: node_field_data\n+base_field: nid\n+display:\n+  default:\n+    id: default\n+    display_title: Master\n+    display_plugin: default\n+    position: 0\n+    display_options:\n+      title: 'Recent articles'\n+      fields:\n+        title:\n+          id: title\n+          table: node_field_data\n+          field: title\n+          entity_type: node\n+          entity_field: title\n+          plugin_id: field\n+          label: ''\n+          exclude: false\n+          alter:\n+            alter_text: false\n+          element_type: ''\n+          click_sort_column: value\n+          type: string\n+          settings:\n+            link_to_entity: true\n+          group_column: value\n+          group_columns: {  }\n+          group_rows: true\n+          delta_limit: 0\n+          delta_offset: 0\n+          delta_reversed: false\n+          delta_first_last: false\n+          multi_type: separator\n+          separator: ', '\n+          field_api_classes: false\n+          default_formatter: string\n+      pager:\n+        type: some\n+        options:\n+          offset: 0\n+          items_per_page: 5\n+      exposed_form:\n+        type: basic\n+        options: {  }\n+      access:\n+        type: perm\n+        options:\n+          perm: 'access content'\n+      cache:\n+        type: tag\n+        options: {  }\n+      empty: {  }\n+      sorts:\n+        created:\n+          id: created\n+          table: node_field_data\n+          field: created\n+          entity_type: node\n+          entity_field: created\n+          plugin_id: date\n+          order: DESC\n+          expose:\n+            label: ''\n+          exposed: false\n+      arguments: {  }\n+      filters:\n+        status:\n+          id: status\n+          table: node_field_data\n+          field: status\n+          entity_type: node\n+          entity_field: status\n+          plugin_id: boolean\n+          operator: '='\n+          value: '1'\n+          group: 1\n+          exposed: false\n+        type:\n+          id: type\n+          table: node_field_data\n+          field: type\n+          entity_type: node\n+          entity_field: type\n+          plugin_id: bundle\n+          operator: in\n+          value:\n+            article: article\n+          group: 1\n+          exposed: false\n+      filter_groups:\n+        operator: AND\n+        groups:\n+          1: AND\n+      style:\n+        type: default\n+        options: {  }\n+      row:\n+        type: fields\n+        options: {  }\n+      query:\n+        type: views_query\n+        options: {  }\n+      relationships: {  }\n+      css_class: ''\n+      use_ajax: false\n+      use_more: false\n+      use_more_always: false\n+      use_more_text: More\n+      header: {  }\n+      footer: {  }\n+      display_extenders: {  }\n+    cache_metadata:\n+      max-age: -1\n+      contexts:\n+        - 'languages:language_content'\n+        - 'languages:language_interface'\n+        - 'user.node_grants:view'\n+        - user.permissions\n+      tags: {  }\n+  block_1:\n+    id: block_1\n+    display_title: Block\n+    display_plugin: block\n+    position: 2\n+    display_options:\n+      display_extenders: {  }\n+      block_description: 'Recent articles'\n+    cache_metadata:\n+      max-age: -1\n+      contexts:\n+        - 'languages:language_content'\n+        - 'languages:language_interface'\n+        - 'user.node_grants:view'\n+        - user.permissions\n+      tags: {  }\n+  page_1:\n+    id: page_1\n+    display_title: Page\n+    display_plugin: page\n+    position: 1\n+    display_options:\n+      display_extenders: {  }\n+      path: recent-articles\n+    cache_metadata:\n+      max-age: -1\n+      contexts:\n+        - 'languages:language_content'\n+        - 'languages:language_interface'\n+        - 'user.node_grants:view'\n+        - user.permissions\n+      tags: {  }\n",
+      "diffTruncated": false,
+      "diffBytes": 4289
+    },
+    {
+      "task": "sb-view",
+      "mode": "mcp",
+      "run": 1,
+      "startedAt": "2026-11-24T20:01:25.388Z",
+      "agent": {
+        "exitCode": 0,
+        "timedOut": false,
+        "durationSec": 42,
+        "guidanceCalls": {
+          "search": 0,
+          "retrieve": 0,
+          "mcp": 4,
+          "skill": 0
+        },
+        "model": "claude-haiku-5-5",
+        "tokens": {
+          "input": 18,
+          "output": 7338,
+          "cacheRead": 190519,
+          "cacheCreation": 19868,
+          "total": 217743
+        },
+        "costUsd": 0.009549590000000002,
+        "numTurns": 11
+      },
+      "checks": [
+        {
+          "id": "view-exists",
+          "kind": "must",
+          "text": "View recent_articles exists, is enabled and lists content.",
+          "pass": true
+        },
+        {
+          "id": "filters",
+          "kind": "must",
+          "text": "The view filters on the article type and on published status.",
+          "pass": true,
+          "detail": "type=true status=true"
+        },
+        {
+          "id": "sort",
+          "kind": "must",
+          "text": "The view sorts by created date, newest first.",
+          "pass": true
+        },
+        {
+          "id": "pager",
+          "kind": "must",
+          "text": "The view shows 5 items.",
+          "pass": true,
+          "detail": "items_per_page=5"
+        },
+        {
+          "id": "page-display",
+          "kind": "must",
+          "text": "A page display exists at /recent-articles.",
+          "pass": true
+        },
+        {
+          "id": "block-display",
+          "kind": "must",
+          "text": "A block display exists.",
+          "pass": true
+        },
+        {
+          "id": "renders",
+          "kind": "must",
+          "text": "/recent-articles lists the five newest published articles, newest first, as links.",
+          "pass": true,
+          "detail": "HTTP 200 shown=true order=true hidden=true"
+        },
+        {
+          "id": "block-not-placed",
+          "kind": "must_not",
+          "text": "The view block is not placed in any region.",
+          "pass": true
+        }
+      ],
+      "passed": 8,
+      "total": 8,
+      "diff": "diff --git a/config/sync/views.view.recent_articles.yml b/config/sync/views.view.recent_articles.yml\nnew file mode 100644\nindex 0000000..1be2c36\n--- /dev/null\n+++ b/config/sync/views.view.recent_articles.yml\n@@ -0,0 +1,215 @@\n+uuid: a5b24177-e21b-418f-af85-d6ccebc54daa\n+langcode: en\n+status: true\n+dependencies:\n+  config:\n+    - node.type.article\n+  module:\n+    - node\n+    - user\n+id: recent_articles\n+label: 'Recent articles'\n+module: views\n+description: 'The five most recently created published articles.'\n+tag: default\n+base_table: node_field_data\n+base_field: nid\n+display:\n+  default:\n+    id: default\n+    display_title: Default\n+    display_plugin: default\n+    position: 0\n+    display_options:\n+      title: 'Recent articles'\n+      fields:\n+        title:\n+          id: title\n+          table: node_field_data\n+          field: title\n+          relationship: none\n+          group_type: group\n+          admin_label: ''\n+          entity_type: node\n+          entity_field: title\n+          plugin_id: field\n+          label: ''\n+          exclude: false\n+          alter:\n+            alter_text: false\n+            make_link: false\n+            absolute: false\n+            word_boundary: false\n+            ellipsis: false\n+            strip_tags: false\n+            trim: false\n+            html: false\n+          element_type: ''\n+          element_class: ''\n+          element_label_type: ''\n+          element_label_class: ''\n+          element_label_colon: false\n+          element_wrapper_type: ''\n+          element_wrapper_class: ''\n+          element_default_classes: true\n+          empty: ''\n+          hide_empty: false\n+          empty_zero: false\n+          hide_alter_empty: true\n+          click_sort_column: value\n+          type: string\n+          settings:\n+            link_to_entity: true\n+          group_column: value\n+          group_columns: {  }\n+          group_rows: true\n+          field_api_classes: false\n+          delta: -1\n+          fieldapi_revision: false\n+      pager:\n+        type: some\n+        options:\n+          offset: 0\n+          items_per_page: 5\n+      exposed_form:\n+        type: basic\n+        options: {  }\n+      access:\n+        type: perm\n+        options:\n+          perm: 'access content'\n+      cache:\n+        type: tag\n+        options: {  }\n+      empty: {  }\n+      sorts:\n+        created:\n+          id: created\n+          table: node_field_data\n+          field: created\n+          relationship: none\n+          group_type: group\n+          admin_label: ''\n+          entity_type: node\n+          entity_field: created\n+          plugin_id: date\n+          order: DESC\n+          expose:\n+            label: ''\n+          exposed: false\n+          granularity: second\n+        nid:\n+          id: nid\n+          table: node_field_data\n+          field: nid\n+          relationship: none\n+          group_type: group\n+          admin_label: ''\n+          entity_type: node\n+          entity_field: nid\n+          plugin_id: standard\n+          order: DESC\n+          expose:\n+            label: ''\n+          exposed: false\n+      arguments: {  }\n+      filters:\n+        status:\n+          id: status\n+          table: node_field_data\n+          field: status\n+          relationship: none\n+          entity_type: node\n+          entity_field: status\n+          plugin_id: boolean\n+          operator: '='\n+          value: '1'\n+          group: 1\n+          exposed: false\n+          expose:\n+            label: ''\n+            operator: ''\n+          is_grouped: false\n+        type:\n+          id: type\n+          table: node_field_data\n+          field: type\n+          relationship: none\n+          entity_type: node\n+          entity_field: type\n+          plugin_id: bundle\n+          operator: in\n+          value:\n+            article: article\n+          group: 1\n+          exposed: false\n+          expose:\n+            label: ''\n+            operator: ''\n+          is_grouped: false\n+      style:\n+        type: default\n+        options: {  }\n+      row:\n+        type: fields\n+        options: {  }\n+      query:\n+        type: views_query\n+        options: {  }\n+      relationships: {  }\n+      header: {  }\n+      footer: {  }\n+      display_extenders: {  }\n+    cache_metadata:\n+      max-age: -1\n+      contexts:\n+        - 'languages:language_content'\n+        - 'languages:language_interface'\n+        - 'user.node_grants:view'\n+        - user.permissions\n+      tags: {  }\n+  block_1:\n+    id: block_1\n+    display_title: Block\n+    display_plugin: block\n+    position: 2\n+    display_options:\n+      display_description: 'The five most recently created published articles.'\n+      display_extenders: {  }\n+      block_description: 'Recent articles'\n+    cache_metadata:\n+      max-age: -1\n+      contexts:\n+        - 'languages:language_content'\n+        - 'languages:language_interface'\n+        - 'user.node_grants:view'\n+        - user.permissions\n+      tags: {  }\n+  page_1:\n+    id: page_1\n+    display_title: Page\n+    display_plugin: page\n+    position: 1\n+    display_options:\n+      display_extenders: {  }\n+      path: recent-articles\n+      menu:\n+        type: none\n+        title: 'Recent articles'\n+        description: ''\n+        weight: 0\n+        expanded: false\n+        menu_name: main\n+      tab_options:\n+        type: none\n+        title: ''\n+        description: ''\n+        weight: 0\n+    cache_metadata:\n+      max-age: -1\n+      contexts:\n+        - 'languages:language_content'\n+        - 'languages:language_interface'\n+        - 'user.node_grants:view'\n+        - user.permissions\n+      tags: {  }\n",
+      "diffTruncated": false,
+      "diffBytes": 5638
+    },
+    {
+      "task": "sb-block",
+      "mode": "unguided",
+      "run": 1,
+      "startedAt": "2026-11-24T20:02:14.839Z",
+      "agent": {
+        "exitCode": 0,
+        "timedOut": false,
+        "durationSec": 15,
+        "guidanceCalls": {
+          "search": 0,
+          "retrieve": 0,
+          "mcp": 0,
+          "skill": 0
+        },
+        "model": "claude-haiku-5-5",
+        "tokens": {
+          "input": 10,
+          "output": 1960,
+          "cacheRead": 83610,
+          "cacheCreation": 8292,
+          "total": 93872
+        },
+        "costUsd": 0.0034755,
+        "numTurns": 5
+      },
+      "checks": [
+        {
+          "id": "block-content",
+          "kind": "must",
+          "text": "A basic custom block \"Office hours\" with the opening hours in its body exists.",
+          "pass": true
+        },
+        {
+          "id": "placed",
+          "kind": "must",
+          "text": "The block is placed and enabled in Olivero's footer_top region.",
+          "pass": true
+        },
+        {
+          "id": "title-visible",
+          "kind": "must",
+          "text": "The placed block displays its title.",
+          "pass": true
+        },
+        {
+          "id": "all-pages",
+          "kind": "must",
+          "text": "The placed block has no visibility conditions.",
+          "pass": true
+        },
+        {
+          "id": "renders",
+          "kind": "must",
+          "text": "The front page and /user/login show the opening hours.",
+          "pass": true,
+          "detail": "front=200 login=200"
+        },
+        {
+          "id": "not-in-admin-theme",
+          "kind": "must_not",
+          "text": "The block is not placed in the Claro admin theme.",
+          "pass": true
+        }
+      ],
+      "passed": 6,
+      "total": 6,
+      "diff": "diff --git a/bench-state/content.json b/bench-state/content.json\nindex 1713895..e6d5eb8 100644\n--- a/bench-state/content.json\n+++ b/bench-state/content.json\n@@ -1,6 +1,14 @@\n {\n   \"node\": [],\n-  \"block_content\": [],\n+  \"block_content\": [\n+    {\n+      \"id\": 1,\n+      \"uuid\": \"2f3d3961-de45-420e-a50e-722f8203c25d\",\n+      \"type\": \"basic\",\n+      \"info\": \"Office hours\",\n+      \"body\": \"<p>Open Monday to Friday, 9:00 to 17:00</p>\"\n+    }\n+  ],\n   \"menu_link_content\": [],\n   \"user\": [\n     {\ndiff --git a/config/sync/block.block.olivero_officehours.yml b/config/sync/block.block.olivero_officehours.yml\nnew file mode 100644\nindex 0000000..4e06e91\n--- /dev/null\n+++ b/config/sync/block.block.olivero_officehours.yml\n@@ -0,0 +1,23 @@\n+uuid: 6baa2ffb-7b87-4cc0-9622-1921d15b0ef6\n+langcode: en\n+status: true\n+dependencies:\n+  content:\n+    - 'block_content:basic:2f3d3961-de45-420e-a50e-722f8203c25d'\n+  module:\n+    - block_content\n+  theme:\n+    - olivero\n+id: olivero_officehours\n+theme: olivero\n+region: footer_top\n+weight: 0\n+provider: null\n+plugin: 'block_content:2f3d3961-de45-420e-a50e-722f8203c25d'\n+settings:\n+  id: 'block_content:2f3d3961-de45-420e-a50e-722f8203c25d'\n+  label: 'Office hours'\n+  label_display: visible\n+  provider: block_content\n+  view_mode: full\n+visibility: {  }\n",
+      "diffTruncated": false,
+      "diffBytes": 1291
+    },
+    {
+      "task": "sb-block",
+      "mode": "skill",
+      "run": 1,
+      "startedAt": "2026-11-24T20:02:34.366Z",
+      "agent": {
+        "exitCode": 0,
+        "timedOut": false,
+        "durationSec": 18,
+        "guidanceCalls": {
+          "search": 1,
+          "retrieve": 1,
+          "mcp": 0,
+          "skill": 1
+        },
+        "model": "claude-haiku-5-5",
+        "tokens": {
+          "input": 12,
+          "output": 2629,
+          "cacheRead": 118373,
+          "cacheCreation": 13738,
+          "total": 134752
+        },
+        "costUsd": 0.005247030000000001,
+        "numTurns": 8
+      },
+      "checks": [
+        {
+          "id": "block-content",
+          "kind": "must",
+          "text": "A basic custom block \"Office hours\" with the opening hours in its body exists.",
+          "pass": true
+        },
+        {
+          "id": "placed",
+          "kind": "must",
+          "text": "The block is placed and enabled in Olivero's footer_top region.",
+          "pass": true
+        },
+        {
+          "id": "title-visible",
+          "kind": "must",
+          "text": "The placed block displays its title.",
+          "pass": true
+        },
+        {
+          "id": "all-pages",
+          "kind": "must",
+          "text": "The placed block has no visibility conditions.",
+          "pass": true
+        },
+        {
+          "id": "renders",
+          "kind": "must",
+          "text": "The front page and /user/login show the opening hours.",
+          "pass": true,
+          "detail": "front=200 login=200"
+        },
+        {
+          "id": "not-in-admin-theme",
+          "kind": "must_not",
+          "text": "The block is not placed in the Claro admin theme.",
+          "pass": true
+        }
+      ],
+      "passed": 6,
+      "total": 6,
+      "diff": "diff --git a/bench-state/content.json b/bench-state/content.json\nindex 1713895..9cf4c50 100644\n--- a/bench-state/content.json\n+++ b/bench-state/content.json\n@@ -1,6 +1,14 @@\n {\n   \"node\": [],\n-  \"block_content\": [],\n+  \"block_content\": [\n+    {\n+      \"id\": 1,\n+      \"uuid\": \"142b5d08-af50-472a-b097-28528ab10c3d\",\n+      \"type\": \"basic\",\n+      \"info\": \"Office hours\",\n+      \"body\": \"<p>Open Monday to Friday, 9:00 to 17:00</p>\"\n+    }\n+  ],\n   \"menu_link_content\": [],\n   \"user\": [\n     {\ndiff --git a/config/sync/block.block.olivero_office_hours.yml b/config/sync/block.block.olivero_office_hours.yml\nnew file mode 100644\nindex 0000000..d9d4a3d\n--- /dev/null\n+++ b/config/sync/block.block.olivero_office_hours.yml\n@@ -0,0 +1,25 @@\n+uuid: 34130227-cc8a-43e8-9b49-745c2c4aee51\n+langcode: en\n+status: true\n+dependencies:\n+  content:\n+    - 'block_content:basic:142b5d08-af50-472a-b097-28528ab10c3d'\n+  module:\n+    - block_content\n+  theme:\n+    - olivero\n+id: olivero_office_hours\n+theme: olivero\n+region: footer_top\n+weight: 0\n+provider: null\n+plugin: 'block_content:142b5d08-af50-472a-b097-28528ab10c3d'\n+settings:\n+  id: 'block_content:142b5d08-af50-472a-b097-28528ab10c3d'\n+  label: 'Office hours'\n+  label_display: visible\n+  provider: block_content\n+  context_mapping: {  }\n+  view_mode: full\n+  block_serialized: null\n+visibility: {  }\n",
+      "diffTruncated": false,
+      "diffBytes": 1346
+    },
+    {
+      "task": "sb-block",
+      "mode": "mcp",
+      "run": 1,
+      "startedAt": "2026-11-24T20:02:56.998Z",
+      "agent": {
+        "exitCode": 0,
+        "timedOut": false,
+        "durationSec": 16,
+        "guidanceCalls": {
+          "search": 0,
+          "retrieve": 0,
+          "mcp": 0,
+          "skill": 0
+        },
+        "model": "claude-haiku-5-5",
+        "tokens": {
+          "input": 6,
+          "output": 2145,
+          "cacheRead": 47042,
+          "cacheCreation": 9070,
+          "total": 58263
+        },
+        "costUsd": 0.00335752,
+        "numTurns": 3
+      },
+      "checks": [
+        {
+          "id": "block-content",
+          "kind": "must",
+          "text": "A basic custom block \"Office hours\" with the opening hours in its body exists.",
+          "pass": true
+        },
+        {
+          "id": "placed",
+          "kind": "must",
+          "text": "The block is placed and enabled in Olivero's footer_top region.",
+          "pass": true
+        },
+        {
+          "id": "title-visible",
+          "kind": "must",
+          "text": "The placed block displays its title.",
+          "pass": true
+        },
+        {
+          "id": "all-pages",
+          "kind": "must",
+          "text": "The placed block has no visibility conditions.",
+          "pass": true
+        },
+        {
+          "id": "renders",
+          "kind": "must",
+          "text": "The front page and /user/login show the opening hours.",
+          "pass": true,
+          "detail": "front=200 login=200"
+        },
+        {
+          "id": "not-in-admin-theme",
+          "kind": "must_not",
+          "text": "The block is not placed in the Claro admin theme.",
+          "pass": true
+        }
+      ],
+      "passed": 6,
+      "total": 6,
+      "diff": "diff --git a/bench-state/content.json b/bench-state/content.json\nindex 1713895..596e298 100644\n--- a/bench-state/content.json\n+++ b/bench-state/content.json\n@@ -1,6 +1,14 @@\n {\n   \"node\": [],\n-  \"block_content\": [],\n+  \"block_content\": [\n+    {\n+      \"id\": 1,\n+      \"uuid\": \"dc5e5372-8cbe-4615-a368-c527e62adb9a\",\n+      \"type\": \"basic\",\n+      \"info\": \"Office hours\",\n+      \"body\": \"<p>Open Monday to Friday, 9:00 to 17:00</p>\"\n+    }\n+  ],\n   \"menu_link_content\": [],\n   \"user\": [\n     {\ndiff --git a/config/sync/block.block.olivero_officehours.yml b/config/sync/block.block.olivero_officehours.yml\nnew file mode 100644\nindex 0000000..24685ab\n--- /dev/null\n+++ b/config/sync/block.block.olivero_officehours.yml\n@@ -0,0 +1,24 @@\n+uuid: 0a93fae8-89a1-4ff1-bda1-2b5e41f6bdee\n+langcode: en\n+status: true\n+dependencies:\n+  content:\n+    - 'block_content:basic:dc5e5372-8cbe-4615-a368-c527e62adb9a'\n+  module:\n+    - block_content\n+  theme:\n+    - olivero\n+id: olivero_officehours\n+theme: olivero\n+region: footer_top\n+weight: 0\n+provider: null\n+plugin: 'block_content:dc5e5372-8cbe-4615-a368-c527e62adb9a'\n+settings:\n+  id: 'block_content:dc5e5372-8cbe-4615-a368-c527e62adb9a'\n+  label: 'Office hours'\n+  label_display: visible\n+  provider: block_content\n+  view_mode: full\n+  type: basic\n+visibility: {  }\n",
+      "diffTruncated": false,
+      "diffBytes": 1306
+    },
+    {
+      "task": "sb-roles",
+      "mode": "unguided",
+      "run": 1,
+      "startedAt": "2026-11-24T20:03:17.514Z",
+      "agent": {
+        "exitCode": 0,
+        "timedOut": false,
+        "durationSec": 17,
+        "guidanceCalls": {
+          "search": 0,
+          "retrieve": 0,
+          "mcp": 0,
+          "skill": 0
+        },
+        "model": "claude-haiku-5-5",
+        "tokens": {
+          "input": 6,
+          "output": 2334,
+          "cacheRead": 47615,
+          "cacheCreation": 9503,
+          "total": 59458
+        },
+        "costUsd": 0.00354435,
+        "numTurns": 3
+      },
+      "checks": [
+        {
+          "id": "role-exists",
+          "kind": "must",
+          "text": "Role reviewer exists with the label Reviewer.",
+          "pass": true
+        },
+        {
+          "id": "permissions",
+          "kind": "must",
+          "text": "Reviewer has access content overview and view all revisions.",
+          "pass": true,
+          "detail": "access content overview, view all revisions"
+        },
+        {
+          "id": "user-rita",
+          "kind": "must",
+          "text": "An active user rita has the reviewer role.",
+          "pass": true
+        },
+        {
+          "id": "access",
+          "kind": "must",
+          "text": "rita can open /admin/content and an article's revisions, but cannot edit the article.",
+          "pass": true,
+          "detail": "{\"overview\":true,\"revisions\":true,\"update\":false}"
+        },
+        {
+          "id": "no-admin",
+          "kind": "must_not",
+          "text": "Reviewer is not an admin role and has no administer or bypass permissions.",
+          "pass": true
+        },
+        {
+          "id": "no-editing",
+          "kind": "must_not",
+          "text": "Reviewer has no create, edit, delete or revert content permissions.",
+          "pass": true
+        }
+      ],
+      "passed": 6,
+      "total": 6,
+      "diff": "diff --git a/bench-state/content.json b/bench-state/content.json\nindex 1713895..082ef45 100644\n--- a/bench-state/content.json\n+++ b/bench-state/content.json\n@@ -10,6 +10,14 @@\n       \"roles\": [\n         \"administrator\"\n       ]\n+    },\n+    {\n+      \"id\": 2,\n+      \"name\": \"rita\",\n+      \"status\": 1,\n+      \"roles\": [\n+        \"reviewer\"\n+      ]\n     }\n   ],\n   \"path_alias\": [],\ndiff --git a/config/sync/system.action.user_add_role_action.reviewer.yml b/config/sync/system.action.user_add_role_action.reviewer.yml\nnew file mode 100644\nindex 0000000..4f23d45\n--- /dev/null\n+++ b/config/sync/system.action.user_add_role_action.reviewer.yml\n@@ -0,0 +1,14 @@\n+uuid: d527b0c2-0e9b-4638-b061-cf89b341b00a\n+langcode: en\n+status: true\n+dependencies:\n+  config:\n+    - user.role.reviewer\n+  module:\n+    - user\n+id: user_add_role_action.reviewer\n+label: 'Add the Reviewer role to the selected user(s)'\n+type: user\n+plugin: user_add_role_action\n+configuration:\n+  rid: reviewer\ndiff --git a/config/sync/system.action.user_remove_role_action.reviewer.yml b/config/sync/system.action.user_remove_role_action.reviewer.yml\nnew file mode 100644\nindex 0000000..14c8f97\n--- /dev/null\n+++ b/config/sync/system.action.user_remove_role_action.reviewer.yml\n@@ -0,0 +1,14 @@\n+uuid: c5f631da-fe8a-4624-aa7e-537ab8e36b7d\n+langcode: en\n+status: true\n+dependencies:\n+  config:\n+    - user.role.reviewer\n+  module:\n+    - user\n+id: user_remove_role_action.reviewer\n+label: 'Remove the Reviewer role from the selected user(s)'\n+type: user\n+plugin: user_remove_role_action\n+configuration:\n+  rid: reviewer\ndiff --git a/config/sync/user.role.reviewer.yml b/config/sync/user.role.reviewer.yml\nnew file mode 100644\nindex 0000000..468826b\n--- /dev/null\n+++ b/config/sync/user.role.reviewer.yml\n@@ -0,0 +1,13 @@\n+uuid: 2c304bdc-f73c-403d-bbd2-99613f0fb97b\n+langcode: en\n+status: true\n+dependencies:\n+  module:\n+    - node\n+id: reviewer\n+label: Reviewer\n+weight: 4\n+is_admin: false\n+permissions:\n+  - 'access content overview'\n+  - 'view all revisions'\n",
+      "diffTruncated": false,
+      "diffBytes": 2022
+    },
+    {
+      "task": "sb-roles",
+      "mode": "skill",
+      "run": 1,
+      "startedAt": "2026-11-24T20:03:38.844Z",
+      "agent": {
+        "exitCode": 0,
+        "timedOut": false,
+        "durationSec": 21,
+        "guidanceCalls": {
+          "search": 1,
+          "retrieve": 1,
+          "mcp": 0,
+          "skill": 1
+        },
+        "model": "claude-haiku-5-5",
+        "tokens": {
+          "input": 14,
+          "output": 2718,
+          "cacheRead": 154156,
+          "cacheCreation": 18890,
+          "total": 175778
+        },
+        "costUsd": 0.00667996,
+        "numTurns": 9
+      },
+      "checks": [
+        {
+          "id": "role-exists",
+          "kind": "must",
+          "text": "Role reviewer exists with the label Reviewer.",
+          "pass": true
+        },
+        {
+          "id": "permissions",
+          "kind": "must",
+          "text": "Reviewer has access content overview and view all revisions.",
+          "pass": true,
+          "detail": "access content overview, view all revisions"
+        },
+        {
+          "id": "user-rita",
+          "kind": "must",
+          "text": "An active user rita has the reviewer role.",
+          "pass": true
+        },
+        {
+          "id": "access",
+          "kind": "must",
+          "text": "rita can open /admin/content and an article's revisions, but cannot edit the article.",
+          "pass": true,
+          "detail": "{\"overview\":true,\"revisions\":true,\"update\":false}"
+        },
+        {
+          "id": "no-admin",
+          "kind": "must_not",
+          "text": "Reviewer is not an admin role and has no administer or bypass permissions.",
+          "pass": true
+        },
+        {
+          "id": "no-editing",
+          "kind": "must_not",
+          "text": "Reviewer has no create, edit, delete or revert content permissions.",
+          "pass": true
+        }
+      ],
+      "passed": 6,
+      "total": 6,
+      "diff": "diff --git a/bench-state/content.json b/bench-state/content.json\nindex 1713895..082ef45 100644\n--- a/bench-state/content.json\n+++ b/bench-state/content.json\n@@ -10,6 +10,14 @@\n       \"roles\": [\n         \"administrator\"\n       ]\n+    },\n+    {\n+      \"id\": 2,\n+      \"name\": \"rita\",\n+      \"status\": 1,\n+      \"roles\": [\n+        \"reviewer\"\n+      ]\n     }\n   ],\n   \"path_alias\": [],\ndiff --git a/config/sync/system.action.user_add_role_action.reviewer.yml b/config/sync/system.action.user_add_role_action.reviewer.yml\nnew file mode 100644\nindex 0000000..e264ef1\n--- /dev/null\n+++ b/config/sync/system.action.user_add_role_action.reviewer.yml\n@@ -0,0 +1,14 @@\n+uuid: 025a7b79-0823-4983-ad31-58a8d342d091\n+langcode: en\n+status: true\n+dependencies:\n+  config:\n+    - user.role.reviewer\n+  module:\n+    - user\n+id: user_add_role_action.reviewer\n+label: 'Add the Reviewer role to the selected user(s)'\n+type: user\n+plugin: user_add_role_action\n+configuration:\n+  rid: reviewer\ndiff --git a/config/sync/system.action.user_remove_role_action.reviewer.yml b/config/sync/system.action.user_remove_role_action.reviewer.yml\nnew file mode 100644\nindex 0000000..a3fc924\n--- /dev/null\n+++ b/config/sync/system.action.user_remove_role_action.reviewer.yml\n@@ -0,0 +1,14 @@\n+uuid: 7bc680cc-411a-4afb-9444-ce9afe779b73\n+langcode: en\n+status: true\n+dependencies:\n+  config:\n+    - user.role.reviewer\n+  module:\n+    - user\n+id: user_remove_role_action.reviewer\n+label: 'Remove the Reviewer role from the selected user(s)'\n+type: user\n+plugin: user_remove_role_action\n+configuration:\n+  rid: reviewer\ndiff --git a/config/sync/user.role.reviewer.yml b/config/sync/user.role.reviewer.yml\nnew file mode 100644\nindex 0000000..e096cfc\n--- /dev/null\n+++ b/config/sync/user.role.reviewer.yml\n@@ -0,0 +1,13 @@\n+uuid: 60d18071-65a9-4ee5-8979-b2a5382b4e0d\n+langcode: en\n+status: true\n+dependencies:\n+  module:\n+    - node\n+id: reviewer\n+label: Reviewer\n+weight: 4\n+is_admin: false\n+permissions:\n+  - 'access content overview'\n+  - 'view all revisions'\n",
+      "diffTruncated": false,
+      "diffBytes": 2022
+    },
+    {
+      "task": "sb-roles",
+      "mode": "mcp",
+      "run": 1,
+      "startedAt": "2026-11-24T20:04:03.747Z",
+      "agent": {
+        "exitCode": 0,
+        "timedOut": false,
+        "durationSec": 22,
+        "guidanceCalls": {
+          "search": 0,
+          "retrieve": 0,
+          "mcp": 0,
+          "skill": 0
+        },
+        "model": "claude-haiku-5-5",
+        "tokens": {
+          "input": 10,
+          "output": 2391,
+          "cacheRead": 87142,
+          "cacheCreation": 9599,
+          "total": 99142
+        },
+        "costUsd": 0.00398772,
+        "numTurns": 5
+      },
+      "checks": [
+        {
+          "id": "role-exists",
+          "kind": "must",
+          "text": "Role reviewer exists with the label Reviewer.",
+          "pass": true
+        },
+        {
+          "id": "permissions",
+          "kind": "must",
+          "text": "Reviewer has access content overview and view all revisions.",
+          "pass": true,
+          "detail": "access content, access content overview, view all revisions"
+        },
+        {
+          "id": "user-rita",
+          "kind": "must",
+          "text": "An active user rita has the reviewer role.",
+          "pass": true
+        },
+        {
+          "id": "access",
+          "kind": "must",
+          "text": "rita can open /admin/content and an article's revisions, but cannot edit the article.",
+          "pass": true,
+          "detail": "{\"overview\":true,\"revisions\":true,\"update\":false}"
+        },
+        {
+          "id": "no-admin",
+          "kind": "must_not",
+          "text": "Reviewer is not an admin role and has no administer or bypass permissions.",
+          "pass": true
+        },
+        {
+          "id": "no-editing",
+          "kind": "must_not",
+          "text": "Reviewer has no create, edit, delete or revert content permissions.",
+          "pass": true
+        }
+      ],
+      "passed": 6,
+      "total": 6,
+      "diff": "diff --git a/bench-state/content.json b/bench-state/content.json\nindex 1713895..082ef45 100644\n--- a/bench-state/content.json\n+++ b/bench-state/content.json\n@@ -10,6 +10,14 @@\n       \"roles\": [\n         \"administrator\"\n       ]\n+    },\n+    {\n+      \"id\": 2,\n+      \"name\": \"rita\",\n+      \"status\": 1,\n+      \"roles\": [\n+        \"reviewer\"\n+      ]\n     }\n   ],\n   \"path_alias\": [],\ndiff --git a/config/sync/system.action.user_add_role_action.reviewer.yml b/config/sync/system.action.user_add_role_action.reviewer.yml\nnew file mode 100644\nindex 0000000..117b0a0\n--- /dev/null\n+++ b/config/sync/system.action.user_add_role_action.reviewer.yml\n@@ -0,0 +1,14 @@\n+uuid: 9fd83be7-2017-4ffe-9923-9684e9a55794\n+langcode: en\n+status: true\n+dependencies:\n+  config:\n+    - user.role.reviewer\n+  module:\n+    - user\n+id: user_add_role_action.reviewer\n+label: 'Add the Reviewer role to the selected user(s)'\n+type: user\n+plugin: user_add_role_action\n+configuration:\n+  rid: reviewer\ndiff --git a/config/sync/system.action.user_remove_role_action.reviewer.yml b/config/sync/system.action.user_remove_role_action.reviewer.yml\nnew file mode 100644\nindex 0000000..0fb22ba\n--- /dev/null\n+++ b/config/sync/system.action.user_remove_role_action.reviewer.yml\n@@ -0,0 +1,14 @@\n+uuid: 2ffcbd39-8fdc-415a-9578-82974bb2f24a\n+langcode: en\n+status: true\n+dependencies:\n+  config:\n+    - user.role.reviewer\n+  module:\n+    - user\n+id: user_remove_role_action.reviewer\n+label: 'Remove the Reviewer role from the selected user(s)'\n+type: user\n+plugin: user_remove_role_action\n+configuration:\n+  rid: reviewer\ndiff --git a/config/sync/user.role.reviewer.yml b/config/sync/user.role.reviewer.yml\nnew file mode 100644\nindex 0000000..244d3d5\n--- /dev/null\n+++ b/config/sync/user.role.reviewer.yml\n@@ -0,0 +1,15 @@\n+uuid: 2dda8cc6-dbd0-49e7-ae9c-24e54ef43b97\n+langcode: en\n+status: true\n+dependencies:\n+  module:\n+    - node\n+    - system\n+id: reviewer\n+label: Reviewer\n+weight: 4\n+is_admin: false\n+permissions:\n+  - 'access content'\n+  - 'access content overview'\n+  - 'view all revisions'\n",
+      "diffTruncated": false,
+      "diffBytes": 2058
+    },
+    {
+      "task": "sb-menu",
+      "mode": "unguided",
+      "run": 1,
+      "startedAt": "2026-11-24T20:04:30.005Z",
+      "agent": {
+        "exitCode": 0,
+        "timedOut": false,
+        "durationSec": 16,
+        "guidanceCalls": {
+          "search": 0,
+          "retrieve": 0,
+          "mcp": 0,
+          "skill": 0
+        },
+        "model": "claude-haiku-5-5",
+        "tokens": {
+          "input": 8,
+          "output": 2248,
+          "cacheRead": 68629,
+          "cacheCreation": 12231,
+          "total": 83116
+        },
+        "costUsd": 0.00425729,
+        "numTurns": 4
+      },
+      "checks": [
+        {
+          "id": "page",
+          "kind": "must",
+          "text": "Exactly one published basic page is titled About us.",
+          "pass": true
+        },
+        {
+          "id": "alias",
+          "kind": "must",
+          "text": "The About us page has the alias /about.",
+          "pass": true
+        },
+        {
+          "id": "menu-link",
+          "kind": "must",
+          "text": "An enabled main menu link titled About us points to the page.",
+          "pass": true
+        },
+        {
+          "id": "renders",
+          "kind": "must",
+          "text": "The front page links to /about with the text About us.",
+          "pass": true,
+          "detail": "HTTP 200"
+        },
+        {
+          "id": "no-other-menus",
+          "kind": "must_not",
+          "text": "No About us link exists in another menu.",
+          "pass": true
+        }
+      ],
+      "passed": 5,
+      "total": 5,
+      "diff": "diff --git a/bench-state/content.json b/bench-state/content.json\nindex 1713895..0e0e49e 100644\n--- a/bench-state/content.json\n+++ b/bench-state/content.json\n@@ -1,7 +1,24 @@\n {\n-  \"node\": [],\n+  \"node\": [\n+    {\n+      \"id\": 1,\n+      \"type\": \"page\",\n+      \"title\": \"About us\",\n+      \"status\": 1,\n+      \"alias\": \"/about\"\n+    }\n+  ],\n   \"block_content\": [],\n-  \"menu_link_content\": [],\n+  \"menu_link_content\": [\n+    {\n+      \"id\": 1,\n+      \"title\": \"About us\",\n+      \"menu\": \"main\",\n+      \"uri\": \"entity:node/1\",\n+      \"enabled\": 1,\n+      \"parent\": \"\"\n+    }\n+  ],\n   \"user\": [\n     {\n       \"id\": 1,\n@@ -12,6 +29,11 @@\n       ]\n     }\n   ],\n-  \"path_alias\": [],\n+  \"path_alias\": [\n+    {\n+      \"path\": \"/node/1\",\n+      \"alias\": \"/about\"\n+    }\n+  ],\n   \"taxonomy_term\": []\n }\n",
+      "diffTruncated": false,
+      "diffBytes": 788
+    },
+    {
+      "task": "sb-menu",
+      "mode": "skill",
+      "run": 1,
+      "startedAt": "2026-11-24T20:04:49.166Z",
+      "agent": {
+        "exitCode": 0,
+        "timedOut": false,
+        "durationSec": 24,
+        "guidanceCalls": {
+          "search": 1,
+          "retrieve": 1,
+          "mcp": 0,
+          "skill": 1
+        },
+        "model": "claude-haiku-5-5",
+        "tokens": {
+          "input": 14,
+          "output": 3847,
+          "cacheRead": 143713,
+          "cacheCreation": 14895,
+          "total": 162469
+        },
+        "costUsd": 0.006341030000000001,
+        "numTurns": 9
+      },
+      "checks": [
+        {
+          "id": "page",
+          "kind": "must",
+          "text": "Exactly one published basic page is titled About us.",
+          "pass": true
+        },
+        {
+          "id": "alias",
+          "kind": "must",
+          "text": "The About us page has the alias /about.",
+          "pass": true
+        },
+        {
+          "id": "menu-link",
+          "kind": "must",
+          "text": "An enabled main menu link titled About us points to the page.",
+          "pass": true
+        },
+        {
+          "id": "renders",
+          "kind": "must",
+          "text": "The front page links to /about with the text About us.",
+          "pass": true,
+          "detail": "HTTP 200"
+        },
+        {
+          "id": "no-other-menus",
+          "kind": "must_not",
+          "text": "No About us link exists in another menu.",
+          "pass": true
+        }
+      ],
+      "passed": 5,
+      "total": 5,
+      "diff": "diff --git a/bench-state/content.json b/bench-state/content.json\nindex 1713895..0e0e49e 100644\n--- a/bench-state/content.json\n+++ b/bench-state/content.json\n@@ -1,7 +1,24 @@\n {\n-  \"node\": [],\n+  \"node\": [\n+    {\n+      \"id\": 1,\n+      \"type\": \"page\",\n+      \"title\": \"About us\",\n+      \"status\": 1,\n+      \"alias\": \"/about\"\n+    }\n+  ],\n   \"block_content\": [],\n-  \"menu_link_content\": [],\n+  \"menu_link_content\": [\n+    {\n+      \"id\": 1,\n+      \"title\": \"About us\",\n+      \"menu\": \"main\",\n+      \"uri\": \"entity:node/1\",\n+      \"enabled\": 1,\n+      \"parent\": \"\"\n+    }\n+  ],\n   \"user\": [\n     {\n       \"id\": 1,\n@@ -12,6 +29,11 @@\n       ]\n     }\n   ],\n-  \"path_alias\": [],\n+  \"path_alias\": [\n+    {\n+      \"path\": \"/node/1\",\n+      \"alias\": \"/about\"\n+    }\n+  ],\n   \"taxonomy_term\": []\n }\n",
+      "diffTruncated": false,
+      "diffBytes": 788
+    },
+    {
+      "task": "sb-menu",
+      "mode": "mcp",
+      "run": 1,
+      "startedAt": "2026-11-24T20:05:16.703Z",
+      "agent": {
+        "exitCode": 0,
+        "timedOut": false,
+        "durationSec": 24,
+        "guidanceCalls": {
+          "search": 0,
+          "retrieve": 0,
+          "mcp": 0,
+          "skill": 0
+        },
+        "model": "claude-haiku-5-5",
+        "tokens": {
+          "input": 12,
+          "output": 2781,
+          "cacheRead": 103780,
+          "cacheCreation": 9356,
+          "total": 115929
+        },
+        "costUsd": 0.0043007,
+        "numTurns": 6
+      },
+      "checks": [
+        {
+          "id": "page",
+          "kind": "must",
+          "text": "Exactly one published basic page is titled About us.",
+          "pass": true
+        },
+        {
+          "id": "alias",
+          "kind": "must",
+          "text": "The About us page has the alias /about.",
+          "pass": true
+        },
+        {
+          "id": "menu-link",
+          "kind": "must",
+          "text": "An enabled main menu link titled About us points to the page.",
+          "pass": true
+        },
+        {
+          "id": "renders",
+          "kind": "must",
+          "text": "The front page links to /about with the text About us.",
+          "pass": true,
+          "detail": "HTTP 200"
+        },
+        {
+          "id": "no-other-menus",
+          "kind": "must_not",
+          "text": "No About us link exists in another menu.",
+          "pass": true
+        }
+      ],
+      "passed": 5,
+      "total": 5,
+      "diff": "diff --git a/bench-state/content.json b/bench-state/content.json\nindex 1713895..0e0e49e 100644\n--- a/bench-state/content.json\n+++ b/bench-state/content.json\n@@ -1,7 +1,24 @@\n {\n-  \"node\": [],\n+  \"node\": [\n+    {\n+      \"id\": 1,\n+      \"type\": \"page\",\n+      \"title\": \"About us\",\n+      \"status\": 1,\n+      \"alias\": \"/about\"\n+    }\n+  ],\n   \"block_content\": [],\n-  \"menu_link_content\": [],\n+  \"menu_link_content\": [\n+    {\n+      \"id\": 1,\n+      \"title\": \"About us\",\n+      \"menu\": \"main\",\n+      \"uri\": \"entity:node/1\",\n+      \"enabled\": 1,\n+      \"parent\": \"\"\n+    }\n+  ],\n   \"user\": [\n     {\n       \"id\": 1,\n@@ -12,6 +29,11 @@\n       ]\n     }\n   ],\n-  \"path_alias\": [],\n+  \"path_alias\": [\n+    {\n+      \"path\": \"/node/1\",\n+      \"alias\": \"/about\"\n+    }\n+  ],\n   \"taxonomy_term\": []\n }\ndiff --git a/config/sync/.htaccess b/config/sync/.htaccess\nnew file mode 100644\nindex 0000000..b0dc540\n--- /dev/null\n+++ b/config/sync/.htaccess\n@@ -0,0 +1,24 @@\n+# Deny all requests from Apache 2.4+.\n+<IfModule mod_authz_core.c>\n+  Require all denied\n+</IfModule>\n+\n+# Deny all requests from Apache 2.0-2.2.\n+<IfModule !mod_authz_core.c>\n+  Deny from all\n+</IfModule>\n+\n+# Turn off all options we don't need.\n+Options -Indexes -ExecCGI -Includes -MultiViews\n+\n+# Set the catch-all handler to prevent scripts from being executed.\n+SetHandler Drupal_Security_Do_Not_Remove_See_SA_2006_006\n+<Files *>\n+  # Override the handler again if we're run later in the evaluation list.\n+  SetHandler Drupal_Security_Do_Not_Remove_See_SA_2013_003\n+</Files>\n+\n+# If we know how to do it safely, disable the PHP engine entirely.\n+<IfModule mod_php.c>\n+  php_flag engine off\n+</IfModule>\n\\ No newline at end of file\n",
+      "diffTruncated": false,
+      "diffBytes": 1688
+    },
+    {
+      "task": "code-oop-hooks",
+      "mode": "unguided",
+      "run": 1,
+      "startedAt": "2026-11-24T20:05:44.589Z",
+      "agent": {
+        "exitCode": 0,
+        "timedOut": false,
+        "durationSec": 51,
+        "guidanceCalls": {
+          "search": 0,
+          "retrieve": 0,
+          "mcp": 0,
+          "skill": 0
+        },
+        "model": "claude-haiku-5-5",
+        "tokens": {
+          "input": 14,
+          "output": 7477,
+          "cacheRead": 139211,
+          "cacheCreation": 13876,
+          "total": 160578
+        },
+        "costUsd": 0.00790721,
+        "numTurns": 7
+      },
+      "checks": [
+        {
+          "id": "module-enabled",
+          "kind": "must",
+          "text": "Module bench_hooks exists in web/modules/custom/bench_hooks and is enabled.",
+          "pass": true,
+          "detail": "info=true enabled=true"
+        },
+        {
+          "id": "article-title",
+          "kind": "must",
+          "text": "An article saved as \"  hello drupal world \" is stored as \"Hello Drupal World\".",
+          "pass": true,
+          "detail": "\"Hello Drupal World\""
+        },
+        {
+          "id": "page-title",
+          "kind": "must",
+          "text": "With the module enabled, a basic page title is stored unchanged.",
+          "pass": true,
+          "detail": "\"  hello drupal page \""
+        },
+        {
+          "id": "help",
+          "kind": "must",
+          "text": "The module help text says \"Bench hooks tidies article titles.\"",
+          "pass": true,
+          "detail": "Bench hooks tidies article titles."
+        },
+        {
+          "id": "hook-attribute",
+          "kind": "must",
+          "text": "A class in src/Hook uses the #[Hook] attribute.",
+          "pass": true
+        },
+        {
+          "id": "no-legacy-pattern",
+          "kind": "must_not",
+          "text": "No procedural hook implementations (legacy-scan oop-hooks rules).",
+          "pass": true
+        },
+        {
+          "id": "no-deprecated-api",
+          "kind": "must_not",
+          "text": "The module uses no core API that data/drupal/deprecations.json lists as deprecated or removed.",
+          "pass": true
+        }
+      ],
+      "passed": 7,
+      "total": 7,
+      "diff": "diff --git a/config/sync/core.extension.yml b/config/sync/core.extension.yml\nindex 28a14b2..77f1865 100644\n--- a/config/sync/core.extension.yml\n+++ b/config/sync/core.extension.yml\n@@ -3,6 +3,7 @@ _core:\n module:\n   announcements_feed: 0\n   automated_cron: 0\n+  bench_hooks: 0\n   big_pipe: 0\n   block: 0\n   block_content: 0\ndiff --git a/web/modules/custom/bench_hooks/bench_hooks.info.yml b/web/modules/custom/bench_hooks/bench_hooks.info.yml\nnew file mode 100644\nindex 0000000..5fb28e2\n--- /dev/null\n+++ b/web/modules/custom/bench_hooks/bench_hooks.info.yml\n@@ -0,0 +1,8 @@\n+name: Bench hooks\n+type: module\n+description: 'Tidies article titles on save.'\n+package: Custom\n+core_version_requirement: ^11\n+dependencies:\n+  - drupal:node\n+  - drupal:help\ndiff --git a/web/modules/custom/bench_hooks/src/Hook/BenchHooks.php b/web/modules/custom/bench_hooks/src/Hook/BenchHooks.php\nnew file mode 100644\nindex 0000000..99b99c5\n--- /dev/null\n+++ b/web/modules/custom/bench_hooks/src/Hook/BenchHooks.php\n@@ -0,0 +1,42 @@\n+<?php\n+\n+declare(strict_types=1);\n+\n+namespace Drupal\\bench_hooks\\Hook;\n+\n+use Drupal\\Core\\Hook\\Attribute\\Hook;\n+use Drupal\\Core\\Routing\\RouteMatchInterface;\n+use Drupal\\Core\\StringTranslation\\TranslatableMarkup;\n+use Drupal\\node\\NodeInterface;\n+\n+/**\n+ * Hook implementations for the Bench hooks module.\n+ */\n+final class BenchHooks {\n+\n+  /**\n+   * Implements hook_help().\n+   */\n+  #[Hook('help')]\n+  public function help(string $route_name, RouteMatchInterface $route_match): ?TranslatableMarkup {\n+    if ($route_name === 'help.page.bench_hooks') {\n+      return new TranslatableMarkup('Bench hooks tidies article titles.');\n+    }\n+    return NULL;\n+  }\n+\n+  /**\n+   * Implements hook_node_presave().\n+   *\n+   * Trims and title-cases the title of article nodes before they are saved.\n+   */\n+  #[Hook('node_presave')]\n+  public function nodePresave(NodeInterface $node): void {\n+    if ($node->bundle() !== 'article') {\n+      return;\n+    }\n+    $title = mb_convert_case(trim($node->getTitle()), MB_CASE_TITLE, 'UTF-8');\n+    $node->setTitle($title);\n+  }\n+\n+}\n",
+      "diffTruncated": false,
+      "diffBytes": 2083
+    },
+    {
+      "task": "code-oop-hooks",
+      "mode": "skill",
+      "run": 1,
+      "startedAt": "2026-11-24T20:06:41.502Z",
+      "agent": {
+        "exitCode": 0,
+        "timedOut": false,
+        "durationSec": 30,
+        "guidanceCalls": {
+          "search": 2,
+          "retrieve": 1,
+          "mcp": 0,
+          "skill": 1
+        },
+        "model": "claude-haiku-5-5",
+        "tokens": {
+          "input": 18,
+          "output": 4576,
+          "cacheRead": 201478,
+          "cacheCreation": 20706,
+          "total": 226778
+        },
+        "costUsd": 0.00844578,
+        "numTurns": 13
+      },
+      "checks": [
+        {
+          "id": "module-enabled",
+          "kind": "must",
+          "text": "Module bench_hooks exists in web/modules/custom/bench_hooks and is enabled.",
+          "pass": true,
+          "detail": "info=true enabled=true"
+        },
+        {
+          "id": "article-title",
+          "kind": "must",
+          "text": "An article saved as \"  hello drupal world \" is stored as \"Hello Drupal World\".",
+          "pass": true,
+          "detail": "\"Hello Drupal World\""
+        },
+        {
+          "id": "page-title",
+          "kind": "must",
+          "text": "With the module enabled, a basic page title is stored unchanged.",
+          "pass": true,
+          "detail": "\"  hello drupal page \""
+        },
+        {
+          "id": "help",
+          "kind": "must",
+          "text": "The module help text says \"Bench hooks tidies article titles.\"",
+          "pass": true,
+          "detail": "Bench hooks tidies article titles."
+        },
+        {
+          "id": "hook-attribute",
+          "kind": "must",
+          "text": "A class in src/Hook uses the #[Hook] attribute.",
+          "pass": true
+        },
+        {
+          "id": "no-legacy-pattern",
+          "kind": "must_not",
+          "text": "No procedural hook implementations (legacy-scan oop-hooks rules).",
+          "pass": true
+        },
+        {
+          "id": "no-deprecated-api",
+          "kind": "must_not",
+          "text": "The module uses no core API that data/drupal/deprecations.json lists as deprecated or removed.",
+          "pass": true
+        }
+      ],
+      "passed": 7,
+      "total": 7,
+      "diff": "diff --git a/config/sync/core.extension.yml b/config/sync/core.extension.yml\nindex 28a14b2..77f1865 100644\n--- a/config/sync/core.extension.yml\n+++ b/config/sync/core.extension.yml\n@@ -3,6 +3,7 @@ _core:\n module:\n   announcements_feed: 0\n   automated_cron: 0\n+  bench_hooks: 0\n   big_pipe: 0\n   block: 0\n   block_content: 0\ndiff --git a/web/modules/custom/bench_hooks/bench_hooks.info.yml b/web/modules/custom/bench_hooks/bench_hooks.info.yml\nnew file mode 100644\nindex 0000000..99e317c\n--- /dev/null\n+++ b/web/modules/custom/bench_hooks/bench_hooks.info.yml\n@@ -0,0 +1,5 @@\n+name: Bench hooks\n+type: module\n+description: 'Tidies article titles on save.'\n+core_version_requirement: ^11\n+package: Custom\ndiff --git a/web/modules/custom/bench_hooks/src/Hook/BenchHooksHooks.php b/web/modules/custom/bench_hooks/src/Hook/BenchHooksHooks.php\nnew file mode 100644\nindex 0000000..b5bf8ab\n--- /dev/null\n+++ b/web/modules/custom/bench_hooks/src/Hook/BenchHooksHooks.php\n@@ -0,0 +1,38 @@\n+<?php\n+\n+declare(strict_types=1);\n+\n+namespace Drupal\\bench_hooks\\Hook;\n+\n+use Drupal\\Core\\Hook\\Attribute\\Hook;\n+use Drupal\\node\\NodeInterface;\n+\n+/**\n+ * Hook implementations for the Bench hooks module.\n+ */\n+class BenchHooksHooks {\n+\n+  /**\n+   * Implements hook_help().\n+   */\n+  #[Hook('help')]\n+  public function help(string $route_name): ?string {\n+    if ($route_name === 'help.page.bench_hooks') {\n+      return 'Bench hooks tidies article titles.';\n+    }\n+    return NULL;\n+  }\n+\n+  /**\n+   * Implements hook_node_presave().\n+   */\n+  #[Hook('node_presave')]\n+  public function nodePresave(NodeInterface $node): void {\n+    if ($node->bundle() !== 'article') {\n+      return;\n+    }\n+    $title = $node->getTitle();\n+    $node->setTitle(mb_convert_case(trim($title), MB_CASE_TITLE));\n+  }\n+\n+}\n",
+      "diffTruncated": false,
+      "diffBytes": 1784
+    },
+    {
+      "task": "code-oop-hooks",
+      "mode": "mcp",
+      "run": 1,
+      "startedAt": "2026-11-24T20:07:16.863Z",
+      "agent": {
+        "exitCode": 0,
+        "timedOut": false,
+        "durationSec": 30,
+        "guidanceCalls": {
+          "search": 0,
+          "retrieve": 0,
+          "mcp": 3,
+          "skill": 0
+        },
+        "model": "claude-haiku-5-5",
+        "tokens": {
+          "input": 16,
+          "output": 4640,
+          "cacheRead": 160030,
+          "cacheCreation": 13731,
+          "total": 178417
+        },
+        "costUsd": 0.006668100000000001,
+        "numTurns": 11
+      },
+      "checks": [
+        {
+          "id": "module-enabled",
+          "kind": "must",
+          "text": "Module bench_hooks exists in web/modules/custom/bench_hooks and is enabled.",
+          "pass": true,
+          "detail": "info=true enabled=true"
+        },
+        {
+          "id": "article-title",
+          "kind": "must",
+          "text": "An article saved as \"  hello drupal world \" is stored as \"Hello Drupal World\".",
+          "pass": true,
+          "detail": "\"Hello Drupal World\""
+        },
+        {
+          "id": "page-title",
+          "kind": "must",
+          "text": "With the module enabled, a basic page title is stored unchanged.",
+          "pass": true,
+          "detail": "\"  hello drupal page \""
+        },
+        {
+          "id": "help",
+          "kind": "must",
+          "text": "The module help text says \"Bench hooks tidies article titles.\"",
+          "pass": true,
+          "detail": "<p>Bench hooks tidies article titles.</p>"
+        },
+        {
+          "id": "hook-attribute",
+          "kind": "must",
+          "text": "A class in src/Hook uses the #[Hook] attribute.",
+          "pass": false
+        },
+        {
+          "id": "no-legacy-pattern",
+          "kind": "must_not",
+          "text": "No procedural hook implementations (legacy-scan oop-hooks rules).",
+          "pass": false,
+          "detail": "procedural-hook-implementation bench_hooks.module:14; procedural-hook-implementation bench_hooks.module:24"
+        },
+        {
+          "id": "no-deprecated-api",
+          "kind": "must_not",
+          "text": "The module uses no core API that data/drupal/deprecations.json lists as deprecated or removed.",
+          "pass": true
+        }
+      ],
+      "passed": 5,
+      "total": 7,
+      "diff": "diff --git a/config/sync/core.extension.yml b/config/sync/core.extension.yml\nindex 28a14b2..77f1865 100644\n--- a/config/sync/core.extension.yml\n+++ b/config/sync/core.extension.yml\n@@ -3,6 +3,7 @@ _core:\n module:\n   announcements_feed: 0\n   automated_cron: 0\n+  bench_hooks: 0\n   big_pipe: 0\n   block: 0\n   block_content: 0\ndiff --git a/web/modules/custom/bench_hooks/bench_hooks.info.yml b/web/modules/custom/bench_hooks/bench_hooks.info.yml\nnew file mode 100644\nindex 0000000..99e317c\n--- /dev/null\n+++ b/web/modules/custom/bench_hooks/bench_hooks.info.yml\n@@ -0,0 +1,5 @@\n+name: Bench hooks\n+type: module\n+description: 'Tidies article titles on save.'\n+core_version_requirement: ^11\n+package: Custom\ndiff --git a/web/modules/custom/bench_hooks/bench_hooks.module b/web/modules/custom/bench_hooks/bench_hooks.module\nnew file mode 100644\nindex 0000000..2f2cefb\n--- /dev/null\n+++ b/web/modules/custom/bench_hooks/bench_hooks.module\n@@ -0,0 +1,30 @@\n+<?php\n+\n+/**\n+ * @file\n+ * Hook implementations for the Bench hooks module.\n+ */\n+\n+use Drupal\\Core\\Routing\\RouteMatchInterface;\n+use Drupal\\node\\NodeInterface;\n+\n+/**\n+ * Implements hook_help().\n+ */\n+function bench_hooks_help($route_name, RouteMatchInterface $route_match) {\n+  switch ($route_name) {\n+    case 'help.page.bench_hooks':\n+      return '<p>' . t('Bench hooks tidies article titles.') . '</p>';\n+  }\n+}\n+\n+/**\n+ * Implements hook_ENTITY_TYPE_presave() for node entities.\n+ */\n+function bench_hooks_node_presave(NodeInterface $node) {\n+  if ($node->bundle() !== 'article') {\n+    return;\n+  }\n+  $title = trim((string) $node->getTitle());\n+  $node->setTitle(mb_convert_case($title, MB_CASE_TITLE, 'UTF-8'));\n+}\n",
+      "diffTruncated": false,
+      "diffBytes": 1675
+    },
+    {
+      "task": "code-plugin-attributes",
+      "mode": "unguided",
+      "run": 1,
+      "startedAt": "2026-11-24T20:07:53.036Z",
+      "agent": {
+        "exitCode": 0,
+        "timedOut": false,
+        "durationSec": 18,
+        "guidanceCalls": {
+          "search": 0,
+          "retrieve": 0,
+          "mcp": 0,
+          "skill": 0
+        },
+        "model": "claude-haiku-5-5",
+        "tokens": {
+          "input": 8,
+          "output": 2456,
+          "cacheRead": 64952,
+          "cacheCreation": 8726,
+          "total": 76142
+        },
+        "costUsd": 0.00362352,
+        "numTurns": 4
+      },
+      "checks": [
+        {
+          "id": "module-enabled",
+          "kind": "must",
+          "text": "Module bench_block exists in web/modules/custom/bench_block and is enabled.",
+          "pass": true,
+          "detail": "info=true enabled=true"
+        },
+        {
+          "id": "definition",
+          "kind": "must",
+          "text": "Block plugin bench_greeting exists with the admin label Bench greeting.",
+          "pass": true,
+          "detail": "Bench greeting"
+        },
+        {
+          "id": "attribute",
+          "kind": "must",
+          "text": "The plugin is declared with the #[Block] attribute.",
+          "pass": true
+        },
+        {
+          "id": "config-form",
+          "kind": "must",
+          "text": "Saving a greeting in the block form changes the rendered text.",
+          "pass": true,
+          "detail": "OUT:Howdy, bench"
+        },
+        {
+          "id": "renders",
+          "kind": "must",
+          "text": "The block is placed in Olivero's content region and the front page shows the default greeting.",
+          "pass": true,
+          "detail": "HTTP 200"
+        },
+        {
+          "id": "no-legacy-pattern",
+          "kind": "must_not",
+          "text": "No @Block annotation (legacy-scan plugin-attributes rules).",
+          "pass": true
+        },
+        {
+          "id": "no-deprecated-api",
+          "kind": "must_not",
+          "text": "The module uses no core API that data/drupal/deprecations.json lists as deprecated or removed.",
+          "pass": true
+        }
+      ],
+      "passed": 7,
+      "total": 7,
+      "diff": "diff --git a/config/sync/block.block.olivero_bench_greeting.yml b/config/sync/block.block.olivero_bench_greeting.yml\nnew file mode 100644\nindex 0000000..b31c6f5\n--- /dev/null\n+++ b/config/sync/block.block.olivero_bench_greeting.yml\n@@ -0,0 +1,21 @@\n+uuid: 95e89f35-20ac-4b2d-b3de-4c23515eff5f\n+langcode: en\n+status: true\n+dependencies:\n+  module:\n+    - bench_block\n+  theme:\n+    - olivero\n+id: olivero_bench_greeting\n+theme: olivero\n+region: content\n+weight: 0\n+provider: null\n+plugin: bench_greeting\n+settings:\n+  id: bench_greeting\n+  label: 'Bench greeting'\n+  label_display: '0'\n+  provider: bench_block\n+  greeting: 'Hello from the benchmark'\n+visibility: {  }\ndiff --git a/config/sync/core.extension.yml b/config/sync/core.extension.yml\nindex 28a14b2..1aecda1 100644\n--- a/config/sync/core.extension.yml\n+++ b/config/sync/core.extension.yml\n@@ -3,6 +3,7 @@ _core:\n module:\n   announcements_feed: 0\n   automated_cron: 0\n+  bench_block: 0\n   big_pipe: 0\n   block: 0\n   block_content: 0\ndiff --git a/web/modules/custom/bench_block/bench_block.info.yml b/web/modules/custom/bench_block/bench_block.info.yml\nnew file mode 100644\nindex 0000000..9456380\n--- /dev/null\n+++ b/web/modules/custom/bench_block/bench_block.info.yml\n@@ -0,0 +1,5 @@\n+name: Bench Block\n+type: module\n+description: Provides a configurable greeting block for the benchmark.\n+core_version_requirement: ^11\n+package: Custom\ndiff --git a/web/modules/custom/bench_block/src/Plugin/Block/BenchGreetingBlock.php b/web/modules/custom/bench_block/src/Plugin/Block/BenchGreetingBlock.php\nnew file mode 100644\nindex 0000000..3ad3347\n--- /dev/null\n+++ b/web/modules/custom/bench_block/src/Plugin/Block/BenchGreetingBlock.php\n@@ -0,0 +1,59 @@\n+<?php\n+\n+namespace Drupal\\bench_block\\Plugin\\Block;\n+\n+use Drupal\\Core\\Block\\Attribute\\Block;\n+use Drupal\\Core\\Block\\BlockBase;\n+use Drupal\\Core\\Form\\FormStateInterface;\n+use Drupal\\Core\\StringTranslation\\TranslatableMarkup;\n+\n+/**\n+ * Provides a block that shows a configurable greeting.\n+ */\n+#[Block(\n+  id: 'bench_greeting',\n+  admin_label: new TranslatableMarkup('Bench greeting'),\n+)]\n+class BenchGreetingBlock extends BlockBase {\n+\n+  /**\n+   * {@inheritdoc}\n+   */\n+  public function defaultConfiguration() {\n+    return [\n+      'greeting' => 'Hello from the benchmark',\n+    ] + parent::defaultConfiguration();\n+  }\n+\n+  /**\n+   * {@inheritdoc}\n+   */\n+  public function blockForm($form, FormStateInterface $form_state) {\n+    $form = parent::blockForm($form, $form_state);\n+    $form['greeting'] = [\n+      '#type' => 'textfield',\n+      '#title' => $this->t('Greeting'),\n+      '#default_value' => $this->configuration['greeting'],\n+      '#required' => TRUE,\n+    ];\n+    return $form;\n+  }\n+\n+  /**\n+   * {@inheritdoc}\n+   */\n+  public function blockSubmit($form, FormStateInterface $form_state) {\n+    parent::blockSubmit($form, $form_state);\n+    $this->configuration['greeting'] = $form_state->getValue('greeting');\n+  }\n+\n+  /**\n+   * {@inheritdoc}\n+   */\n+  public function build() {\n+    return [\n+      '#markup' => $this->configuration['greeting'],\n+    ];\n+  }\n+\n+}\n",
+      "diffTruncated": false,
+      "diffBytes": 3095
+    },
+    {
+      "task": "code-plugin-attributes",
+      "mode": "skill",
+      "run": 1,
+      "startedAt": "2026-11-24T20:08:16.901Z",
+      "agent": {
+        "exitCode": 0,
+        "timedOut": false,
+        "durationSec": 33,
+        "guidanceCalls": {
+          "search": 1,
+          "retrieve": 1,
+          "mcp": 0,
+          "skill": 1
+        },
+        "model": "claude-haiku-5-5",
+        "tokens": {
+          "input": 16,
+          "output": 4710,
+          "cacheRead": 199323,
+          "cacheCreation": 26488,
+          "total": 230537
+        },
+        "costUsd": 0.009647430000000002,
+        "numTurns": 12
+      },
+      "checks": [
+        {
+          "id": "module-enabled",
+          "kind": "must",
+          "text": "Module bench_block exists in web/modules/custom/bench_block and is enabled.",
+          "pass": true,
+          "detail": "info=true enabled=true"
+        },
+        {
+          "id": "definition",
+          "kind": "must",
+          "text": "Block plugin bench_greeting exists with the admin label Bench greeting.",
+          "pass": true,
+          "detail": "Bench greeting"
+        },
+        {
+          "id": "attribute",
+          "kind": "must",
+          "text": "The plugin is declared with the #[Block] attribute.",
+          "pass": true
+        },
+        {
+          "id": "config-form",
+          "kind": "must",
+          "text": "Saving a greeting in the block form changes the rendered text.",
+          "pass": true,
+          "detail": "OUT:Howdy, bench"
+        },
+        {
+          "id": "renders",
+          "kind": "must",
+          "text": "The block is placed in Olivero's content region and the front page shows the default greeting.",
+          "pass": true,
+          "detail": "HTTP 200"
+        },
+        {
+          "id": "no-legacy-pattern",
+          "kind": "must_not",
+          "text": "No @Block annotation (legacy-scan plugin-attributes rules).",
+          "pass": true
+        },
+        {
+          "id": "no-deprecated-api",
+          "kind": "must_not",
+          "text": "The module uses no core API that data/drupal/deprecations.json lists as deprecated or removed.",
+          "pass": true
+        }
+      ],
+      "passed": 7,
+      "total": 7,
+      "diff": "diff --git a/config/sync/block.block.olivero_bench_block_greeting.yml b/config/sync/block.block.olivero_bench_block_greeting.yml\nnew file mode 100644\nindex 0000000..44ff6d9\n--- /dev/null\n+++ b/config/sync/block.block.olivero_bench_block_greeting.yml\n@@ -0,0 +1,21 @@\n+uuid: bc3f1990-75f0-4682-bcea-f01754585948\n+langcode: en\n+status: true\n+dependencies:\n+  module:\n+    - bench_block\n+  theme:\n+    - olivero\n+id: olivero_bench_block_greeting\n+theme: olivero\n+region: content\n+weight: 0\n+provider: null\n+plugin: bench_greeting\n+settings:\n+  id: bench_greeting\n+  label: 'Bench greeting'\n+  label_display: '0'\n+  provider: bench_block\n+  greeting: 'Hello from the benchmark'\n+visibility: {  }\ndiff --git a/config/sync/core.extension.yml b/config/sync/core.extension.yml\nindex 28a14b2..1aecda1 100644\n--- a/config/sync/core.extension.yml\n+++ b/config/sync/core.extension.yml\n@@ -3,6 +3,7 @@ _core:\n module:\n   announcements_feed: 0\n   automated_cron: 0\n+  bench_block: 0\n   big_pipe: 0\n   block: 0\n   block_content: 0\ndiff --git a/web/modules/custom/bench_block/bench_block.info.yml b/web/modules/custom/bench_block/bench_block.info.yml\nnew file mode 100644\nindex 0000000..cb88466\n--- /dev/null\n+++ b/web/modules/custom/bench_block/bench_block.info.yml\n@@ -0,0 +1,5 @@\n+name: Bench block\n+type: module\n+description: 'Provides a configurable greeting block for the benchmark.'\n+core_version_requirement: ^11\n+package: Custom\ndiff --git a/web/modules/custom/bench_block/src/Plugin/Block/BenchGreetingBlock.php b/web/modules/custom/bench_block/src/Plugin/Block/BenchGreetingBlock.php\nnew file mode 100644\nindex 0000000..ea13991\n--- /dev/null\n+++ b/web/modules/custom/bench_block/src/Plugin/Block/BenchGreetingBlock.php\n@@ -0,0 +1,60 @@\n+<?php\n+\n+declare(strict_types=1);\n+\n+namespace Drupal\\bench_block\\Plugin\\Block;\n+\n+use Drupal\\Core\\Block\\Attribute\\Block;\n+use Drupal\\Core\\Block\\BlockBase;\n+use Drupal\\Core\\Form\\FormStateInterface;\n+use Drupal\\Core\\StringTranslation\\TranslatableMarkup;\n+\n+/**\n+ * Shows a configurable greeting.\n+ */\n+#[Block(\n+  id: 'bench_greeting',\n+  admin_label: new TranslatableMarkup('Bench greeting'),\n+)]\n+class BenchGreetingBlock extends BlockBase {\n+\n+  /**\n+   * {@inheritdoc}\n+   */\n+  public function defaultConfiguration(): array {\n+    return [\n+      'greeting' => 'Hello from the benchmark',\n+    ] + parent::defaultConfiguration();\n+  }\n+\n+  /**\n+   * {@inheritdoc}\n+   */\n+  public function blockForm($form, FormStateInterface $form_state): array {\n+    $form = parent::blockForm($form, $form_state);\n+    $form['greeting'] = [\n+      '#type' => 'textfield',\n+      '#title' => $this->t('Greeting'),\n+      '#default_value' => $this->configuration['greeting'],\n+      '#required' => TRUE,\n+    ];\n+    return $form;\n+  }\n+\n+  /**\n+   * {@inheritdoc}\n+   */\n+  public function blockSubmit($form, FormStateInterface $form_state): void {\n+    $this->configuration['greeting'] = $form_state->getValue('greeting');\n+  }\n+\n+  /**\n+   * {@inheritdoc}\n+   */\n+  public function build(): array {\n+    return [\n+      '#plain_text' => $this->configuration['greeting'],\n+    ];\n+  }\n+\n+}\n",
+      "diffTruncated": false,
+      "diffBytes": 3112
+    },
+    {
+      "task": "code-plugin-attributes",
+      "mode": "mcp",
+      "run": 1,
+      "startedAt": "2026-11-24T20:08:55.363Z",
+      "agent": {
+        "exitCode": 0,
+        "timedOut": false,
+        "durationSec": 30,
+        "guidanceCalls": {
+          "search": 0,
+          "retrieve": 0,
+          "mcp": 2,
+          "skill": 0
+        },
+        "model": "claude-haiku-5-5",
+        "tokens": {
+          "input": 18,
+          "output": 4479,
+          "cacheRead": 229697,
+          "cacheCreation": 25871,
+          "total": 260065
+        },
+        "costUsd": 0.00971247,
+        "numTurns": 14
+      },
+      "checks": [
+        {
+          "id": "module-enabled",
+          "kind": "must",
+          "text": "Module bench_block exists in web/modules/custom/bench_block and is enabled.",
+          "pass": true,
+          "detail": "info=true enabled=true"
+        },
+        {
+          "id": "definition",
+          "kind": "must",
+          "text": "Block plugin bench_greeting exists with the admin label Bench greeting.",
+          "pass": true,
+          "detail": "Bench greeting"
+        },
+        {
+          "id": "attribute",
+          "kind": "must",
+          "text": "The plugin is declared with the #[Block] attribute.",
+          "pass": true
+        },
+        {
+          "id": "config-form",
+          "kind": "must",
+          "text": "Saving a greeting in the block form changes the rendered text.",
+          "pass": true,
+          "detail": "OUT:Howdy, bench"
+        },
+        {
+          "id": "renders",
+          "kind": "must",
+          "text": "The block is placed in Olivero's content region and the front page shows the default greeting.",
+          "pass": true,
+          "detail": "HTTP 200"
+        },
+        {
+          "id": "no-legacy-pattern",
+          "kind": "must_not",
+          "text": "No @Block annotation (legacy-scan plugin-attributes rules).",
+          "pass": true
+        },
+        {
+          "id": "no-deprecated-api",
+          "kind": "must_not",
+          "text": "The module uses no core API that data/drupal/deprecations.json lists as deprecated or removed.",
+          "pass": true
+        }
+      ],
+      "passed": 7,
+      "total": 7,
+      "diff": "diff --git a/config/sync/block.block.olivero_bench_greeting.yml b/config/sync/block.block.olivero_bench_greeting.yml\nnew file mode 100644\nindex 0000000..38fab55\n--- /dev/null\n+++ b/config/sync/block.block.olivero_bench_greeting.yml\n@@ -0,0 +1,21 @@\n+uuid: 65f886e6-b712-4185-903a-50d6eac71ada\n+langcode: en\n+status: true\n+dependencies:\n+  module:\n+    - bench_block\n+  theme:\n+    - olivero\n+id: olivero_bench_greeting\n+theme: olivero\n+region: content\n+weight: 0\n+provider: null\n+plugin: bench_greeting\n+settings:\n+  id: bench_greeting\n+  label: 'Bench greeting'\n+  label_display: '0'\n+  provider: bench_block\n+  greeting: 'Hello from the benchmark'\n+visibility: {  }\ndiff --git a/config/sync/core.extension.yml b/config/sync/core.extension.yml\nindex 28a14b2..1aecda1 100644\n--- a/config/sync/core.extension.yml\n+++ b/config/sync/core.extension.yml\n@@ -3,6 +3,7 @@ _core:\n module:\n   announcements_feed: 0\n   automated_cron: 0\n+  bench_block: 0\n   big_pipe: 0\n   block: 0\n   block_content: 0\ndiff --git a/web/modules/custom/bench_block/bench_block.info.yml b/web/modules/custom/bench_block/bench_block.info.yml\nnew file mode 100644\nindex 0000000..6ebbe2f\n--- /dev/null\n+++ b/web/modules/custom/bench_block/bench_block.info.yml\n@@ -0,0 +1,5 @@\n+name: Bench block\n+type: module\n+description: 'Provides a configurable greeting block.'\n+package: Custom\n+core_version_requirement: ^11\ndiff --git a/web/modules/custom/bench_block/src/Plugin/Block/BenchGreetingBlock.php b/web/modules/custom/bench_block/src/Plugin/Block/BenchGreetingBlock.php\nnew file mode 100644\nindex 0000000..3784804\n--- /dev/null\n+++ b/web/modules/custom/bench_block/src/Plugin/Block/BenchGreetingBlock.php\n@@ -0,0 +1,61 @@\n+<?php\n+\n+declare(strict_types=1);\n+\n+namespace Drupal\\bench_block\\Plugin\\Block;\n+\n+use Drupal\\Core\\Block\\Attribute\\Block;\n+use Drupal\\Core\\Block\\BlockBase;\n+use Drupal\\Core\\Form\\FormStateInterface;\n+use Drupal\\Core\\StringTranslation\\TranslatableMarkup;\n+\n+/**\n+ * Shows a configurable greeting.\n+ */\n+#[Block(\n+  id: 'bench_greeting',\n+  admin_label: new TranslatableMarkup('Bench greeting'),\n+)]\n+class BenchGreetingBlock extends BlockBase {\n+\n+  /**\n+   * {@inheritdoc}\n+   */\n+  public function defaultConfiguration(): array {\n+    return [\n+      'greeting' => 'Hello from the benchmark',\n+    ] + parent::defaultConfiguration();\n+  }\n+\n+  /**\n+   * {@inheritdoc}\n+   */\n+  public function blockForm($form, FormStateInterface $form_state): array {\n+    $form = parent::blockForm($form, $form_state);\n+    $form['greeting'] = [\n+      '#type' => 'textfield',\n+      '#title' => $this->t('Greeting'),\n+      '#default_value' => $this->configuration['greeting'],\n+      '#required' => TRUE,\n+    ];\n+    return $form;\n+  }\n+\n+  /**\n+   * {@inheritdoc}\n+   */\n+  public function blockSubmit($form, FormStateInterface $form_state): void {\n+    parent::blockSubmit($form, $form_state);\n+    $this->configuration['greeting'] = $form_state->getValue('greeting');\n+  }\n+\n+  /**\n+   * {@inheritdoc}\n+   */\n+  public function build(): array {\n+    return [\n+      '#plain_text' => $this->configuration['greeting'],\n+    ];\n+  }\n+\n+}\n",
+      "diffTruncated": false,
+      "diffBytes": 3116
+    },
+    {
+      "task": "code-dependency-injection",
+      "mode": "unguided",
+      "run": 1,
+      "startedAt": "2026-11-24T20:09:30.648Z",
+      "agent": {
+        "exitCode": 0,
+        "timedOut": false,
+        "durationSec": 38,
+        "guidanceCalls": {
+          "search": 0,
+          "retrieve": 0,
+          "mcp": 0,
+          "skill": 0
+        },
+        "model": "claude-haiku-5-5",
+        "tokens": {
+          "input": 20,
+          "output": 5287,
+          "cacheRead": 209819,
+          "cacheCreation": 15263,
+          "total": 230389
+        },
+        "costUsd": 0.007796290000000002,
+        "numTurns": 10
+      },
+      "checks": [
+        {
+          "id": "module-enabled",
+          "kind": "must",
+          "text": "Module bench_di exists in web/modules/custom/bench_di and is enabled.",
+          "pass": true,
+          "detail": "info=true enabled=true"
+        },
+        {
+          "id": "service",
+          "kind": "must",
+          "text": "The container has a service bench_di.latest_article from the module.",
+          "pass": true,
+          "detail": "Drupal\\bench_di\\Service\\LatestArticle"
+        },
+        {
+          "id": "service-injected",
+          "kind": "must",
+          "text": "The service gets its dependencies through arguments or autowiring.",
+          "pass": true,
+          "detail": "{\"class\":\"Drupal\\\\bench_di\\\\Service\\\\LatestArticle\",\"arguments\":[\"@entity_type.manager\"]}"
+        },
+        {
+          "id": "route",
+          "kind": "must",
+          "text": "/bench/latest-article shows the newest published article title.",
+          "pass": true,
+          "detail": "HTTP 200 <!DOCTYPE html> <html lang=\"en\" dir=\"ltr\" style=\"--color--primary-hue:202;--color--primary-saturation:79%;--color--prima"
+        },
+        {
+          "id": "no-legacy-pattern",
+          "kind": "must_not",
+          "text": "No static \\Drupal:: calls in injectable classes (legacy-scan dependency-injection rules).",
+          "pass": true
+        },
+        {
+          "id": "no-container-injection",
+          "kind": "must_not",
+          "text": "The services file does not inject @service_container.",
+          "pass": true
+        },
+        {
+          "id": "no-deprecated-api",
+          "kind": "must_not",
+          "text": "The module uses no core API that data/drupal/deprecations.json lists as deprecated or removed.",
+          "pass": true
+        }
+      ],
+      "passed": 7,
+      "total": 7,
+      "diff": "diff --git a/config/sync/.htaccess b/config/sync/.htaccess\nnew file mode 100644\nindex 0000000..b0dc540\n--- /dev/null\n+++ b/config/sync/.htaccess\n@@ -0,0 +1,24 @@\n+# Deny all requests from Apache 2.4+.\n+<IfModule mod_authz_core.c>\n+  Require all denied\n+</IfModule>\n+\n+# Deny all requests from Apache 2.0-2.2.\n+<IfModule !mod_authz_core.c>\n+  Deny from all\n+</IfModule>\n+\n+# Turn off all options we don't need.\n+Options -Indexes -ExecCGI -Includes -MultiViews\n+\n+# Set the catch-all handler to prevent scripts from being executed.\n+SetHandler Drupal_Security_Do_Not_Remove_See_SA_2006_006\n+<Files *>\n+  # Override the handler again if we're run later in the evaluation list.\n+  SetHandler Drupal_Security_Do_Not_Remove_See_SA_2013_003\n+</Files>\n+\n+# If we know how to do it safely, disable the PHP engine entirely.\n+<IfModule mod_php.c>\n+  php_flag engine off\n+</IfModule>\n\\ No newline at end of file\ndiff --git a/config/sync/core.extension.yml b/config/sync/core.extension.yml\nindex 28a14b2..0eeb875 100644\n--- a/config/sync/core.extension.yml\n+++ b/config/sync/core.extension.yml\n@@ -3,6 +3,7 @@ _core:\n module:\n   announcements_feed: 0\n   automated_cron: 0\n+  bench_di: 0\n   big_pipe: 0\n   block: 0\n   block_content: 0\ndiff --git a/web/modules/custom/bench_di/bench_di.info.yml b/web/modules/custom/bench_di/bench_di.info.yml\nnew file mode 100644\nindex 0000000..99b554f\n--- /dev/null\n+++ b/web/modules/custom/bench_di/bench_di.info.yml\n@@ -0,0 +1,5 @@\n+name: Bench DI\n+type: module\n+description: 'Provides the latest published article title service and a route that displays it.'\n+core_version_requirement: ^11\n+package: Custom\ndiff --git a/web/modules/custom/bench_di/bench_di.routing.yml b/web/modules/custom/bench_di/bench_di.routing.yml\nnew file mode 100644\nindex 0000000..be61beb\n--- /dev/null\n+++ b/web/modules/custom/bench_di/bench_di.routing.yml\n@@ -0,0 +1,7 @@\n+bench_di.latest_article:\n+  path: '/bench/latest-article'\n+  defaults:\n+    _controller: '\\Drupal\\bench_di\\Controller\\LatestArticleController::content'\n+    _title: 'Latest article'\n+  requirements:\n+    _permission: 'access content'\ndiff --git a/web/modules/custom/bench_di/bench_di.services.yml b/web/modules/custom/bench_di/bench_di.services.yml\nnew file mode 100644\nindex 0000000..57dfc29\n--- /dev/null\n+++ b/web/modules/custom/bench_di/bench_di.services.yml\n@@ -0,0 +1,4 @@\n+services:\n+  bench_di.latest_article:\n+    class: Drupal\\bench_di\\Service\\LatestArticle\n+    arguments: ['@entity_type.manager']\ndiff --git a/web/modules/custom/bench_di/src/Controller/LatestArticleController.php b/web/modules/custom/bench_di/src/Controller/LatestArticleController.php\nnew file mode 100644\nindex 0000000..9c3b5fd\n--- /dev/null\n+++ b/web/modules/custom/bench_di/src/Controller/LatestArticleController.php\n@@ -0,0 +1,49 @@\n+<?php\n+\n+declare(strict_types=1);\n+\n+namespace Drupal\\bench_di\\Controller;\n+\n+use Drupal\\bench_di\\Service\\LatestArticle;\n+use Drupal\\Core\\Controller\\ControllerBase;\n+use Symfony\\Component\\DependencyInjection\\ContainerInterface;\n+\n+/**\n+ * Displays the latest published article title.\n+ */\n+class LatestArticleController extends ControllerBase {\n+\n+  /**\n+   * Constructs a LatestArticleController object.\n+   *\n+   * @param \\Drupal\\bench_di\\Service\\LatestArticle $latestArticle\n+   *   The latest article service.\n+   */\n+  public function __construct(\n+    protected LatestArticle $latestArticle,\n+  ) {}\n+\n+  /**\n+   * {@inheritdoc}\n+   */\n+  public static function create(ContainerInterface $container): static {\n+    return new static(\n+      $container->get('bench_di.latest_article'),\n+    );\n+  }\n+\n+  /**\n+   * Returns the page content.\n+   *\n+   * @return array\n+   *   A render array.\n+   */\n+  public function content(): array {\n+    $title = $this->latestArticle->getLatestArticleTitle();\n+    return [\n+      '#markup' => $title === NULL ? 'No articles yet' : 'Latest article: ' . $title,\n+      '#cache' => ['tags' => ['node_list']],\n+    ];\n+  }\n+\n+}\ndiff --git a/web/modules/custom/bench_di/src/Service/LatestArticle.php b/web/modules/custom/bench_di/src/Service/LatestArticle.php\nnew file mode 100644\nindex 0000000..9cd334e\n--- /dev/null\n+++ b/web/modules/custom/bench_di/src/Service/LatestArticle.php\n@@ -0,0 +1,49 @@\n+<?php\n+\n+declare(strict_types=1);\n+\n+namespace Drupal\\bench_di\\Service;\n+\n+use Drupal\\Core\\Entity\\EntityTypeManagerInterface;\n+\n+/**\n+ * Provides the title of the most recently created published article.\n+ */\n+class LatestArticle {\n+\n+  /**\n+   * Constructs a LatestArticle service.\n+   *\n+   * @param \\Drupal\\Core\\Entity\\EntityTypeManagerInterface $entityTypeManager\n+   *   The entity type manager.\n+   */\n+  public function __construct(\n+    protected EntityTypeManagerInterface $entityTypeManager,\n+  ) {}\n+\n+  /**\n+   * Returns the title of the latest published article.\n+   *\n+   * @return string|null\n+   *   The title, or NULL if no published article exists.\n+   */\n+  public function getLatestArticleTitle(): ?string {\n+    $storage = $this->entityTypeManager->getStorage('node');\n+    $nids = $storage->getQuery()\n+      ->accessCheck(FALSE)\n+      ->condition('type', 'article')\n+      ->condition('status', 1)\n+      ->sort('created', 'DESC')\n+      ->sort('nid', 'DESC')\n+      ->range(0, 1)\n+      ->execute();\n+\n+    if (!$nids) {\n+      return NULL;\n+    }\n+\n+    $node = $storage->load(reset($nids));\n+    return $node?->label();\n+  }\n+\n+}\n",
+      "diffTruncated": false,
+      "diffBytes": 5386
+    },
+    {
+      "task": "code-dependency-injection",
+      "mode": "skill",
+      "run": 1,
+      "startedAt": "2026-11-24T20:10:14.594Z",
+      "agent": {
+        "exitCode": 0,
+        "timedOut": false,
+        "durationSec": 42,
+        "guidanceCalls": {
+          "search": 1,
+          "retrieve": 1,
+          "mcp": 0,
+          "skill": 1
+        },
+        "model": "claude-haiku-5-5",
+        "tokens": {
+          "input": 16,
+          "output": 6738,
+          "cacheRead": 202727,
+          "cacheCreation": 31232,
+          "total": 240713
+        },
+        "costUsd": 0.011644270000000002,
+        "numTurns": 10
+      },
+      "checks": [
+        {
+          "id": "module-enabled",
+          "kind": "must",
+          "text": "Module bench_di exists in web/modules/custom/bench_di and is enabled.",
+          "pass": true,
+          "detail": "info=true enabled=true"
+        },
+        {
+          "id": "service",
+          "kind": "must",
+          "text": "The container has a service bench_di.latest_article from the module.",
+          "pass": true,
+          "detail": "Drupal\\bench_di\\LatestArticle"
+        },
+        {
+          "id": "service-injected",
+          "kind": "must",
+          "text": "The service gets its dependencies through arguments or autowiring.",
+          "pass": true,
+          "detail": "\"@Drupal\\\\bench_di\\\\LatestArticle\""
+        },
+        {
+          "id": "route",
+          "kind": "must",
+          "text": "/bench/latest-article shows the newest published article title.",
+          "pass": true,
+          "detail": "HTTP 200 <!DOCTYPE html> <html lang=\"en\" dir=\"ltr\" style=\"--color--primary-hue:202;--color--primary-saturation:79%;--color--prima"
+        },
+        {
+          "id": "no-legacy-pattern",
+          "kind": "must_not",
+          "text": "No static \\Drupal:: calls in injectable classes (legacy-scan dependency-injection rules).",
+          "pass": true
+        },
+        {
+          "id": "no-container-injection",
+          "kind": "must_not",
+          "text": "The services file does not inject @service_container.",
+          "pass": true
+        },
+        {
+          "id": "no-deprecated-api",
+          "kind": "must_not",
+          "text": "The module uses no core API that data/drupal/deprecations.json lists as deprecated or removed.",
+          "pass": true
+        }
+      ],
+      "passed": 7,
+      "total": 7,
+      "diff": "diff --git a/config/sync/.htaccess b/config/sync/.htaccess\nnew file mode 100644\nindex 0000000..b0dc540\n--- /dev/null\n+++ b/config/sync/.htaccess\n@@ -0,0 +1,24 @@\n+# Deny all requests from Apache 2.4+.\n+<IfModule mod_authz_core.c>\n+  Require all denied\n+</IfModule>\n+\n+# Deny all requests from Apache 2.0-2.2.\n+<IfModule !mod_authz_core.c>\n+  Deny from all\n+</IfModule>\n+\n+# Turn off all options we don't need.\n+Options -Indexes -ExecCGI -Includes -MultiViews\n+\n+# Set the catch-all handler to prevent scripts from being executed.\n+SetHandler Drupal_Security_Do_Not_Remove_See_SA_2006_006\n+<Files *>\n+  # Override the handler again if we're run later in the evaluation list.\n+  SetHandler Drupal_Security_Do_Not_Remove_See_SA_2013_003\n+</Files>\n+\n+# If we know how to do it safely, disable the PHP engine entirely.\n+<IfModule mod_php.c>\n+  php_flag engine off\n+</IfModule>\n\\ No newline at end of file\ndiff --git a/config/sync/core.extension.yml b/config/sync/core.extension.yml\nindex 28a14b2..0eeb875 100644\n--- a/config/sync/core.extension.yml\n+++ b/config/sync/core.extension.yml\n@@ -3,6 +3,7 @@ _core:\n module:\n   announcements_feed: 0\n   automated_cron: 0\n+  bench_di: 0\n   big_pipe: 0\n   block: 0\n   block_content: 0\ndiff --git a/web/modules/custom/bench_di/bench_di.info.yml b/web/modules/custom/bench_di/bench_di.info.yml\nnew file mode 100644\nindex 0000000..7b90d38\n--- /dev/null\n+++ b/web/modules/custom/bench_di/bench_di.info.yml\n@@ -0,0 +1,5 @@\n+name: Bench DI\n+type: module\n+description: 'Dependency-injected service and route returning the latest published article title.'\n+core_version_requirement: ^11\n+package: Custom\ndiff --git a/web/modules/custom/bench_di/bench_di.routing.yml b/web/modules/custom/bench_di/bench_di.routing.yml\nnew file mode 100644\nindex 0000000..1788a98\n--- /dev/null\n+++ b/web/modules/custom/bench_di/bench_di.routing.yml\n@@ -0,0 +1,7 @@\n+bench_di.latest_article:\n+  path: '/bench/latest-article'\n+  defaults:\n+    _controller: '\\Drupal\\bench_di\\Controller\\LatestArticleController::page'\n+    _title: 'Latest article'\n+  requirements:\n+    _permission: 'access content'\ndiff --git a/web/modules/custom/bench_di/bench_di.services.yml b/web/modules/custom/bench_di/bench_di.services.yml\nnew file mode 100644\nindex 0000000..19ed088\n--- /dev/null\n+++ b/web/modules/custom/bench_di/bench_di.services.yml\n@@ -0,0 +1,8 @@\n+services:\n+  _defaults:\n+    autowire: true\n+    autoconfigure: true\n+\n+  Drupal\\bench_di\\LatestArticle: ~\n+\n+  bench_di.latest_article: '@Drupal\\bench_di\\LatestArticle'\ndiff --git a/web/modules/custom/bench_di/src/Controller/LatestArticleController.php b/web/modules/custom/bench_di/src/Controller/LatestArticleController.php\nnew file mode 100644\nindex 0000000..da94f98\n--- /dev/null\n+++ b/web/modules/custom/bench_di/src/Controller/LatestArticleController.php\n@@ -0,0 +1,35 @@\n+<?php\n+\n+declare(strict_types=1);\n+\n+namespace Drupal\\bench_di\\Controller;\n+\n+use Drupal\\bench_di\\LatestArticle;\n+use Drupal\\Core\\Controller\\ControllerBase;\n+\n+/**\n+ * Responds with the latest article title.\n+ */\n+class LatestArticleController extends ControllerBase {\n+\n+  public function __construct(\n+    protected readonly LatestArticle $latestArticle,\n+  ) {}\n+\n+  /**\n+   * Builds the page.\n+   */\n+  public function page(): array {\n+    $title = $this->latestArticle->getTitle();\n+    return [\n+      '#plain_text' => $title === NULL ? 'No articles yet' : 'Latest article: ' . $title,\n+      '#cache' => [\n+        // The result changes when any article is created, saved or deleted,\n+        // and depends on what the user may access.\n+        'tags' => ['node_list:article'],\n+        'contexts' => ['user.permissions'],\n+      ],\n+    ];\n+  }\n+\n+}\ndiff --git a/web/modules/custom/bench_di/src/LatestArticle.php b/web/modules/custom/bench_di/src/LatestArticle.php\nnew file mode 100644\nindex 0000000..d639c62\n--- /dev/null\n+++ b/web/modules/custom/bench_di/src/LatestArticle.php\n@@ -0,0 +1,39 @@\n+<?php\n+\n+declare(strict_types=1);\n+\n+namespace Drupal\\bench_di;\n+\n+use Drupal\\Core\\Entity\\EntityTypeManagerInterface;\n+\n+/**\n+ * Finds the most recently created published article.\n+ */\n+class LatestArticle {\n+\n+  public function __construct(\n+    protected readonly EntityTypeManagerInterface $entityTypeManager,\n+  ) {}\n+\n+  /**\n+   * Returns the title of the newest published article, or NULL if there is none.\n+   */\n+  public function getTitle(): ?string {\n+    $nid = $this->entityTypeManager->getStorage('node')->getQuery()\n+      ->accessCheck(TRUE)\n+      ->condition('type', 'article')\n+      ->condition('status', 1)\n+      ->sort('created', 'DESC')\n+      ->sort('nid', 'DESC')\n+      ->range(0, 1)\n+      ->execute();\n+\n+    if (!$nid) {\n+      return NULL;\n+    }\n+\n+    $node = $this->entityTypeManager->getStorage('node')->load(reset($nid));\n+    return $node?->label();\n+  }\n+\n+}\n",
+      "diffTruncated": false,
+      "diffBytes": 4834
+    },
+    {
+      "task": "code-dependency-injection",
+      "mode": "mcp",
+      "run": 1,
+      "startedAt": "2026-11-24T20:11:02.818Z",
+      "agent": {
+        "exitCode": 0,
+        "timedOut": false,
+        "durationSec": 48,
+        "guidanceCalls": {
+          "search": 0,
+          "retrieve": 0,
+          "mcp": 3,
+          "skill": 0
+        },
+        "model": "claude-haiku-5-5",
+        "tokens": {
+          "input": 24,
+          "output": 8435,
+          "cacheRead": 352552,
+          "cacheCreation": 30905,
+          "total": 391916
+        },
+        "costUsd": 0.01392642,
+        "numTurns": 18
+      },
+      "checks": [
+        {
+          "id": "module-enabled",
+          "kind": "must",
+          "text": "Module bench_di exists in web/modules/custom/bench_di and is enabled.",
+          "pass": true,
+          "detail": "info=true enabled=true"
+        },
+        {
+          "id": "service",
+          "kind": "must",
+          "text": "The container has a service bench_di.latest_article from the module.",
+          "pass": true,
+          "detail": "Drupal\\bench_di\\LatestArticle"
+        },
+        {
+          "id": "service-injected",
+          "kind": "must",
+          "text": "The service gets its dependencies through arguments or autowiring.",
+          "pass": true,
+          "detail": "{\"class\":\"Drupal\\\\bench_di\\\\LatestArticle\"}"
+        },
+        {
+          "id": "route",
+          "kind": "must",
+          "text": "/bench/latest-article shows the newest published article title.",
+          "pass": true,
+          "detail": "HTTP 200 <!DOCTYPE html> <html lang=\"en\" dir=\"ltr\" style=\"--color--primary-hue:202;--color--primary-saturation:79%;--color--prima"
+        },
+        {
+          "id": "no-legacy-pattern",
+          "kind": "must_not",
+          "text": "No static \\Drupal:: calls in injectable classes (legacy-scan dependency-injection rules).",
+          "pass": true
+        },
+        {
+          "id": "no-container-injection",
+          "kind": "must_not",
+          "text": "The services file does not inject @service_container.",
+          "pass": true
+        },
+        {
+          "id": "no-deprecated-api",
+          "kind": "must_not",
+          "text": "The module uses no core API that data/drupal/deprecations.json lists as deprecated or removed.",
+          "pass": true
+        }
+      ],
+      "passed": 7,
+      "total": 7,
+      "diff": "diff --git a/config/sync/core.extension.yml b/config/sync/core.extension.yml\nindex 28a14b2..0eeb875 100644\n--- a/config/sync/core.extension.yml\n+++ b/config/sync/core.extension.yml\n@@ -3,6 +3,7 @@ _core:\n module:\n   announcements_feed: 0\n   automated_cron: 0\n+  bench_di: 0\n   big_pipe: 0\n   block: 0\n   block_content: 0\ndiff --git a/web/modules/custom/bench_di/bench_di.info.yml b/web/modules/custom/bench_di/bench_di.info.yml\nnew file mode 100644\nindex 0000000..23d49ec\n--- /dev/null\n+++ b/web/modules/custom/bench_di/bench_di.info.yml\n@@ -0,0 +1,5 @@\n+name: Bench DI\n+type: module\n+description: 'Provides a service returning the latest published article title and a route that displays it.'\n+core_version_requirement: ^11\n+package: Custom\ndiff --git a/web/modules/custom/bench_di/bench_di.routing.yml b/web/modules/custom/bench_di/bench_di.routing.yml\nnew file mode 100644\nindex 0000000..1788a98\n--- /dev/null\n+++ b/web/modules/custom/bench_di/bench_di.routing.yml\n@@ -0,0 +1,7 @@\n+bench_di.latest_article:\n+  path: '/bench/latest-article'\n+  defaults:\n+    _controller: '\\Drupal\\bench_di\\Controller\\LatestArticleController::page'\n+    _title: 'Latest article'\n+  requirements:\n+    _permission: 'access content'\ndiff --git a/web/modules/custom/bench_di/bench_di.services.yml b/web/modules/custom/bench_di/bench_di.services.yml\nnew file mode 100644\nindex 0000000..ef0b30e\n--- /dev/null\n+++ b/web/modules/custom/bench_di/bench_di.services.yml\n@@ -0,0 +1,10 @@\n+services:\n+  _defaults:\n+    autowire: true\n+    autoconfigure: true\n+\n+  bench_di.latest_article:\n+    class: Drupal\\bench_di\\LatestArticle\n+\n+  # Allows autowiring by class name, as used by the controller.\n+  Drupal\\bench_di\\LatestArticle: '@bench_di.latest_article'\ndiff --git a/web/modules/custom/bench_di/src/Controller/LatestArticleController.php b/web/modules/custom/bench_di/src/Controller/LatestArticleController.php\nnew file mode 100644\nindex 0000000..ad20a28\n--- /dev/null\n+++ b/web/modules/custom/bench_di/src/Controller/LatestArticleController.php\n@@ -0,0 +1,39 @@\n+<?php\n+\n+declare(strict_types=1);\n+\n+namespace Drupal\\bench_di\\Controller;\n+\n+use Drupal\\bench_di\\LatestArticle;\n+use Drupal\\Core\\Controller\\ControllerBase;\n+\n+/**\n+ * Displays the latest article title.\n+ */\n+class LatestArticleController extends ControllerBase {\n+\n+  public function __construct(\n+    protected readonly LatestArticle $latestArticle,\n+  ) {}\n+\n+  /**\n+   * Builds the page.\n+   */\n+  public function page(): array {\n+    $title = $this->latestArticle->getTitle();\n+    $text = $title === NULL\n+      ? (string) $this->t('No articles yet')\n+      : (string) $this->t('Latest article: @title', ['@title' => $title]);\n+\n+    return [\n+      '#plain_text' => $text,\n+      '#cache' => [\n+        // Access to the article depends on the user's permissions.\n+        'contexts' => ['user.permissions'],\n+        // Saving or deleting any article invalidates this list.\n+        'tags' => ['node_list:article'],\n+      ],\n+    ];\n+  }\n+\n+}\ndiff --git a/web/modules/custom/bench_di/src/LatestArticle.php b/web/modules/custom/bench_di/src/LatestArticle.php\nnew file mode 100644\nindex 0000000..b428c22\n--- /dev/null\n+++ b/web/modules/custom/bench_di/src/LatestArticle.php\n@@ -0,0 +1,42 @@\n+<?php\n+\n+declare(strict_types=1);\n+\n+namespace Drupal\\bench_di;\n+\n+use Drupal\\Core\\Entity\\EntityTypeManagerInterface;\n+\n+/**\n+ * Finds the most recently created published article.\n+ */\n+class LatestArticle {\n+\n+  public function __construct(\n+    protected readonly EntityTypeManagerInterface $entityTypeManager,\n+  ) {}\n+\n+  /**\n+   * Returns the title of the newest published article.\n+   *\n+   * @return string|null\n+   *   The article title, or NULL when no published article exists.\n+   */\n+  public function getTitle(): ?string {\n+    $storage = $this->entityTypeManager->getStorage('node');\n+    $nids = $storage->getQuery()\n+      ->accessCheck(TRUE)\n+      ->condition('type', 'article')\n+      ->condition('status', 1)\n+      ->sort('created', 'DESC')\n+      ->sort('nid', 'DESC')\n+      ->range(0, 1)\n+      ->execute();\n+\n+    if (!$nids) {\n+      return NULL;\n+    }\n+\n+    return $storage->load(reset($nids))?->label();\n+  }\n+\n+}\n",
+      "diffTruncated": false,
+      "diffBytes": 4184
+    },
+    {
+      "task": "code-cache-metadata",
+      "mode": "unguided",
+      "run": 1,
+      "startedAt": "2026-11-24T20:11:56.567Z",
+      "agent": {
+        "exitCode": 0,
+        "timedOut": false,
+        "durationSec": 48,
+        "guidanceCalls": {
+          "search": 0,
+          "retrieve": 0,
+          "mcp": 0,
+          "skill": 0
+        },
+        "model": "claude-haiku-5-5",
+        "tokens": {
+          "input": 18,
+          "output": 7462,
+          "cacheRead": 223500,
+          "cacheCreation": 22987,
+          "total": 253967
+        },
+        "costUsd": 0.0105652,
+        "numTurns": 9
+      },
+      "checks": [
+        {
+          "id": "module-enabled",
+          "kind": "must",
+          "text": "Module bench_cache exists in web/modules/custom/bench_cache and is enabled.",
+          "pass": true,
+          "detail": "info=true enabled=true"
+        },
+        {
+          "id": "placed",
+          "kind": "must",
+          "text": "The block is placed in Olivero's sidebar region.",
+          "pass": true
+        },
+        {
+          "id": "initial",
+          "kind": "must",
+          "text": "The front page shows \"Published articles: 0\" and is served from the page cache on the second request.",
+          "pass": true,
+          "detail": "count=0 x-drupal-cache=HIT"
+        },
+        {
+          "id": "updates-on-publish",
+          "kind": "must",
+          "text": "A new published article raises the count to 1 without a cache clear.",
+          "pass": true,
+          "detail": "count=1"
+        },
+        {
+          "id": "updates-on-unpublish",
+          "kind": "must",
+          "text": "Unpublishing that article lowers the count to 0 without a cache clear.",
+          "pass": true,
+          "detail": "count=0"
+        },
+        {
+          "id": "cache-tags",
+          "kind": "must",
+          "text": "The block carries the node_list or node_list:article cache tag.",
+          "pass": true,
+          "detail": "{\"maxAge\":-1,\"tags\":[\"node_list:article\"]}"
+        },
+        {
+          "id": "not-uncacheable",
+          "kind": "must_not",
+          "text": "The block does not set max-age 0 and the module does not use the page cache kill switch.",
+          "pass": true,
+          "detail": "killSwitch=false maxAge=-1"
+        },
+        {
+          "id": "no-legacy-pattern",
+          "kind": "must_not",
+          "text": "No render arrays missing cache metadata (legacy-scan cache-metadata rules).",
+          "pass": true
+        },
+        {
+          "id": "no-deprecated-api",
+          "kind": "must_not",
+          "text": "The module uses no core API that data/drupal/deprecations.json lists as deprecated or removed.",
+          "pass": true
+        }
+      ],
+      "passed": 9,
+      "total": 9,
+      "diff": "diff --git a/config/sync/.htaccess b/config/sync/.htaccess\nnew file mode 100644\nindex 0000000..b0dc540\n--- /dev/null\n+++ b/config/sync/.htaccess\n@@ -0,0 +1,24 @@\n+# Deny all requests from Apache 2.4+.\n+<IfModule mod_authz_core.c>\n+  Require all denied\n+</IfModule>\n+\n+# Deny all requests from Apache 2.0-2.2.\n+<IfModule !mod_authz_core.c>\n+  Deny from all\n+</IfModule>\n+\n+# Turn off all options we don't need.\n+Options -Indexes -ExecCGI -Includes -MultiViews\n+\n+# Set the catch-all handler to prevent scripts from being executed.\n+SetHandler Drupal_Security_Do_Not_Remove_See_SA_2006_006\n+<Files *>\n+  # Override the handler again if we're run later in the evaluation list.\n+  SetHandler Drupal_Security_Do_Not_Remove_See_SA_2013_003\n+</Files>\n+\n+# If we know how to do it safely, disable the PHP engine entirely.\n+<IfModule mod_php.c>\n+  php_flag engine off\n+</IfModule>\n\\ No newline at end of file\ndiff --git a/config/sync/block.block.olivero_bench_article_count.yml b/config/sync/block.block.olivero_bench_article_count.yml\nnew file mode 100644\nindex 0000000..0ee0a6b\n--- /dev/null\n+++ b/config/sync/block.block.olivero_bench_article_count.yml\n@@ -0,0 +1,20 @@\n+uuid: 4028147a-ace5-4baa-9911-278f20ddc429\n+langcode: en\n+status: true\n+dependencies:\n+  module:\n+    - bench_cache\n+  theme:\n+    - olivero\n+id: olivero_bench_article_count\n+theme: olivero\n+region: sidebar\n+weight: 0\n+provider: null\n+plugin: bench_article_count\n+settings:\n+  id: bench_article_count\n+  label: 'Article count'\n+  label_display: visible\n+  provider: bench_cache\n+visibility: {  }\ndiff --git a/config/sync/core.extension.yml b/config/sync/core.extension.yml\nindex 28a14b2..5de3bf3 100644\n--- a/config/sync/core.extension.yml\n+++ b/config/sync/core.extension.yml\n@@ -3,6 +3,7 @@ _core:\n module:\n   announcements_feed: 0\n   automated_cron: 0\n+  bench_cache: 0\n   big_pipe: 0\n   block: 0\n   block_content: 0\ndiff --git a/web/modules/custom/bench_cache/bench_cache.info.yml b/web/modules/custom/bench_cache/bench_cache.info.yml\nnew file mode 100644\nindex 0000000..64eac05\n--- /dev/null\n+++ b/web/modules/custom/bench_cache/bench_cache.info.yml\n@@ -0,0 +1,5 @@\n+name: Bench cache\n+type: module\n+description: Provides a block showing the number of published articles.\n+core_version_requirement: ^11\n+package: Custom\ndiff --git a/web/modules/custom/bench_cache/src/Plugin/Block/ArticleCountBlock.php b/web/modules/custom/bench_cache/src/Plugin/Block/ArticleCountBlock.php\nnew file mode 100644\nindex 0000000..b410575\n--- /dev/null\n+++ b/web/modules/custom/bench_cache/src/Plugin/Block/ArticleCountBlock.php\n@@ -0,0 +1,70 @@\n+<?php\n+\n+declare(strict_types=1);\n+\n+namespace Drupal\\bench_cache\\Plugin\\Block;\n+\n+use Drupal\\Core\\Block\\Attribute\\Block;\n+use Drupal\\Core\\Block\\BlockBase;\n+use Drupal\\Core\\Cache\\Cache;\n+use Drupal\\Core\\Plugin\\ContainerFactoryPluginInterface;\n+use Drupal\\Core\\Entity\\EntityTypeManagerInterface;\n+use Drupal\\Core\\StringTranslation\\TranslatableMarkup;\n+use Symfony\\Component\\DependencyInjection\\ContainerInterface;\n+\n+/**\n+ * Displays the number of published articles.\n+ */\n+#[Block(\n+  id: 'bench_article_count',\n+  admin_label: new TranslatableMarkup('Article count'),\n+)]\n+final class ArticleCountBlock extends BlockBase implements ContainerFactoryPluginInterface {\n+\n+  /**\n+   * Constructs the block.\n+   */\n+  public function __construct(\n+    array $configuration,\n+    $plugin_id,\n+    $plugin_definition,\n+    private readonly EntityTypeManagerInterface $entityTypeManager,\n+  ) {\n+    parent::__construct($configuration, $plugin_id, $plugin_definition);\n+  }\n+\n+  /**\n+   * {@inheritdoc}\n+   */\n+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition): static {\n+    return new static(\n+      $configuration,\n+      $plugin_id,\n+      $plugin_definition,\n+      $container->get('entity_type.manager'),\n+    );\n+  }\n+\n+  /**\n+   * {@inheritdoc}\n+   */\n+  public function build(): array {\n+    $count = (int) $this->entityTypeManager->getStorage('node')->getQuery()\n+      ->accessCheck(FALSE)\n+      ->condition('type', 'article')\n+      ->condition('status', 1)\n+      ->count()\n+      ->execute();\n+\n+    return [\n+      '#markup' => $this->t('Published articles: @count', ['@count' => $count]),\n+      '#cache' => [\n+        // Invalidated whenever any article is saved or deleted, so publishing\n+        // or unpublishing one updates the count without clearing caches.\n+        'tags' => ['node_list:article'],\n+        'max-age' => Cache::PERMANENT,\n+      ],\n+    ];\n+  }\n+\n+}\n",
+      "diffTruncated": false,
+      "diffBytes": 4549
+    },
+    {
+      "task": "code-cache-metadata",
+      "mode": "skill",
+      "run": 1,
+      "startedAt": "2026-11-24T20:12:50.409Z",
+      "agent": {
+        "exitCode": 0,
+        "timedOut": false,
+        "durationSec": 52,
+        "guidanceCalls": {
+          "search": 1,
+          "retrieve": 1,
+          "mcp": 0,
+          "skill": 1
+        },
+        "model": "claude-haiku-5-5",
+        "tokens": {
+          "input": 28,
+          "output": 8293,
+          "cacheRead": 435242,
+          "cacheCreation": 30093,
+          "total": 473656
+        },
+        "costUsd": 0.01452032,
+        "numTurns": 18
+      },
+      "checks": [
+        {
+          "id": "module-enabled",
+          "kind": "must",
+          "text": "Module bench_cache exists in web/modules/custom/bench_cache and is enabled.",
+          "pass": true,
+          "detail": "info=true enabled=true"
+        },
+        {
+          "id": "placed",
+          "kind": "must",
+          "text": "The block is placed in Olivero's sidebar region.",
+          "pass": true
+        },
+        {
+          "id": "initial",
+          "kind": "must",
+          "text": "The front page shows \"Published articles: 0\" and is served from the page cache on the second request.",
+          "pass": true,
+          "detail": "count=0 x-drupal-cache=HIT"
+        },
+        {
+          "id": "updates-on-publish",
+          "kind": "must",
+          "text": "A new published article raises the count to 1 without a cache clear.",
+          "pass": true,
+          "detail": "count=1"
+        },
+        {
+          "id": "updates-on-unpublish",
+          "kind": "must",
+          "text": "Unpublishing that article lowers the count to 0 without a cache clear.",
+          "pass": true,
+          "detail": "count=0"
+        },
+        {
+          "id": "cache-tags",
+          "kind": "must",
+          "text": "The block carries the node_list or node_list:article cache tag.",
+          "pass": true,
+          "detail": "{\"maxAge\":-1,\"tags\":[\"node_list:article\"]}"
+        },
+        {
+          "id": "not-uncacheable",
+          "kind": "must_not",
+          "text": "The block does not set max-age 0 and the module does not use the page cache kill switch.",
+          "pass": true,
+          "detail": "killSwitch=false maxAge=-1"
+        },
+        {
+          "id": "no-legacy-pattern",
+          "kind": "must_not",
+          "text": "No render arrays missing cache metadata (legacy-scan cache-metadata rules).",
+          "pass": true
+        },
+        {
+          "id": "no-deprecated-api",
+          "kind": "must_not",
+          "text": "The module uses no core API that data/drupal/deprecations.json lists as deprecated or removed.",
+          "pass": true
+        }
+      ],
+      "passed": 9,
+      "total": 9,
+      "diff": "diff --git a/config/sync/.htaccess b/config/sync/.htaccess\nnew file mode 100644\nindex 0000000..b0dc540\n--- /dev/null\n+++ b/config/sync/.htaccess\n@@ -0,0 +1,24 @@\n+# Deny all requests from Apache 2.4+.\n+<IfModule mod_authz_core.c>\n+  Require all denied\n+</IfModule>\n+\n+# Deny all requests from Apache 2.0-2.2.\n+<IfModule !mod_authz_core.c>\n+  Deny from all\n+</IfModule>\n+\n+# Turn off all options we don't need.\n+Options -Indexes -ExecCGI -Includes -MultiViews\n+\n+# Set the catch-all handler to prevent scripts from being executed.\n+SetHandler Drupal_Security_Do_Not_Remove_See_SA_2006_006\n+<Files *>\n+  # Override the handler again if we're run later in the evaluation list.\n+  SetHandler Drupal_Security_Do_Not_Remove_See_SA_2013_003\n+</Files>\n+\n+# If we know how to do it safely, disable the PHP engine entirely.\n+<IfModule mod_php.c>\n+  php_flag engine off\n+</IfModule>\n\\ No newline at end of file\ndiff --git a/config/sync/block.block.olivero_bench_article_count.yml b/config/sync/block.block.olivero_bench_article_count.yml\nnew file mode 100644\nindex 0000000..7f67efb\n--- /dev/null\n+++ b/config/sync/block.block.olivero_bench_article_count.yml\n@@ -0,0 +1,20 @@\n+uuid: 555c5f68-42ac-479e-b6b7-6a86141b1cd3\n+langcode: en\n+status: true\n+dependencies:\n+  module:\n+    - bench_cache\n+  theme:\n+    - olivero\n+id: olivero_bench_article_count\n+theme: olivero\n+region: sidebar\n+weight: 0\n+provider: null\n+plugin: bench_article_count\n+settings:\n+  id: bench_article_count\n+  label: 'Article count'\n+  label_display: visible\n+  provider: bench_cache\n+visibility: {  }\ndiff --git a/config/sync/core.extension.yml b/config/sync/core.extension.yml\nindex 28a14b2..5de3bf3 100644\n--- a/config/sync/core.extension.yml\n+++ b/config/sync/core.extension.yml\n@@ -3,6 +3,7 @@ _core:\n module:\n   announcements_feed: 0\n   automated_cron: 0\n+  bench_cache: 0\n   big_pipe: 0\n   block: 0\n   block_content: 0\ndiff --git a/web/modules/custom/bench_cache/bench_cache.info.yml b/web/modules/custom/bench_cache/bench_cache.info.yml\nnew file mode 100644\nindex 0000000..d7d27de\n--- /dev/null\n+++ b/web/modules/custom/bench_cache/bench_cache.info.yml\n@@ -0,0 +1,5 @@\n+name: Bench cache\n+type: module\n+description: 'Shows the number of published articles in a block.'\n+core_version_requirement: ^11\n+package: Custom\ndiff --git a/web/modules/custom/bench_cache/src/Plugin/Block/ArticleCountBlock.php b/web/modules/custom/bench_cache/src/Plugin/Block/ArticleCountBlock.php\nnew file mode 100644\nindex 0000000..0dc3864\n--- /dev/null\n+++ b/web/modules/custom/bench_cache/src/Plugin/Block/ArticleCountBlock.php\n@@ -0,0 +1,69 @@\n+<?php\n+\n+declare(strict_types=1);\n+\n+namespace Drupal\\bench_cache\\Plugin\\Block;\n+\n+use Drupal\\Core\\Block\\Attribute\\Block;\n+use Drupal\\Core\\Block\\BlockBase;\n+use Drupal\\Core\\Cache\\Cache;\n+use Drupal\\Core\\Entity\\EntityTypeManagerInterface;\n+use Drupal\\Core\\Plugin\\ContainerFactoryPluginInterface;\n+use Drupal\\Core\\StringTranslation\\TranslatableMarkup;\n+use Symfony\\Component\\DependencyInjection\\ContainerInterface;\n+\n+/**\n+ * Shows the number of published articles.\n+ */\n+#[Block(\n+  id: 'bench_article_count',\n+  admin_label: new TranslatableMarkup('Article count'),\n+)]\n+class ArticleCountBlock extends BlockBase implements ContainerFactoryPluginInterface {\n+\n+  public function __construct(\n+    array $configuration,\n+    $plugin_id,\n+    $plugin_definition,\n+    protected readonly EntityTypeManagerInterface $entityTypeManager,\n+  ) {\n+    parent::__construct($configuration, $plugin_id, $plugin_definition);\n+  }\n+\n+  /**\n+   * {@inheritdoc}\n+   */\n+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition): static {\n+    return new static(\n+      $configuration,\n+      $plugin_id,\n+      $plugin_definition,\n+      $container->get(EntityTypeManagerInterface::class),\n+    );\n+  }\n+\n+  /**\n+   * {@inheritdoc}\n+   */\n+  public function build(): array {\n+    $count = $this->entityTypeManager->getStorage('node')->getQuery()\n+      ->accessCheck(TRUE)\n+      ->condition('type', 'article')\n+      ->condition('status', 1)\n+      ->count()\n+      ->execute();\n+\n+    return [\n+      '#markup' => $this->t('Published articles: @count', ['@count' => $count]),\n+      '#cache' => [\n+        // Any article saved or deleted invalidates this tag, so the count\n+        // updates on publish and unpublish without clearing caches.\n+        'tags' => ['node_list:article'],\n+        // Access checks on the count depend on the user's permissions.\n+        'contexts' => ['user.permissions'],\n+        'max-age' => Cache::PERMANENT,\n+      ],\n+    ];\n+  }\n+\n+}\n",
+      "diffTruncated": false,
+      "diffBytes": 4608
+    },
+    {
+      "task": "code-cache-metadata",
+      "mode": "mcp",
+      "run": 1,
+      "startedAt": "2026-11-24T20:13:49.200Z",
+      "agent": {
+        "exitCode": 0,
+        "timedOut": false,
+        "durationSec": 39,
+        "guidanceCalls": {
+          "search": 0,
+          "retrieve": 0,
+          "mcp": 4,
+          "skill": 0
+        },
+        "model": "claude-haiku-5-5",
+        "tokens": {
+          "input": 16,
+          "output": 6834,
+          "cacheRead": 174318,
+          "cacheCreation": 20558,
+          "total": 201726
+        },
+        "costUsd": 0.009273380000000001,
+        "numTurns": 11
+      },
+      "checks": [
+        {
+          "id": "module-enabled",
+          "kind": "must",
+          "text": "Module bench_cache exists in web/modules/custom/bench_cache and is enabled.",
+          "pass": true,
+          "detail": "info=true enabled=true"
+        },
+        {
+          "id": "placed",
+          "kind": "must",
+          "text": "The block is placed in Olivero's sidebar region.",
+          "pass": true
+        },
+        {
+          "id": "initial",
+          "kind": "must",
+          "text": "The front page shows \"Published articles: 0\" and is served from the page cache on the second request.",
+          "pass": true,
+          "detail": "count=0 x-drupal-cache=HIT"
+        },
+        {
+          "id": "updates-on-publish",
+          "kind": "must",
+          "text": "A new published article raises the count to 1 without a cache clear.",
+          "pass": true,
+          "detail": "count=1"
+        },
+        {
+          "id": "updates-on-unpublish",
+          "kind": "must",
+          "text": "Unpublishing that article lowers the count to 0 without a cache clear.",
+          "pass": true,
+          "detail": "count=0"
+        },
+        {
+          "id": "cache-tags",
+          "kind": "must",
+          "text": "The block carries the node_list or node_list:article cache tag.",
+          "pass": true,
+          "detail": "{\"maxAge\":-1,\"tags\":[\"node_list:article\"]}"
+        },
+        {
+          "id": "not-uncacheable",
+          "kind": "must_not",
+          "text": "The block does not set max-age 0 and the module does not use the page cache kill switch.",
+          "pass": true,
+          "detail": "killSwitch=false maxAge=-1"
+        },
+        {
+          "id": "no-legacy-pattern",
+          "kind": "must_not",
+          "text": "No render arrays missing cache metadata (legacy-scan cache-metadata rules).",
+          "pass": true
+        },
+        {
+          "id": "no-deprecated-api",
+          "kind": "must_not",
+          "text": "The module uses no core API that data/drupal/deprecations.json lists as deprecated or removed.",
+          "pass": true
+        }
+      ],
+      "passed": 9,
+      "total": 9,
+      "diff": "diff --git a/config/sync/block.block.olivero_bench_article_count.yml b/config/sync/block.block.olivero_bench_article_count.yml\nnew file mode 100644\nindex 0000000..1edc5b1\n--- /dev/null\n+++ b/config/sync/block.block.olivero_bench_article_count.yml\n@@ -0,0 +1,20 @@\n+uuid: 729e40a6-6ec0-4b79-a4aa-a0bedd3d7575\n+langcode: en\n+status: true\n+dependencies:\n+  module:\n+    - bench_cache\n+  theme:\n+    - olivero\n+id: olivero_bench_article_count\n+theme: olivero\n+region: sidebar\n+weight: 0\n+provider: null\n+plugin: bench_article_count\n+settings:\n+  id: bench_article_count\n+  label: 'Article count'\n+  label_display: visible\n+  provider: bench_cache\n+visibility: {  }\ndiff --git a/config/sync/core.extension.yml b/config/sync/core.extension.yml\nindex 28a14b2..5de3bf3 100644\n--- a/config/sync/core.extension.yml\n+++ b/config/sync/core.extension.yml\n@@ -3,6 +3,7 @@ _core:\n module:\n   announcements_feed: 0\n   automated_cron: 0\n+  bench_cache: 0\n   big_pipe: 0\n   block: 0\n   block_content: 0\ndiff --git a/web/modules/custom/bench_cache/bench_cache.info.yml b/web/modules/custom/bench_cache/bench_cache.info.yml\nnew file mode 100644\nindex 0000000..f0df193\n--- /dev/null\n+++ b/web/modules/custom/bench_cache/bench_cache.info.yml\n@@ -0,0 +1,7 @@\n+name: Bench cache\n+type: module\n+description: 'Provides a block that shows the number of published articles.'\n+core_version_requirement: ^10.3 || ^11\n+package: Custom\n+dependencies:\n+  - drupal:node\ndiff --git a/web/modules/custom/bench_cache/src/Plugin/Block/ArticleCountBlock.php b/web/modules/custom/bench_cache/src/Plugin/Block/ArticleCountBlock.php\nnew file mode 100644\nindex 0000000..6abd53a\n--- /dev/null\n+++ b/web/modules/custom/bench_cache/src/Plugin/Block/ArticleCountBlock.php\n@@ -0,0 +1,83 @@\n+<?php\n+\n+declare(strict_types=1);\n+\n+namespace Drupal\\bench_cache\\Plugin\\Block;\n+\n+use Drupal\\Core\\Block\\Attribute\\Block;\n+use Drupal\\Core\\Block\\BlockBase;\n+use Drupal\\Core\\Cache\\CacheableMetadata;\n+use Drupal\\Core\\Entity\\EntityTypeManagerInterface;\n+use Drupal\\Core\\Plugin\\ContainerFactoryPluginInterface;\n+use Drupal\\Core\\StringTranslation\\TranslatableMarkup;\n+use Symfony\\Component\\DependencyInjection\\ContainerInterface;\n+\n+/**\n+ * Shows the number of published articles.\n+ */\n+#[Block(\n+  id: 'bench_article_count',\n+  admin_label: new TranslatableMarkup('Article count'),\n+)]\n+class ArticleCountBlock extends BlockBase implements ContainerFactoryPluginInterface {\n+\n+  /**\n+   * Constructs an ArticleCountBlock.\n+   *\n+   * @param array $configuration\n+   *   The plugin configuration.\n+   * @param string $plugin_id\n+   *   The plugin ID.\n+   * @param mixed $plugin_definition\n+   *   The plugin definition.\n+   * @param \\Drupal\\Core\\Entity\\EntityTypeManagerInterface $entityTypeManager\n+   *   The entity type manager.\n+   */\n+  public function __construct(\n+    array $configuration,\n+    $plugin_id,\n+    $plugin_definition,\n+    protected EntityTypeManagerInterface $entityTypeManager,\n+  ) {\n+    parent::__construct($configuration, $plugin_id, $plugin_definition);\n+  }\n+\n+  /**\n+   * {@inheritdoc}\n+   */\n+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition): static {\n+    return new static(\n+      $configuration,\n+      $plugin_id,\n+      $plugin_definition,\n+      $container->get('entity_type.manager'),\n+    );\n+  }\n+\n+  /**\n+   * {@inheritdoc}\n+   */\n+  public function build(): array {\n+    $count = $this->entityTypeManager->getStorage('node')->getQuery()\n+      ->accessCheck(TRUE)\n+      ->condition('type', 'article')\n+      ->condition('status', 1)\n+      ->count()\n+      ->execute();\n+\n+    $build = [\n+      '#markup' => $this->t('Published articles: @count', ['@count' => $count]),\n+    ];\n+\n+    // Any article saved or deleted (including publishing and unpublishing)\n+    // invalidates node_list:article, so the cached count is rebuilt at once.\n+    // The access check makes the count depend on the user's permissions.\n+    $cacheability = (new CacheableMetadata())\n+      ->addCacheTags(['node_list:article'])\n+      ->addCacheContexts(['user.permissions']);\n+    $cacheability->applyTo($build);\n+\n+    return $build;\n+  }\n+\n+}\n",
+      "diffTruncated": false,
+      "diffBytes": 4171
+    },
+    {
+      "task": "code-behaviors-once",
+      "mode": "unguided",
+      "run": 1,
+      "startedAt": "2026-11-24T20:14:35.047Z",
+      "agent": {
+        "exitCode": 0,
+        "timedOut": false,
+        "durationSec": 25,
+        "guidanceCalls": {
+          "search": 0,
+          "retrieve": 0,
+          "mcp": 0,
+          "skill": 0
+        },
+        "model": "claude-haiku-5-5",
+        "tokens": {
+          "input": 10,
+          "output": 3615,
+          "cacheRead": 86643,
+          "cacheCreation": 9466,
+          "total": 99734
+        },
+        "costUsd": 0.00456813,
+        "numTurns": 5
+      },
+      "checks": [
+        {
+          "id": "module-enabled",
+          "kind": "must",
+          "text": "Module bench_js exists in web/modules/custom/bench_js and is enabled.",
+          "pass": true,
+          "detail": "info=true enabled=true"
+        },
+        {
+          "id": "library",
+          "kind": "must",
+          "text": "A module library depends on core/once and core/drupal.",
+          "pass": true,
+          "detail": "{\"badge\":{\"js\":[{\"group\":-100,\"type\":\"file\",\"data\":\"modules\\/custom\\/bench_js\\/js\\/bench-badge.js\",\"version\":-1,\"minified\":false}],\"dependencies\":[\"core\\/drupal\",\"core\\/once\"],\"css\":[],\"fonts\":[],\"license\":{\"name\":\"GPL-2.0-or-later\",\"url\":\"https:\\/\\/www.drupal.org\\/licensing\\/faq\",\"gpl-compatible\":t"
+        },
+        {
+          "id": "attached",
+          "kind": "must",
+          "text": "An article page loads a script from the module.",
+          "pass": true
+        },
+        {
+          "id": "once-per-element",
+          "kind": "must",
+          "text": "Attaching behaviors twice leaves exactly one badge in every .node__content.",
+          "pass": true,
+          "detail": "counts=[1] scripts=core/assets/vendor/once/once.min.js,core/misc/drupalSettingsLoader.js,core/misc/drupal.js,modules/custom/bench_js/js/bench-badge.js errors="
+        },
+        {
+          "id": "ajax-content",
+          "kind": "must",
+          "text": "Content added later gets exactly one badge when behaviors are attached to it.",
+          "pass": true,
+          "detail": "counts=[1,1] errors="
+        },
+        {
+          "id": "no-legacy-pattern",
+          "kind": "must_not",
+          "text": "No jQuery.once() or core/jquery.once (legacy-scan core-once-behaviors rules).",
+          "pass": true
+        },
+        {
+          "id": "no-document-ready",
+          "kind": "must_not",
+          "text": "The module JavaScript does not use document ready handlers.",
+          "pass": true
+        },
+        {
+          "id": "no-deprecated-api",
+          "kind": "must_not",
+          "text": "The module uses no core API that data/drupal/deprecations.json lists as deprecated or removed.",
+          "pass": true
+        }
+      ],
+      "passed": 8,
+      "total": 8,
+      "diff": "diff --git a/config/sync/.htaccess b/config/sync/.htaccess\nnew file mode 100644\nindex 0000000..b0dc540\n--- /dev/null\n+++ b/config/sync/.htaccess\n@@ -0,0 +1,24 @@\n+# Deny all requests from Apache 2.4+.\n+<IfModule mod_authz_core.c>\n+  Require all denied\n+</IfModule>\n+\n+# Deny all requests from Apache 2.0-2.2.\n+<IfModule !mod_authz_core.c>\n+  Deny from all\n+</IfModule>\n+\n+# Turn off all options we don't need.\n+Options -Indexes -ExecCGI -Includes -MultiViews\n+\n+# Set the catch-all handler to prevent scripts from being executed.\n+SetHandler Drupal_Security_Do_Not_Remove_See_SA_2006_006\n+<Files *>\n+  # Override the handler again if we're run later in the evaluation list.\n+  SetHandler Drupal_Security_Do_Not_Remove_See_SA_2013_003\n+</Files>\n+\n+# If we know how to do it safely, disable the PHP engine entirely.\n+<IfModule mod_php.c>\n+  php_flag engine off\n+</IfModule>\n\\ No newline at end of file\ndiff --git a/config/sync/core.extension.yml b/config/sync/core.extension.yml\nindex 28a14b2..89c5abf 100644\n--- a/config/sync/core.extension.yml\n+++ b/config/sync/core.extension.yml\n@@ -3,6 +3,7 @@ _core:\n module:\n   announcements_feed: 0\n   automated_cron: 0\n+  bench_js: 0\n   big_pipe: 0\n   block: 0\n   block_content: 0\ndiff --git a/web/modules/custom/bench_js/bench_js.info.yml b/web/modules/custom/bench_js/bench_js.info.yml\nnew file mode 100644\nindex 0000000..7ca3309\n--- /dev/null\n+++ b/web/modules/custom/bench_js/bench_js.info.yml\n@@ -0,0 +1,5 @@\n+name: 'Bench JS'\n+type: module\n+description: 'Adds a \"New\" badge to every node content element on front-end pages.'\n+core_version_requirement: ^11\n+package: Custom\ndiff --git a/web/modules/custom/bench_js/bench_js.libraries.yml b/web/modules/custom/bench_js/bench_js.libraries.yml\nnew file mode 100644\nindex 0000000..4b5d49e\n--- /dev/null\n+++ b/web/modules/custom/bench_js/bench_js.libraries.yml\n@@ -0,0 +1,6 @@\n+badge:\n+  js:\n+    js/bench-badge.js: {}\n+  dependencies:\n+    - core/drupal\n+    - core/once\ndiff --git a/web/modules/custom/bench_js/bench_js.module b/web/modules/custom/bench_js/bench_js.module\nnew file mode 100644\nindex 0000000..29ef29e\n--- /dev/null\n+++ b/web/modules/custom/bench_js/bench_js.module\n@@ -0,0 +1,30 @@\n+<?php\n+\n+/**\n+ * @file\n+ * Attaches the Bench JS badge library to front-end pages.\n+ */\n+\n+use Drupal\\Core\\Routing\\AdminContext;\n+use Drupal\\Core\\Routing\\RouteMatchInterface;\n+\n+/**\n+ * Implements hook_help().\n+ */\n+function bench_js_help($route_name, RouteMatchInterface $route_match) {\n+  switch ($route_name) {\n+    case 'help.page.bench_js':\n+      return '<p>' . t('Adds a \"New\" badge to every <code>.node__content</code> element on front-end pages.') . '</p>';\n+  }\n+}\n+\n+/**\n+ * Implements hook_page_attachments().\n+ */\n+function bench_js_page_attachments(array &$attachments) {\n+  // Only front-end pages; skip admin routes.\n+  if (\\Drupal::service(AdminContext::class)->isAdminRoute()) {\n+    return;\n+  }\n+  $attachments['#attached']['library'][] = 'bench_js/badge';\n+}\ndiff --git a/web/modules/custom/bench_js/js/bench-badge.js b/web/modules/custom/bench_js/js/bench-badge.js\nnew file mode 100644\nindex 0000000..860499a\n--- /dev/null\n+++ b/web/modules/custom/bench_js/js/bench-badge.js\n@@ -0,0 +1,25 @@\n+/**\n+ * @file\n+ * Appends a \"New\" badge to each .node__content element exactly once.\n+ */\n+\n+(function (Drupal, once) {\n+  'use strict';\n+\n+  /**\n+   * Adds the badge to matching elements within the context.\n+   *\n+   * Drupal.behaviors.attach runs on initial page load and again for content\n+   * inserted by AJAX, so once() guarantees each element is only processed once.\n+   */\n+  Drupal.behaviors.benchJsBadge = {\n+    attach(context) {\n+      once('bench-js-badge', '.node__content', context).forEach((element) => {\n+        const badge = document.createElement('span');\n+        badge.className = 'bench-badge';\n+        badge.textContent = 'New';\n+        element.appendChild(badge);\n+      });\n+    },\n+  };\n+})(Drupal, once);\n",
+      "diffTruncated": false,
+      "diffBytes": 3941
+    },
+    {
+      "task": "code-behaviors-once",
+      "mode": "skill",
+      "run": 1,
+      "startedAt": "2026-11-24T20:15:05.565Z",
+      "agent": {
+        "exitCode": 0,
+        "timedOut": false,
+        "durationSec": 25,
+        "guidanceCalls": {
+          "search": 1,
+          "retrieve": 1,
+          "mcp": 0,
+          "skill": 1
+        },
+        "model": "claude-haiku-5-5",
+        "tokens": {
+          "input": 12,
+          "output": 3999,
+          "cacheRead": 120355,
+          "cacheCreation": 15055,
+          "total": 139421
+        },
+        "costUsd": 0.00621525,
+        "numTurns": 8
+      },
+      "checks": [
+        {
+          "id": "module-enabled",
+          "kind": "must",
+          "text": "Module bench_js exists in web/modules/custom/bench_js and is enabled.",
+          "pass": true,
+          "detail": "info=true enabled=true"
+        },
+        {
+          "id": "library",
+          "kind": "must",
+          "text": "A module library depends on core/once and core/drupal.",
+          "pass": true,
+          "detail": "{\"badge\":{\"js\":[{\"group\":-100,\"type\":\"file\",\"data\":\"modules\\/custom\\/bench_js\\/js\\/bench-js.js\",\"version\":-1,\"minified\":false}],\"dependencies\":[\"core\\/drupal\",\"core\\/once\"],\"css\":[],\"fonts\":[],\"license\":{\"name\":\"GPL-2.0-or-later\",\"url\":\"https:\\/\\/www.drupal.org\\/licensing\\/faq\",\"gpl-compatible\":true"
+        },
+        {
+          "id": "attached",
+          "kind": "must",
+          "text": "An article page loads a script from the module.",
+          "pass": true
+        },
+        {
+          "id": "once-per-element",
+          "kind": "must",
+          "text": "Attaching behaviors twice leaves exactly one badge in every .node__content.",
+          "pass": true,
+          "detail": "counts=[1] scripts=core/assets/vendor/once/once.min.js,core/misc/drupalSettingsLoader.js,core/misc/drupal.js,modules/custom/bench_js/js/bench-js.js errors="
+        },
+        {
+          "id": "ajax-content",
+          "kind": "must",
+          "text": "Content added later gets exactly one badge when behaviors are attached to it.",
+          "pass": true,
+          "detail": "counts=[1,1] errors="
+        },
+        {
+          "id": "no-legacy-pattern",
+          "kind": "must_not",
+          "text": "No jQuery.once() or core/jquery.once (legacy-scan core-once-behaviors rules).",
+          "pass": true
+        },
+        {
+          "id": "no-document-ready",
+          "kind": "must_not",
+          "text": "The module JavaScript does not use document ready handlers.",
+          "pass": true
+        },
+        {
+          "id": "no-deprecated-api",
+          "kind": "must_not",
+          "text": "The module uses no core API that data/drupal/deprecations.json lists as deprecated or removed.",
+          "pass": true
+        }
+      ],
+      "passed": 8,
+      "total": 8,
+      "diff": "diff --git a/config/sync/core.extension.yml b/config/sync/core.extension.yml\nindex 28a14b2..89c5abf 100644\n--- a/config/sync/core.extension.yml\n+++ b/config/sync/core.extension.yml\n@@ -3,6 +3,7 @@ _core:\n module:\n   announcements_feed: 0\n   automated_cron: 0\n+  bench_js: 0\n   big_pipe: 0\n   block: 0\n   block_content: 0\ndiff --git a/web/modules/custom/bench_js/bench_js.info.yml b/web/modules/custom/bench_js/bench_js.info.yml\nnew file mode 100644\nindex 0000000..95c4b04\n--- /dev/null\n+++ b/web/modules/custom/bench_js/bench_js.info.yml\n@@ -0,0 +1,4 @@\n+name: Bench JS\n+type: module\n+description: 'Adds a \"New\" badge to every node content element using a Drupal behavior.'\n+core_version_requirement: ^10.3 || ^11\ndiff --git a/web/modules/custom/bench_js/bench_js.libraries.yml b/web/modules/custom/bench_js/bench_js.libraries.yml\nnew file mode 100644\nindex 0000000..e1d586f\n--- /dev/null\n+++ b/web/modules/custom/bench_js/bench_js.libraries.yml\n@@ -0,0 +1,6 @@\n+badge:\n+  js:\n+    js/bench-js.js: {}\n+  dependencies:\n+    - core/drupal\n+    - core/once\ndiff --git a/web/modules/custom/bench_js/bench_js.module b/web/modules/custom/bench_js/bench_js.module\nnew file mode 100644\nindex 0000000..3afc523\n--- /dev/null\n+++ b/web/modules/custom/bench_js/bench_js.module\n@@ -0,0 +1,15 @@\n+<?php\n+\n+/**\n+ * @file\n+ * Attaches the Bench JS badge library to every page.\n+ */\n+\n+declare(strict_types=1);\n+\n+/**\n+ * Implements hook_page_attachments().\n+ */\n+function bench_js_page_attachments(array &$attachments): void {\n+  $attachments['#attached']['library'][] = 'bench_js/badge';\n+}\ndiff --git a/web/modules/custom/bench_js/js/bench-js.js b/web/modules/custom/bench_js/js/bench-js.js\nnew file mode 100644\nindex 0000000..a081023\n--- /dev/null\n+++ b/web/modules/custom/bench_js/js/bench-js.js\n@@ -0,0 +1,17 @@\n+/**\n+ * @file\n+ * Adds a \"New\" badge to each node content element, once per element.\n+ */\n+\n+((Drupal, once) => {\n+  Drupal.behaviors.benchJsBadge = {\n+    attach(context) {\n+      once('bench-js-badge', '.node__content', context).forEach((element) => {\n+        const badge = document.createElement('span');\n+        badge.className = 'bench-badge';\n+        badge.textContent = 'New';\n+        element.append(badge);\n+      });\n+    },\n+  };\n+})(Drupal, once);\n",
+      "diffTruncated": false,
+      "diffBytes": 2265
+    },
+    {
+      "task": "code-behaviors-once",
+      "mode": "mcp",
+      "run": 1,
+      "startedAt": "2026-11-24T20:15:35.806Z",
+      "agent": {
+        "exitCode": 0,
+        "timedOut": false,
+        "durationSec": 36,
+        "guidanceCalls": {
+          "search": 0,
+          "retrieve": 0,
+          "mcp": 3,
+          "skill": 0
+        },
+        "model": "claude-haiku-5-5",
+        "tokens": {
+          "input": 22,
+          "output": 4491,
+          "cacheRead": 240356,
+          "cacheCreation": 15153,
+          "total": 260022
+        },
+        "costUsd": 0.00768186,
+        "numTurns": 17
+      },
+      "checks": [
+        {
+          "id": "module-enabled",
+          "kind": "must",
+          "text": "Module bench_js exists in web/modules/custom/bench_js and is enabled.",
+          "pass": true,
+          "detail": "info=true enabled=true"
+        },
+        {
+          "id": "library",
+          "kind": "must",
+          "text": "A module library depends on core/once and core/drupal.",
+          "pass": true,
+          "detail": "{\"badge\":{\"js\":[{\"group\":-100,\"type\":\"file\",\"data\":\"modules\\/custom\\/bench_js\\/js\\/bench-badge.js\",\"version\":-1,\"minified\":false}],\"dependencies\":[\"core\\/drupal\",\"core\\/once\"],\"css\":[],\"fonts\":[],\"license\":{\"name\":\"GPL-2.0-or-later\",\"url\":\"https:\\/\\/www.drupal.org\\/licensing\\/faq\",\"gpl-compatible\":t"
+        },
+        {
+          "id": "attached",
+          "kind": "must",
+          "text": "An article page loads a script from the module.",
+          "pass": true
+        },
+        {
+          "id": "once-per-element",
+          "kind": "must",
+          "text": "Attaching behaviors twice leaves exactly one badge in every .node__content.",
+          "pass": true,
+          "detail": "counts=[1] scripts=core/assets/vendor/once/once.min.js,core/misc/drupalSettingsLoader.js,core/misc/drupal.js,modules/custom/bench_js/js/bench-badge.js errors="
+        },
+        {
+          "id": "ajax-content",
+          "kind": "must",
+          "text": "Content added later gets exactly one badge when behaviors are attached to it.",
+          "pass": true,
+          "detail": "counts=[1,1] errors="
+        },
+        {
+          "id": "no-legacy-pattern",
+          "kind": "must_not",
+          "text": "No jQuery.once() or core/jquery.once (legacy-scan core-once-behaviors rules).",
+          "pass": true
+        },
+        {
+          "id": "no-document-ready",
+          "kind": "must_not",
+          "text": "The module JavaScript does not use document ready handlers.",
+          "pass": true
+        },
+        {
+          "id": "no-deprecated-api",
+          "kind": "must_not",
+          "text": "The module uses no core API that data/drupal/deprecations.json lists as deprecated or removed.",
+          "pass": true
+        }
+      ],
+      "passed": 8,
+      "total": 8,
+      "diff": "diff --git a/config/sync/.htaccess b/config/sync/.htaccess\nnew file mode 100644\nindex 0000000..b0dc540\n--- /dev/null\n+++ b/config/sync/.htaccess\n@@ -0,0 +1,24 @@\n+# Deny all requests from Apache 2.4+.\n+<IfModule mod_authz_core.c>\n+  Require all denied\n+</IfModule>\n+\n+# Deny all requests from Apache 2.0-2.2.\n+<IfModule !mod_authz_core.c>\n+  Deny from all\n+</IfModule>\n+\n+# Turn off all options we don't need.\n+Options -Indexes -ExecCGI -Includes -MultiViews\n+\n+# Set the catch-all handler to prevent scripts from being executed.\n+SetHandler Drupal_Security_Do_Not_Remove_See_SA_2006_006\n+<Files *>\n+  # Override the handler again if we're run later in the evaluation list.\n+  SetHandler Drupal_Security_Do_Not_Remove_See_SA_2013_003\n+</Files>\n+\n+# If we know how to do it safely, disable the PHP engine entirely.\n+<IfModule mod_php.c>\n+  php_flag engine off\n+</IfModule>\n\\ No newline at end of file\ndiff --git a/config/sync/core.extension.yml b/config/sync/core.extension.yml\nindex 28a14b2..89c5abf 100644\n--- a/config/sync/core.extension.yml\n+++ b/config/sync/core.extension.yml\n@@ -3,6 +3,7 @@ _core:\n module:\n   announcements_feed: 0\n   automated_cron: 0\n+  bench_js: 0\n   big_pipe: 0\n   block: 0\n   block_content: 0\ndiff --git a/web/modules/custom/bench_js/bench_js.info.yml b/web/modules/custom/bench_js/bench_js.info.yml\nnew file mode 100644\nindex 0000000..34d32cc\n--- /dev/null\n+++ b/web/modules/custom/bench_js/bench_js.info.yml\n@@ -0,0 +1,5 @@\n+name: Bench JS\n+type: module\n+description: 'Adds a \"New\" badge to every node content element using a Drupal behavior.'\n+core_version_requirement: ^10 || ^11\n+package: Custom\ndiff --git a/web/modules/custom/bench_js/bench_js.libraries.yml b/web/modules/custom/bench_js/bench_js.libraries.yml\nnew file mode 100644\nindex 0000000..4b5d49e\n--- /dev/null\n+++ b/web/modules/custom/bench_js/bench_js.libraries.yml\n@@ -0,0 +1,6 @@\n+badge:\n+  js:\n+    js/bench-badge.js: {}\n+  dependencies:\n+    - core/drupal\n+    - core/once\ndiff --git a/web/modules/custom/bench_js/bench_js.module b/web/modules/custom/bench_js/bench_js.module\nnew file mode 100644\nindex 0000000..aa2e72f\n--- /dev/null\n+++ b/web/modules/custom/bench_js/bench_js.module\n@@ -0,0 +1,17 @@\n+<?php\n+\n+/**\n+ * @file\n+ * Attaches the Bench JS badge library to front-end pages.\n+ */\n+\n+/**\n+ * Implements hook_page_attachments().\n+ */\n+function bench_js_page_attachments(array &$attachments) {\n+  // Only attach on front-end routes, not on administrative pages.\n+  if (\\Drupal::service('router.admin_context')->isAdminRoute()) {\n+    return;\n+  }\n+  $attachments['#attached']['library'][] = 'bench_js/badge';\n+}\ndiff --git a/web/modules/custom/bench_js/js/bench-badge.js b/web/modules/custom/bench_js/js/bench-badge.js\nnew file mode 100644\nindex 0000000..65d1fb4\n--- /dev/null\n+++ b/web/modules/custom/bench_js/js/bench-badge.js\n@@ -0,0 +1,12 @@\n+((Drupal, once) => {\n+  Drupal.behaviors.benchJsBadge = {\n+    attach(context, settings) {\n+      once('bench-js-badge', '.node__content', context).forEach((element) => {\n+        const badge = document.createElement('span');\n+        badge.className = 'bench-badge';\n+        badge.textContent = 'New';\n+        element.append(badge);\n+      });\n+    },\n+  };\n+})(Drupal, once);\n",
+      "diffTruncated": false,
+      "diffBytes": 3233
+    }
+  ]
+}

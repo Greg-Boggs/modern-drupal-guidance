@@ -1,0 +1,6 @@
+name: 'MDG demo: dependency injection'
+type: module
+description: 'Reference implementation for the dependency-injection guide.'
+package: Modern Drupal Guidance
+core_version_requirement: '>=10.3'
+configure: mdg_dependency_injection.settings

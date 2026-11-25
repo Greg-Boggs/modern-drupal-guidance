@@ -1,0 +1,3 @@
+services:
+  bench_hidden.builder:
+    class: Drupal\bench_hidden\Builder

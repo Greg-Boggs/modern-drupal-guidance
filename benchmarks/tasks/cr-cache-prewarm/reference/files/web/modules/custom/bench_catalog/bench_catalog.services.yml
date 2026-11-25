@@ -1,0 +1,6 @@
+services:
+  bench_catalog.catalog:
+    class: Drupal\bench_catalog\Catalog
+    arguments: ['@cache.default']
+    tags:
+      - { name: cache_prewarmable }

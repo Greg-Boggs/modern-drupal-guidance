@@ -1,0 +1,7 @@
+name: bench_styles
+type: module
+description: Reference solution for cr-image-style-options.
+core_version_requirement: ^11.4
+package: Bench
+dependencies:
+  - drupal:image

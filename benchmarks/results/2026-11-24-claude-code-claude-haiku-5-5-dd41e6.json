@@ -1,0 +1,101 @@
+{
+  "schema": "modern-drupal-guidance-bench/1",
+  "id": "dd41e6",
+  "createdAt": "2026-11-24T19:57:35.571Z",
+  "agent": {
+    "id": "claude-code",
+    "version": "2.1.308",
+    "model": "claude-haiku-5-5"
+  },
+  "guidance": {
+    "skillVersion": "2026_11_24-9a0ea49d",
+    "repoCommit": "uncommitted",
+    "guideCount": 100
+  },
+  "drupal": {
+    "core": "11.4.13",
+    "drush": "13.8.1",
+    "php": "8.3.33",
+    "profile": "standard",
+    "recipes": [
+      "page_content_type",
+      "article_content_type",
+      "article_tags"
+    ]
+  },
+  "os": {
+    "platform": "linux",
+    "release": "7.0.0-44-generic",
+    "arch": "x64"
+  },
+  "harness": {
+    "tasks": "pilot",
+    "modes": [
+      "unguided",
+      "skill",
+      "mcp"
+    ],
+    "runs": 1,
+    "allowWeb": false,
+    "timeoutMin": 20
+  },
+  "summary": {
+    "byMode": {
+      "unguided": {
+        "trials": 0,
+        "errored": 1,
+        "tasksFullyPassed": 0,
+        "taskPassRate": 0,
+        "checksPassed": 0,
+        "checksTotal": 0,
+        "checkPassRate": 0,
+        "tokens": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheCreation": 0,
+          "total": 0
+        },
+        "costUsd": 0
+      }
+    },
+    "uplift": {}
+  },
+  "trials": [
+    {
+      "task": "sb-content-type",
+      "mode": "unguided",
+      "run": 1,
+      "startedAt": "2026-11-24T19:57:34.754Z",
+      "agent": {
+        "exitCode": 1,
+        "timedOut": false,
+        "durationSec": 0,
+        "guidanceCalls": {
+          "search": 0,
+          "retrieve": 0,
+          "mcp": 0,
+          "skill": 0
+        },
+        "model": "claude-haiku-5-5",
+        "tokens": {
+          "input": 0,
+          "output": 0,
+          "cacheRead": 0,
+          "cacheCreation": 0,
+          "total": 0
+        },
+        "costUsd": 0,
+        "numTurns": 1,
+        "error": "Failed to authenticate: OAuth session expired and could not be refreshed",
+        "infraError": "auth"
+      },
+      "checks": [],
+      "passed": 0,
+      "total": 0,
+      "diff": "",
+      "diffTruncated": false,
+      "diffBytes": 0
+    }
+  ]
+}

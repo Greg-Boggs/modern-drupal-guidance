@@ -1,0 +1,373 @@
+{
+  "$schema": "schemas/releases.schema.json",
+  "generated": "2026-11-23",
+  "as_of": "2026-11-23",
+  "current_release": "11.4",
+  "sources": [
+    "https://updates.drupal.org/release-history/drupal/all",
+    "https://www.drupal.org/about/core/policies/core-release-cycles/schedule",
+    "https://www.drupal.org/project/drupal/releases",
+    "https://github.com/drupal/core"
+  ],
+  "releases": [
+    {
+      "minor": "9.0",
+      "major": 9,
+      "first_release": "9.0.0",
+      "release_date": "2020-06-03",
+      "planned_release": null,
+      "latest_patch": "9.0.14",
+      "security_support_end": "2021-06",
+      "security_support_end_precision": "month",
+      "min_php": "7.3",
+      "status": "end-of-life",
+      "supported": false,
+      "source_urls": [
+        "https://www.drupal.org/project/drupal/releases/9.0.0",
+        "https://www.drupal.org/project/drupal/releases/9.1.0",
+        "https://updates.drupal.org/release-history/drupal/all"
+      ]
+    },
+    {
+      "minor": "9.1",
+      "major": 9,
+      "first_release": "9.1.0",
+      "release_date": "2020-12-02",
+      "planned_release": null,
+      "latest_patch": "9.1.15",
+      "security_support_end": "2021-12",
+      "security_support_end_precision": "month",
+      "min_php": "7.3",
+      "status": "end-of-life",
+      "supported": false,
+      "source_urls": [
+        "https://www.drupal.org/project/drupal/releases/9.1.0",
+        "https://www.drupal.org/project/drupal/releases/9.2.0",
+        "https://updates.drupal.org/release-history/drupal/all"
+      ]
+    },
+    {
+      "minor": "9.2",
+      "major": 9,
+      "first_release": "9.2.0",
+      "release_date": "2021-06-16",
+      "planned_release": null,
+      "latest_patch": "9.2.21",
+      "security_support_end": "2022-06",
+      "security_support_end_precision": "month",
+      "min_php": "7.3",
+      "status": "end-of-life",
+      "supported": false,
+      "source_urls": [
+        "https://www.drupal.org/project/drupal/releases/9.2.0",
+        "https://www.drupal.org/project/drupal/releases/9.3.0",
+        "https://updates.drupal.org/release-history/drupal/all"
+      ]
+    },
+    {
+      "minor": "9.3",
+      "major": 9,
+      "first_release": "9.3.0",
+      "release_date": "2021-12-09",
+      "planned_release": null,
+      "latest_patch": "9.3.22",
+      "security_support_end": "2022-12",
+      "security_support_end_precision": "month",
+      "min_php": "7.3",
+      "status": "end-of-life",
+      "supported": false,
+      "source_urls": [
+        "https://www.drupal.org/project/drupal/releases/9.3.0",
+        "https://www.drupal.org/project/drupal/releases/9.4.0",
+        "https://updates.drupal.org/release-history/drupal/all"
+      ]
+    },
+    {
+      "minor": "9.4",
+      "major": 9,
+      "first_release": "9.4.0",
+      "release_date": "2022-06-15",
+      "planned_release": null,
+      "latest_patch": "9.4.15",
+      "security_support_end": "2023-06",
+      "security_support_end_precision": "month",
+      "min_php": "7.4",
+      "status": "end-of-life",
+      "supported": false,
+      "source_urls": [
+        "https://www.drupal.org/project/drupal/releases/9.4.0",
+        "https://www.drupal.org/project/drupal/releases/10.1.0",
+        "https://updates.drupal.org/release-history/drupal/all"
+      ],
+      "notes": "9.4.0 release notes raise the minimum from PHP 7.3 to 7.4; core/composer.json still says >=7.3"
+    },
+    {
+      "minor": "9.5",
+      "major": 9,
+      "first_release": "9.5.0",
+      "release_date": "2022-12-15",
+      "planned_release": null,
+      "latest_patch": "9.5.11",
+      "security_support_end": "2023-11-01",
+      "security_support_end_precision": "day",
+      "min_php": "7.4",
+      "status": "end-of-life",
+      "supported": false,
+      "source_urls": [
+        "https://www.drupal.org/project/drupal/releases/9.5.0",
+        "https://www.drupal.org/about/core/policies/core-release-cycles/schedule",
+        "https://updates.drupal.org/release-history/drupal/all"
+      ],
+      "notes": "Drupal 9 end of life, from the release schedule past milestones. composer.json says >=7.3; the 9.4.0 release notes raise the minimum to 7.4"
+    },
+    {
+      "minor": "10.0",
+      "major": 10,
+      "first_release": "10.0.0",
+      "release_date": "2022-12-15",
+      "planned_release": null,
+      "latest_patch": "10.0.11",
+      "security_support_end": "2023-12",
+      "security_support_end_precision": "month",
+      "min_php": "8.1",
+      "status": "end-of-life",
+      "supported": false,
+      "source_urls": [
+        "https://www.drupal.org/project/drupal/releases/10.0.0",
+        "https://www.drupal.org/project/drupal/releases/10.1.0",
+        "https://updates.drupal.org/release-history/drupal/all"
+      ]
+    },
+    {
+      "minor": "10.1",
+      "major": 10,
+      "first_release": "10.1.0",
+      "release_date": "2023-06-22",
+      "planned_release": null,
+      "latest_patch": "10.1.8",
+      "security_support_end": "2024-06",
+      "security_support_end_precision": "month",
+      "min_php": "8.1",
+      "status": "end-of-life",
+      "supported": false,
+      "source_urls": [
+        "https://www.drupal.org/project/drupal/releases/10.1.0",
+        "https://www.drupal.org/project/drupal/releases/10.2.0",
+        "https://updates.drupal.org/release-history/drupal/all"
+      ]
+    },
+    {
+      "minor": "10.2",
+      "major": 10,
+      "first_release": "10.2.0",
+      "release_date": "2023-12-15",
+      "planned_release": null,
+      "latest_patch": "10.2.12",
+      "security_support_end": "2024-12",
+      "security_support_end_precision": "month",
+      "min_php": "8.1",
+      "status": "end-of-life",
+      "supported": false,
+      "source_urls": [
+        "https://www.drupal.org/project/drupal/releases/10.2.0",
+        "https://www.drupal.org/project/drupal/releases/10.3.0",
+        "https://updates.drupal.org/release-history/drupal/all"
+      ]
+    },
+    {
+      "minor": "10.3",
+      "major": 10,
+      "first_release": "10.3.0",
+      "release_date": "2024-06-20",
+      "planned_release": null,
+      "latest_patch": "10.3.14",
+      "security_support_end": "2025-06",
+      "security_support_end_precision": "month",
+      "min_php": "8.1",
+      "status": "end-of-life",
+      "supported": false,
+      "source_urls": [
+        "https://www.drupal.org/project/drupal/releases/10.3.0",
+        "https://updates.drupal.org/release-history/drupal/all"
+      ]
+    },
+    {
+      "minor": "10.4",
+      "major": 10,
+      "first_release": "10.4.0",
+      "release_date": "2024-12-17",
+      "planned_release": null,
+      "latest_patch": "10.4.10",
+      "security_support_end": "2025-12",
+      "security_support_end_precision": "month",
+      "min_php": "8.1",
+      "status": "end-of-life",
+      "supported": false,
+      "source_urls": [
+        "https://www.drupal.org/project/drupal/releases/10.4.0",
+        "https://updates.drupal.org/release-history/drupal/all"
+      ]
+    },
+    {
+      "minor": "10.5",
+      "major": 10,
+      "first_release": "10.5.0",
+      "release_date": "2025-06-19",
+      "planned_release": null,
+      "latest_patch": "10.5.12",
+      "security_support_end": "2026-06",
+      "security_support_end_precision": "month",
+      "min_php": "8.1",
+      "status": "end-of-life",
+      "supported": false,
+      "source_urls": [
+        "https://www.drupal.org/project/drupal/releases/10.5.0",
+        "https://updates.drupal.org/release-history/drupal/all"
+      ]
+    },
+    {
+      "minor": "10.6",
+      "major": 10,
+      "first_release": "10.6.0",
+      "release_date": "2025-12-17",
+      "planned_release": null,
+      "latest_patch": "10.6.22",
+      "security_support_end": "2026-12-09",
+      "security_support_end_precision": "day",
+      "min_php": "8.1",
+      "status": "supported",
+      "supported": true,
+      "source_urls": [
+        "https://www.drupal.org/project/drupal/releases/10.6.0",
+        "https://www.drupal.org/about/core/policies/core-release-cycles/schedule",
+        "https://updates.drupal.org/release-history/drupal/all"
+      ],
+      "notes": "End-of-life date of Drupal 10, from the release schedule"
+    },
+    {
+      "minor": "11.0",
+      "major": 11,
+      "first_release": "11.0.0",
+      "release_date": "2024-08-02",
+      "planned_release": null,
+      "latest_patch": "11.0.13",
+      "security_support_end": "2025-06",
+      "security_support_end_precision": "month",
+      "min_php": "8.3",
+      "status": "end-of-life",
+      "supported": false,
+      "source_urls": [
+        "https://www.drupal.org/project/drupal/releases/11.0.0",
+        "https://www.drupal.org/project/drupal/releases/11.1.0",
+        "https://updates.drupal.org/release-history/drupal/all"
+      ]
+    },
+    {
+      "minor": "11.1",
+      "major": 11,
+      "first_release": "11.1.0",
+      "release_date": "2024-12-16",
+      "planned_release": null,
+      "latest_patch": "11.1.10",
+      "security_support_end": "2025-12",
+      "security_support_end_precision": "month",
+      "min_php": "8.3",
+      "status": "end-of-life",
+      "supported": false,
+      "source_urls": [
+        "https://www.drupal.org/project/drupal/releases/11.1.0",
+        "https://updates.drupal.org/release-history/drupal/all"
+      ]
+    },
+    {
+      "minor": "11.2",
+      "major": 11,
+      "first_release": "11.2.0",
+      "release_date": "2025-06-23",
+      "planned_release": null,
+      "latest_patch": "11.2.14",
+      "security_support_end": "2026-06",
+      "security_support_end_precision": "month",
+      "min_php": "8.3",
+      "status": "end-of-life",
+      "supported": false,
+      "source_urls": [
+        "https://www.drupal.org/project/drupal/releases/11.2.0",
+        "https://updates.drupal.org/release-history/drupal/all"
+      ]
+    },
+    {
+      "minor": "11.3",
+      "major": 11,
+      "first_release": "11.3.0",
+      "release_date": "2025-12-17",
+      "planned_release": null,
+      "latest_patch": "11.3.22",
+      "security_support_end": "2026-12",
+      "security_support_end_precision": "month",
+      "min_php": "8.3",
+      "status": "supported",
+      "supported": true,
+      "source_urls": [
+        "https://www.drupal.org/project/drupal/releases/11.3.0",
+        "https://updates.drupal.org/release-history/drupal/all"
+      ],
+      "notes": "Release schedule: security support for 11.3.x ends in the week of 2026-12-07"
+    },
+    {
+      "minor": "11.4",
+      "major": 11,
+      "first_release": "11.4.0",
+      "release_date": "2026-07-01",
+      "planned_release": null,
+      "latest_patch": "11.4.13",
+      "security_support_end": "2027-04-21",
+      "security_support_end_precision": "day",
+      "min_php": "8.3",
+      "status": "current",
+      "supported": true,
+      "source_urls": [
+        "https://www.drupal.org/project/drupal/releases/11.4.0",
+        "https://www.drupal.org/about/core/policies/core-release-cycles/schedule",
+        "https://updates.drupal.org/release-history/drupal/all"
+      ],
+      "notes": "The 11.4.0 release notes say June 2027; the release schedule page gives April 21, 2027 and is newer, so it wins"
+    },
+    {
+      "minor": "11.5",
+      "major": 11,
+      "first_release": null,
+      "release_date": null,
+      "planned_release": "week of 2026-12-07",
+      "latest_patch": null,
+      "security_support_end": null,
+      "security_support_end_precision": "unknown",
+      "min_php": "8.3",
+      "status": "prerelease",
+      "supported": false,
+      "source_urls": [
+        "https://www.drupal.org/about/core/policies/core-release-cycles/schedule",
+        "https://updates.drupal.org/release-history/drupal/all"
+      ],
+      "notes": "Not yet released; composer.json on 11.5.0-beta1 requires >=8.3.0"
+    },
+    {
+      "minor": "12.0",
+      "major": 12,
+      "first_release": null,
+      "release_date": null,
+      "planned_release": "2026-12-09",
+      "latest_patch": null,
+      "security_support_end": null,
+      "security_support_end_precision": "unknown",
+      "min_php": "8.5",
+      "status": "prerelease",
+      "supported": false,
+      "source_urls": [
+        "https://www.drupal.org/about/core/policies/core-release-cycles/schedule",
+        "https://updates.drupal.org/release-history/drupal/all"
+      ],
+      "notes": "Not yet released; composer.json on 12.0.0-beta2 requires >=8.5.0"
+    }
+  ]
+}

@@ -1,0 +1,70 @@
+{
+ "_comment": "Regex rules over the symbol. Matches get priority high and the listed tags.",
+ "rules": [
+  [
+   "^(drupal_set_message|drupal_get_messages)\\(\\)$",
+   {
+    "tags": [
+     "messenger"
+    ]
+   }
+  ],
+  [
+   "^db_[a-z_]+\\(\\)$",
+   {
+    "tags": [
+     "database"
+    ]
+   }
+  ],
+  [
+   "^(entity_load|entity_load_multiple|entity_load_by_property|entity_load_multiple_by_properties|entity_load_unchanged|entity_create|entity_delete_multiple|entity_get_[a-z_]+|entity_get_bundles|entity_get_form_display|entity_get_display|entity_view_mode_[a-z_]+|entity_page_label|entity_revision_[a-z_]+)\\(\\)$",
+   {
+    "tags": [
+     "entity"
+    ]
+   }
+  ],
+  [
+   "^(node|user|taxonomy|comment|file|block_content|menu|shortcut|image|filter)_(load|load_multiple|load_by_[a-z_]+|save|delete|delete_multiple|create|get_entity_ids|view|view_multiple)(_[a-z_]+)?\\(\\)$",
+   {
+    "tags": [
+     "entity-wrapper"
+    ]
+   }
+  ],
+  [
+   "^file_(?!uri_scheme|scan_directory)[a-z_]+\\(\\)$",
+   {
+    "tags": [
+     "file"
+    ]
+   }
+  ],
+  [
+   "^user_[a-z_]+\\(\\)$",
+   {
+    "tags": [
+     "user"
+    ]
+   }
+  ],
+  [
+   "^(drupal_render|drupal_render_root|drupal_render_cache_[a-z_]+|render|format_date|format_size|format_interval|format_plural|url|l|drupal_get_path|drupal_get_filename|drupal_realpath|drupal_get_user_timezone|drupal_attach_[a-z_]+|drupal_add_[a-z_]+|drupal_http_request|drupal_mail|drupal_json_encode|drupal_json_decode)\\(\\)$",
+   {
+    "tags": [
+     "procedural-api"
+    ]
+   }
+  ],
+  [
+   "^core/(jquery[a-z.]*|underscore|backbone|ckeditor|popperjs|farbtastic|js-cookie|modernizr)$",
+   {
+    "tags": [
+     "javascript",
+     "library"
+    ]
+   }
+  ]
+ ]
+}

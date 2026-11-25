@@ -1,0 +1,4 @@
+services:
+  bench_lazy.counter:
+    class: Drupal\bench_lazy\Counter
+    arguments: ['@>entity_type.manager']

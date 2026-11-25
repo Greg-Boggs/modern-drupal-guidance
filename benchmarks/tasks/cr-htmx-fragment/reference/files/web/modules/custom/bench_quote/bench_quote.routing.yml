@@ -1,0 +1,16 @@
+bench_quote.page:
+  path: '/bench-quote'
+  defaults:
+    _controller: '\Drupal\bench_quote\Controller\QuoteController::page'
+    _title: 'Quote'
+  requirements:
+    _access: 'TRUE'
+bench_quote.next:
+  path: '/bench-quote/next'
+  defaults:
+    _controller: '\Drupal\bench_quote\Controller\QuoteController::next'
+    _title: 'Quote'
+  requirements:
+    _access: 'TRUE'
+  options:
+    _htmx_route: TRUE

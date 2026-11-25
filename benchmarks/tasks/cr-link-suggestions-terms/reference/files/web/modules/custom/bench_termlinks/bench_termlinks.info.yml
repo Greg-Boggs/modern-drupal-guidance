@@ -1,0 +1,8 @@
+name: Bench term links
+type: module
+description: Tags as link suggestions.
+core_version_requirement: ^11.3
+package: Bench
+dependencies:
+  - drupal:taxonomy
+  - drupal:ckeditor5

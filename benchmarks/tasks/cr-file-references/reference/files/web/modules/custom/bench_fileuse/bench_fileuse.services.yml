@@ -1,0 +1,4 @@
+services:
+  bench_fileuse.finder:
+    class: Drupal\bench_fileuse\FileUseFinder
+    autowire: true

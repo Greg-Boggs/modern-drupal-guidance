@@ -1,0 +1,5 @@
+name: Bench catalog
+type: module
+description: A prewarmable catalog service.
+core_version_requirement: ^11.2
+package: Bench

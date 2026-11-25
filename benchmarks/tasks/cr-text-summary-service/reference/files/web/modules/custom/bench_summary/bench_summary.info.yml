@@ -1,0 +1,7 @@
+name: bench_summary
+type: module
+description: Reference solution for cr-text-summary-service.
+core_version_requirement: ^11.3
+package: Bench
+dependencies:
+  - drupal:text

@@ -1,0 +1,15 @@
+Modern Drupal Guidance
+Copyright 2026 Modern Drupal Guidance contributors
+
+This product is a fork of Modern Web Guidance by Google LLC
+(https://github.com/GoogleChrome/modern-web-guidance-src), licensed under the
+Apache License, Version 2.0. Portions of the build, search, CLI, legacy-scan
+and evaluation harness code are Copyright 2026 Google LLC.
+
+The static word-embedding table in src/rag/gen/query-words.* is derived from
+the table distributed with Modern Web Guidance, extended with vocabulary from
+the Modern Drupal Guidance corpus (see src/rag/README.md).
+
+Modern Drupal Guidance is not affiliated with or endorsed by Google, Chrome or
+the Modern Web Guidance project. Drupal is a registered trademark of Dries
+Buytaert.

@@ -1,0 +1,4 @@
+services:
+  bench_grants.maintenance:
+    class: Drupal\bench_grants\Maintenance
+    autowire: true

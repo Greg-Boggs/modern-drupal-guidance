@@ -1,0 +1,7 @@
+name: Bench DI
+type: module
+description: Shows the latest article title.
+core_version_requirement: ^10.3 || ^11
+package: Benchmark
+dependencies:
+  - drupal:node

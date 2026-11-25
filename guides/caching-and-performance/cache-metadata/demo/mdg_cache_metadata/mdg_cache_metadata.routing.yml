@@ -1,0 +1,14 @@
+mdg_cache_metadata.latest:
+  path: '/mdg/latest'
+  defaults:
+    _controller: '\Drupal\mdg_cache_metadata\Controller\LatestController::list'
+    _title: 'Latest articles'
+  requirements:
+    _custom_access: '\Drupal\mdg_cache_metadata\Controller\LatestController::access'
+
+mdg_cache_metadata.json:
+  path: '/mdg/site.json'
+  defaults:
+    _controller: '\Drupal\mdg_cache_metadata\Controller\LatestController::json'
+  requirements:
+    _permission: 'access content'

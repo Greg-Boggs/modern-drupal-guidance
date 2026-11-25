@@ -1,0 +1,7 @@
+name: Bench no help
+type: module
+description: Removes the announcements help hook.
+core_version_requirement: ^11.2
+package: Bench
+dependencies:
+  - drupal:announcements_feed

@@ -1,0 +1,22 @@
+<?php
+
+/**
+ * @file
+ * Helper functions for bench_helpers. This file holds no hook implementations.
+ */
+
+declare(strict_types=1);
+
+/**
+ * Returns the helper text.
+ */
+function bench_helpers_help(): string {
+  return 'Helper text.';
+}
+
+/**
+ * Returns the label of the cron schedule.
+ */
+function bench_helpers_cron_label(): string {
+  return 'Nightly';
+}
